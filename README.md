@@ -130,34 +130,36 @@ Incidents:
 			50 + stack count magic DPS
 			permanent -25% movespeed
 	
-	Weight: every 10 mins starting at 0-9 mins for every hero
-	Birthday:
-		Weight: 5
-		Bad Back:
-			-10% movement speed
-			-20 attack speed
-		
-		Weight: 5
-		Dementia:
-			-10% Cast Point Reduction
-			+5% cooldown time (Multiplicative)
-		
-		Weight: 5
-		Cataract:
-			-25% vision
-		
-		Weight: 5
-		Gift:
-			+500 + (25 to 50) * level gold
-			
-		Weight: 5
-		Wisdom:
-			*Only procs if hero is below lvl 30
-			+700 + (25 to 50) * level experience
-		
-		Weight: 1
-		Heart Attack:
-			Take 15% max HP DPS for 20 seconds
+Birthdays:
+
+	Happens every 10 minutes after a random time in the first 10 minutes.
+
+	Weight: 5
+	Bad Back:
+		-10% movement speed
+		-20 attack speed
+
+	Weight: 5
+	Dementia:
+		-10% Cast Point Reduction
+		+5% cooldown time (Multiplicative)
+
+	Weight: 5
+	Cataract:
+		-25% vision
+
+	Weight: 5
+	Gift:
+		+500 + (25 to 50) * level gold
+
+	Weight: 5
+	Wisdom:
+		*Only procs if hero is below lvl 30
+		+700 + (25 to 50) * level experience
+
+	Weight: 1
+	Heart Attack:
+		Take 15% max HP DPS for 20 seconds
 
 Traits:
 
@@ -230,7 +232,8 @@ Traits:
 		+200% Sickness Chance
 
 Mental Breaks:
-	75/20/5% chance for minor/major/extreme
+
+	Happens based on hero's mood
 	
 	Minor:
 		Sad Wander:
