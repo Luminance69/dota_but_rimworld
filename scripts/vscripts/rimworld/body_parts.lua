@@ -42,12 +42,14 @@ function BodyParts:GetPartSlot(part)
     local slots = {}
 
     for slot, table in pairs(self.parts) do
-        for _, part in pairs(table) do
-            slots[part] = slot
+        for _, v in pairs(table) do
+            if v == part then
+                return slot
+            end
         end
     end
 
-    return slots
+    return false
 end
 
 BodyParts.slots = {

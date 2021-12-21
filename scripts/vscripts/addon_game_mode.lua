@@ -63,5 +63,6 @@ ListenToGameEvent("game_rules_state_change",
 	Incidents:Init()	
 	Birthdays:Init()
 	Traits:Init()
+	BodyParts:Init()
 end, nil)
 

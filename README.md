@@ -291,8 +291,8 @@ Body Parts:
 			+50% Casting Point Reduction
 			+5 Armor
 		Power Claws:
-			+200% attack damage
-			Unable to hold any weapons
+			+400% attack damage
+			Unable to use items with handles / gloves
 	Eye:
 		Bionic:
 			+25% Vision
@@ -302,9 +302,7 @@ Body Parts:
 			+4 Armor
 		Eye of Apollo:
 			+30% Vision
-			+100 Attack Range (bow only)
-			+25% Accuracy (bow only)
-			+50% Projectile Speed (bow only)
+			+30% stats from head items
 	Heart:
 		Bionic:
 			+10 Strength
