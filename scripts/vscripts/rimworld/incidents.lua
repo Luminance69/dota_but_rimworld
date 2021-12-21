@@ -1,22 +1,22 @@
 Incidents = Incidents or class({})
 
 Incidents.incidents = {
-	["creep_disease"] = 5,
-	["hero_sickness"] = 50,
-	["zzztt"] = 10,	
-	["mad_neutral"] = 40,	
-	["mass_neutral_insanity"] = 5,	
-	["psychic_soothe"] = 10,	
-	["psychic_drone"] = 8,
-	["invert_day"] = 5,
-	["gift"] = 5,
-	["cold_snap"] = 2,
-	["nothing"] = 10000,
+    ["creep_disease"] = 5,
+    ["hero_sickness"] = 50,
+    ["zzztt"] = 10,
+    ["mad_neutral"] = 40,
+    ["mass_neutral_insanity"] = 5,
+    ["psychic_soothe"] = 10,
+    ["psychic_drone"] = 8,
+    ["invert_day"] = 5,
+    ["gift"] = 5,
+    ["cold_snap"] = 2,
+    ["nothing"] = 10000,
 }
 
 function Incidents:Init()
-	print("[Rimworld] Incidents Loaded!")
-	
+    print("[Rimworld] Incidents Loaded!")
+
     self:LinkModifiers(Incidents.modifiers)
 
     Timers:CreateTimer(IsInToolsMode() and 1 or 90, self.DoIncident)
@@ -43,7 +43,7 @@ function Incidents:DoIncident()
         -- Do notification/sound etc. (maybe panorama? :P)
     end
 
-	return 1
+    return 1
 end
 
 Incidents.creep_disease = function(args)

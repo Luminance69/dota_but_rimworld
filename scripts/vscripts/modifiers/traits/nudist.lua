@@ -51,12 +51,12 @@ function modifier_nudist:GetMoodBonus()
 end
 
 function modifier_nudist:AddCustomTransmitterData( )
-	return
-	{
-		bonus = self.bonus,
-	}
+    return
+    {
+        bonus = self.bonus,
+    }
 end
 
 function modifier_nudist:HandleCustomTransmitterData( data )
-	self.bonus = data.bonus
+    self.bonus = data.bonus
 end
