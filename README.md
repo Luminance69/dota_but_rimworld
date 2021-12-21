@@ -2,6 +2,7 @@
 Dota 2 but Rimworld
 
 Incidents:
+
 	Weight: 5
 	Creep Disease:
 		All allied creeps are infected with disease.
@@ -159,6 +160,7 @@ Incidents:
 			Take 15% max HP DPS for 20 seconds
 
 Traits:
+
 	2-3 Traits are randomly assigned to each hero at the start of the game.
 	
 
@@ -258,8 +260,8 @@ Mental Breaks:
 			Your hero is stunned
 			60s duration
 
--- 1.1
 Body Parts:
+
 	Each hero has 8 body parts; 2 legs, 2 arms, 2 eyes, 1 heart, 1 brain.
 
 	Heroes can get part replacement through incidents.
