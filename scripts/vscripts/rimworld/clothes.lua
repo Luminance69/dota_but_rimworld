@@ -3,7 +3,7 @@ Clothes = Clothes or class({})
 function Clothes:GetItemTypes(item)
     local types = {}
 
-    for type, tbl in pairs(self.items) do
+    for type, tbl in pairs(Clothes.items) do
         for _, v in pairs(tbl) do
             if not types[v] then
                 types[v] = {}

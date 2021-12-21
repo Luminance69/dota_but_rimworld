@@ -23,7 +23,7 @@ function modifier_nudist:OnIntervalThink()
     for _, slot in pairs(self.slots) do
         local item = self:GetParent():GetItemInSlot(slot)
 
-        if Clothes:GetItemTypes(item:GetAbilityName())["clothes"] then
+        if item and Clothes:GetItemTypes(item:GetAbilityName())["clothes"] then
             self.bonus = self.bonus + 4
         end
     end

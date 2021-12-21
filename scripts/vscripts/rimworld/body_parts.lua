@@ -1,8 +1,10 @@
 BodyParts = BodyParts or class({})
 
 function BodyParts:Init()
-    for slot, table in pairs(self.incidents) do
-        for _, part in pairs(table) do
+	print("[Rimworld] BodyParts Loaded!")
+	
+    for slot, tbl in pairs(self.parts) do
+        for _, part in pairs(tbl) do
             LinkLuaModifier("modifier_" .. part, "modifiers/body_parts/" .. slot, LUA_MODIFIER_MOTION_NONE)
         end
     end
@@ -41,7 +43,7 @@ end
 function BodyParts:GetPartSlot(part)
     local slots = {}
 
-    for slot, table in pairs(self.parts) do
+    for slot, table in pairs(BodyParts.parts) do
         for _, v in pairs(table) do
             if v == part then
                 return slot

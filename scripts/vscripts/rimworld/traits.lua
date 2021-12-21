@@ -1,6 +1,8 @@
 Traits = Traits or class({})
 
 function Traits:Init()
+	print("[Rimworld] Traits Loaded!")
+	
     for k, v in pairs(self.traits) do
         for _, trait in pairs(v) do
             LinkLuaModifier("modifier_" .. trait, "modifiers/traits/" .. trait, LUA_MODIFIER_MOTION_NONE)
@@ -19,8 +21,12 @@ end
 function Traits:AddTraits(hero)
     local traits = self:GetRandomTraits(RandomInt(2, 3))
 
+    print("Adding traits to " .. hero:GetUnitName() .. ":")
+
     for _, trait in pairs(traits) do
-        hero:AddNewModifier(hero, nil, trait, nil)
+        hero:AddNewModifier(hero, nil, "modifier_" .. trait, nil)
+
+        print(trait)
     end
 end
 

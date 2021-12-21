@@ -1,9 +1,25 @@
 Incidents = Incidents or class({})
 
-function Incidents:Init()
-    self:LinkModifiers(self.modifiers)
+Incidents.incidents = {
+	["creep_disease"] = 5,
+	["hero_sickness"] = 50,
+	["zzztt"] = 10,	
+	["mad_neutral"] = 40,	
+	["mass_neutral_insanity"] = 5,	
+	["psychic_soothe"] = 10,	
+	["psychic_drone"] = 8,
+	["invert_day"] = 5,
+	["gift"] = 5,
+	["cold_snap"] = 2,
+	["nothing"] = 10000,
+}
 
-    Timers:CreateTimer(RandomInt(90, 690), self.DoIncident)
+function Incidents:Init()
+	print("[Rimworld] Incidents Loaded!")
+	
+    self:LinkModifiers(Incidents.modifiers)
+
+    Timers:CreateTimer(IsInToolsMode() and 1 or 90, self.DoIncident)
 end
 
 function Incidents:LinkModifiers(table)
@@ -19,7 +35,7 @@ function Incidents:LinkModifiers(table)
 end
 
 function Incidents:DoIncident()
-    local incident = GetWeightedChoice(self.incidents)
+    local incident = GetWeightedChoice(Incidents.incidents)
 
     if self[incident] then
         self[incident]()
@@ -30,19 +46,9 @@ function Incidents:DoIncident()
 	return 1
 end
 
-Incidents.incidents = {
-	["creep_disease"] = 5,
-	["hero_sickness"] = 50,
-	["zzztt"] = 10,	
-	["mad_neutral"] = 40,	
-	["mass_neutral_insanity"] = 5,	
-	["psychic_soothe"] = 10,	
-	["psychic_drone"] = 8,
-	["invert_day"] = 5,
-	["gift"] = 5,
-	["cold_snap"] = 2,
-	["nothing"] = 10000,
-}
+Incidents.creep_disease = function(args)
+    print("creep disease")
+end
 
 Incidents.modifiers = {
     ["creep_disease"] = {

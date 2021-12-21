@@ -55,14 +55,13 @@ function Spawn()
 end
 
 ListenToGameEvent("game_rules_state_change", function()
-	if GameRules:State_Get() ~= DOTA_GAMERULES_STATE_PRE_GAME then return end
+	if (GameRules:State_Get() ~= DOTA_GAMERULES_STATE_PRE_GAME and not IsInToolsMode()) or (GameRules:State_Get() ~= DOTA_GAMERULES_STATE_GAME_IN_PROGRESS and IsInToolsMode()) then return end
 
-	-- Create Events
-	Timers:CreateTimer(1, Events.TryIncident)
-
-	Incidents:Init()	
-	Birthdays:Init()
-	Traits:Init()
-	BodyParts:Init()
+	Timers:CreateTimer(5, function()
+		Incidents:Init()	
+		Birthdays:Init()
+		BodyParts:Init()
+		Traits:Init()
+	end)
 end, nil)
 

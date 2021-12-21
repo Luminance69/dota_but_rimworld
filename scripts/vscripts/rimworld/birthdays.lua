@@ -1,36 +1,41 @@
 Birthdays = Birthdays or class({})
 
 Birthdays.incidents = {
-	["bad_back"] = 5,
+	["bad_back"] = 5222,
 	["dementia"] = 5,
 	["cataract"] = 5,	
-
 	["heart_attack"] = 1,
-
 	["gift"] = 5,	
 	["wisdom"] = 5,		
 }
 
 function Birthdays:Init()
-    for k, v in pairs(self.incidents) do
-        LinkLuaModifier("modifier_" .. k, "modifiers/birthday/" .. k, LUA_MODIFIER_MOTION_NONE)
+	print("[Rimworld] Birthdays Loaded!")
+
+    for k, v in pairs(Birthdays.incidents) do
+        LinkLuaModifier("modifier_" .. k, "modifiers/birthdays/" .. k, LUA_MODIFIER_MOTION_NONE)
     end
     
 	local heroes = HeroList:GetAllHeroes()
 
 	for _, hero in pairs(heroes) do
 		if hero:IsRealHero() then
-			Timers:CreateTimer(RandomInt(90, 690), self.DoBirthday, hero)
+			Timers:CreateTimer(RandomInt(90, 690), function()
+				print(hero)
+				self:DoBirthday(hero)
+
+				return 600
+			end)
 		end
 	end
 end
 
 function Birthdays:DoBirthday(hero)
-    local incident = GetWeightedChoice(self.incidents)
+    local incident = GetWeightedChoice(Birthdays.incidents)
 
     -- Don't do wisdom if hero is >= lvl 30
     while incident == "wisdom" and hero:GetLevel() >= 30 do
-        incident = GetWeightedChoice(self.incidents)
+        incident = GetWeightedChoice(Birthdays.incidents)
     end
 
 	if self[incident] then
@@ -38,11 +43,10 @@ function Birthdays:DoBirthday(hero)
 
    		-- Do notification/sound etc. (maybe panorama? :P)
 	end
-
-	return 600
 end
 
-function Birthdays:bad_back(hero)
+Birthdays.bad_back = function(hero)
+	print(hero:GetUnitName())
 	local modifier = hero:FindModifierByName("modifier_bad_back")
 
 	if not modifier then
@@ -52,7 +56,7 @@ function Birthdays:bad_back(hero)
 	modifier:IncrementStackCount()
 end
 
-function Birthdays:dementia(hero)
+Birthdays.dementia = function(hero)
 	local modifier = hero:FindModifierByName("modifier_dementia")
 
 	if not modifier then
@@ -62,7 +66,7 @@ function Birthdays:dementia(hero)
 	modifier:IncrementStackCount()
 end
 
-function Birthdays:cataract(hero)
+Birthdays.cataract = function(hero)
 	local modifier = hero:FindModifierByName("modifier_cataract")
 
 	if not modifier then
@@ -72,14 +76,14 @@ function Birthdays:cataract(hero)
 	modifier:IncrementStackCount()
 end
 
-function Birthdays:heart_attack(hero)
+Birthdays.heart_attack = function(hero)
 	hero:AddNewModifier(hero, nil, "modifier_heart_attack", {duration = RandomInt(10, 20)})
 end
 
-function Birthdays:gift(hero) -- +500 + (25 to 50) * level gold
+Birthdays.gift = function(hero) -- +500 + (25 to 50) * level gold
 	hero:ModifyGoldFiltered(500 + RandomInt(25, 50) * hero:GetLevel(), true, DOTA_ModifyGold_GameTick)
 end
 
-function Birthdays:wisdom(hero) -- +700 + (25 to 50) * level experience
+Birthdays.wisdom = function(hero) -- +700 + (25 to 50) * level experience
     hero:AddExperience(700 + RandomInt(25, 50) * hero:GetLevel(), DOTA_ModifyXP_TomeOfKnowledge, false, true)
 end

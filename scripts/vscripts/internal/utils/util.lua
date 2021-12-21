@@ -13,8 +13,8 @@ function GetWeightedChoice(table)
 	local count = 0
 
 	for _, weight in pairs(table) do
-		if type(weight) ~= int then
-			print("WEIGHTED CHOICE ERROR: Expected int but received" .. type(weight))
+		if type(weight) ~= "number" then
+			print("WEIGHTED CHOICE ERROR: Expected number but received: " .. type(weight))
 			return false
 		else
 			count = count + weight	
