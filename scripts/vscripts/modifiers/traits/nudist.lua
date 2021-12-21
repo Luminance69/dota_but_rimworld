@@ -19,7 +19,7 @@ function modifier_nudist:OnCreated()
 end
 
 function modifier_nudist:IsDebuff()
-    return self.bonus and self.bonus > 0
+    return self.bonus and self.bonus < 0
 end
 
 function modifier_nudist:OnIntervalThink()
@@ -34,20 +34,20 @@ function modifier_nudist:OnIntervalThink()
             local types = Clothes:GetItemTypes(item:GetAbilityName())
 
             if types and types["clothes"] then
-                self.bonus = self.bonus + 4
+                self.bonus = self.bonus - 4
             end
         end
     end
 
     if self.bonus == 0 then
-        self.bonus = -12
+        self.bonus = 12
     end
 
     self:SetStackCount(math.abs(self.bonus))
 end
 
 function modifier_nudist:GetMoodBonus()
-    return self:GetStackCount() or -12
+    return self.bonus or 12
 end
 
 function modifier_nudist:AddCustomTransmitterData( )

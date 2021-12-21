@@ -296,13 +296,7 @@ function CDOTA_BaseNPC_Hero:UpdateMood() -- nil
         self.mood = 42 -- Default
     end
 
-    local mood_target = 42
-
-    local modifiers = self:FindAllModifiers()
-
-    for _, modifier in pairs(modifiers) do
-        mood_target = mood_target + modifier.GetMoodBonus and modifier:GetMoodBonus()
-    end
+    local mood_target = self:GetMoodTarget()
 
     -- Slowly move mood towards target
     if math.abs(mood_target - self.mood) < 0.1 then
@@ -328,10 +322,14 @@ function CDOTA_BaseNPC_Hero:GetMentalBreakThresholds() -- int[]: {minor, major, 
     local modifiers = self:FindAllModifiers()
 
     for _, modifier in pairs(modifiers) do
-        bonus = bonus + modifier.GetMentalBreakThresholdBonus and modifier:GetMentalBreakThresholdBonus()
+        bonus = bonus + (modifier.GetMentalBreakThresholdBonus and modifier:GetMentalBreakThresholdBonus() or 0)
     end
 
-    return {35 + bonus, 20 + bonus, 5 + bonus}
+    return {
+        35 + bonus, 
+        20 + bonus, 
+        5 + bonus
+    }
 end
 
 -- Get the hero's illness chance offset
@@ -371,6 +369,18 @@ function CDOTA_BaseNPC_Hero:GetExperienceMultiplier() -- float: xp multiplier
     end
 
     return multiplier
+end
+
+function CDOTA_BaseNPC_Hero:GetMoodTarget() -- float: mood_target
+    local mood_target = 42
+
+    local modifiers = self:FindAllModifiers()
+
+    for _, modifier in pairs(modifiers) do
+        mood_target = mood_target + (modifier.GetMoodBonus and modifier:GetMoodBonus() or 0)
+    end
+
+    return mood_target
 end
 
 function CDOTA_BaseNPC_Hero:GetMood() -- float: mood

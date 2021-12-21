@@ -242,10 +242,15 @@ Mental Breaks:
 		Sad Wander:
 			Your hero goes on a sad wander randomly
 			10s duration
+			-50% movement speed
 		
 		Hide Under Tower:
 			Your hero hides in the nearest tower
 			20s duration
+		
+		Insulting Spree:
+			Your hero insults allies, causing their mood to decrease
+			30s duration
 
 	Major:
 		Sadistic Rage:
@@ -255,15 +260,22 @@ Mental Breaks:
 		Slaughterer:
 			Your hero will kill the nearest friendly basic units (basically ww ulti)
 			30s duration
+
+		Tantrum:
+			Forces your hero to attack itself
+			10s duration or 25% HP
 		
 	Extreme:
 		Berserk:
-			*Requires an allied hero within 3000 units
 			Your hero will kill the nearest allied hero
 			30s duration (or when unit dies)
 		
-		Catatonic
+		Catatonic:
 			Your hero is stunned
+			60s duration
+
+		Give Up:
+			Your hero gives up and runs around randomly
 			60s duration
 
 Body Parts:
