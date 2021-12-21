@@ -54,29 +54,32 @@ end
 function Moods:DoMoodUpdate(hero)
     hero:UpdateMood()
 
-    local mood = hero:GetMood()
-    local thresholds = Moods:Clamp(hero:GetMentalBreakThresholds())
+    if not hero:HasModifier("modifier_catharsis") then
+        local mood = hero:GetMood()
+        local thresholds = Moods:Clamp(hero:GetMentalBreakThresholds())
 
-    local mental_break
+        local mental_break
 
-    if mood < thresholds[3] then
-        if RandomInt(1, 50) == 1 then
-            mental_break = Moods.mental_breaks["extreme"][RandomInt(1, #Moods.mental_breaks["extreme"])]
+        if mood < thresholds[3] then
+            if RandomInt(1, 50) == 1 then
+                mental_break = Moods.mental_breaks["extreme"][RandomInt(1, #Moods.mental_breaks["extreme"])]
+            end
+        elseif mood < thresholds[2] then
+            if RandomInt(1, 100) == 1 then
+                mental_break = Moods.mental_breaks["major"][RandomInt(1, #Moods.mental_breaks["major"])]
+            end
+        elseif mood < thresholds[1] then
+            if RandomInt(1, 200) == 1 then
+                mental_break = Moods.mental_breaks["minor"][RandomInt(1, #Moods.mental_breaks["minor"])]
+            end
         end
-    elseif mood < thresholds[2] then
-        if RandomInt(1, 100) == 1 then
-            mental_break = Moods.mental_breaks["major"][RandomInt(1, #Moods.mental_breaks["major"])]
-        end
-    elseif mood < thresholds[1] then
-        if RandomInt(1, 200) == 1 then
-            mental_break = Moods.mental_breaks["minor"][RandomInt(1, #Moods.mental_breaks["minor"])]
-        end
-    end
 
-    if mental_break then
-        hero:AddNewModifier(hero, nil, "modifier_" .. mental_break, nil)
+        if mental_break then
+            hero:AddNewModifier(hero, nil, "modifier_" .. mental_break, nil)
+            hero:AddNewModifier(hero, nil, "modifier_catharsis", {duration = 120})
 
-        -- Do notification/sound etc. (maybe panorama? :P)
+            -- Do notification/sound etc. (maybe panorama? :P)
+        end
     end
 
     return 1
