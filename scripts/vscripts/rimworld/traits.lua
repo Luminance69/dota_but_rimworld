@@ -16,7 +16,7 @@ function Traits:Init()
 	end
 end
 
-function Traits:AddTrait(hero)
+function Traits:AddTraits(hero)
     local traits = self:GetRandomTraits(RandomInt(2, 3))
 
     for _, trait in pairs(traits) do

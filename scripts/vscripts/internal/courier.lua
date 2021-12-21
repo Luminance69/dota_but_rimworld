@@ -7,8 +7,8 @@ BUTTINGS = BUTTINGS or {}
 _G.personalCouriers = _G.personalCouriers or {}
 _G.mainTeamCouriers = _G.mainTeamCouriers or {}
 
-LinkLuaModifier("modifier_courier", "internal/modifier_courier.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_passive_gold", "internal/modifier_passive_gold.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_courier", "modifiers/courier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_passive_gold", "modifiers/passive_gold.lua", LUA_MODIFIER_MOTION_NONE)
 
 
 ListenToGameEvent("npc_first_spawn",function(event)

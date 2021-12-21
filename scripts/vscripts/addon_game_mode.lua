@@ -54,8 +54,8 @@ function Spawn()
 	FireGameEvent("created_game_mode_entity",{gameModeEntity = GameMode})
 end
 
-ListenToGameEvent("game_rules_state_change", 
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME
+ListenToGameEvent("game_rules_state_change", function()
+	if GameRules:State_Get() ~= DOTA_GAMERULES_STATE_PRE_GAME then return end
 
 	-- Create Events
 	Timers:CreateTimer(1, Events.TryIncident)

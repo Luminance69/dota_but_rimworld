@@ -1,7 +1,7 @@
 BUTTINGS = BUTTINGS or {MAX_LEVEL = MAX_LEVEL}
 
 require("internal/utils/butt_api")
-LinkLuaModifier("modifier_courier_speed", "internal/modifier_courier_speed.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_courier_speed", "modifiers/courier_speed.lua", LUA_MODIFIER_MOTION_NONE)
 
 ListenToGameEvent("game_rules_state_change", function()
 	if (GameRules:State_Get()==DOTA_GAMERULES_STATE_HERO_SELECTION) then
