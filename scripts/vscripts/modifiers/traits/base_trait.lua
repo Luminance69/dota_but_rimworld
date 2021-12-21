@@ -6,3 +6,5 @@ function base_trait:HeroEffectPriority() return MODIFIER_PRIORITY_SUPER_ULTRA en
 function base_trait:IsHidden() return false end
 function base_trait:IsPermanent() return true end
 function base_trait:IsPurgable() return false end
+
+function base_trait:GetTexture() return "trait" end

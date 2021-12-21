@@ -67,6 +67,10 @@ end
 function InternalFilters:ModifyExperienceFilter(event)
 	event.experience = event.experience * BUTTINGS.XP_GAIN_PERCENTAGE * 0.01
 
+	local hero = EntIndexToHScript(event.hero_entindex_const)
+
+	event.experience = event.experience * hero:GetExperienceMultiplier()
+
 	-- PrintTable(event)
 	local playerID = event.player_id_const
 	local reason = event.reason_const

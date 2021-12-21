@@ -319,7 +319,7 @@ Body Parts:
 			+50% Healing Amplification
 	Brain:		
 		Learning Assistant:
-			+20% Experience Gain
+			+25% Experience Gain
 		Joywire:
 			+30 Mood
 			-15% Vision

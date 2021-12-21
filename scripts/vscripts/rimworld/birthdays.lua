@@ -21,7 +21,6 @@ function Birthdays:Init()
 	for _, hero in pairs(heroes) do
 		if hero:IsRealHero() then
 			Timers:CreateTimer(RandomInt(90, 690), function()
-				print(hero)
 				self:DoBirthday(hero)
 
 				return 600
@@ -46,7 +45,6 @@ function Birthdays:DoBirthday(hero)
 end
 
 Birthdays.bad_back = function(hero)
-	print(hero:GetUnitName())
 	local modifier = hero:FindModifierByName("modifier_bad_back")
 
 	if not modifier then

@@ -1,6 +1,6 @@
 -- Nudist:
--- -75% Mental Break chance if no clothing equipped
--- +25% Mental Break chance per clothing item equipped
+-- +12 Mood if no clothing equipped
+-- -4 Mood per clothing item equipped
 
 require("modifiers/traits/base_trait")
 require("rimworld/clothes")
@@ -8,6 +8,11 @@ require("rimworld/clothes")
 modifier_nudist = class(base_trait)
 
 function modifier_nudist:OnCreated()
+    self:SetHasCustomTransmitterData(true)
+    if IsClient() then return end
+
+    self.parent = self:GetParent()
+
     self.slots = {0, 1, 2, 3, 4, 5, 16}
 
     self:StartIntervalThink(1)
@@ -18,13 +23,19 @@ function modifier_nudist:IsDebuff()
 end
 
 function modifier_nudist:OnIntervalThink()
+    if not self.parent then return end
+
     self.bonus = 0
 
     for _, slot in pairs(self.slots) do
-        local item = self:GetParent():GetItemInSlot(slot)
+        local item = self.parent:GetItemInSlot(slot)
 
-        if item and Clothes:GetItemTypes(item:GetAbilityName())["clothes"] then
-            self.bonus = self.bonus + 4
+        if item then
+            local types = Clothes:GetItemTypes(item:GetAbilityName())
+
+            if types and types["clothes"] then
+                self.bonus = self.bonus + 4
+            end
         end
     end
 
@@ -32,9 +43,20 @@ function modifier_nudist:OnIntervalThink()
         self.bonus = -12
     end
 
-    self:SetStackCount(self.bonus)
+    self:SetStackCount(math.abs(self.bonus))
 end
 
 function modifier_nudist:GetMoodBonus()
-    return self.bonus or -12
+    return self:GetStackCount() or -12
+end
+
+function modifier_nudist:AddCustomTransmitterData( )
+	return
+	{
+		bonus = self.bonus,
+	}
+end
+
+function modifier_nudist:HandleCustomTransmitterData( data )
+	self.bonus = data.bonus
 end
