@@ -14,24 +14,25 @@ Incidents:
 	
 	Weight: 50
 	Hero Sickness:
-		All sicknesses increase Mental Break chance by 50%
+		All sicknesses reduce Mood by 8
+
 		Contageon:
 			Flu:
-				5% Transmissible
+				Slightly transmissible
 				-25% movement speed
 				-50 attack speed
 				-20% damage
 				120-240s duration
 		
 			Malaria:
-				20% Transmissible
+				Somewhat transmissible
 				-30% movement speed
 				-30 attack speed
 				-10% damage
 				90-120s duration
 		
 			Plague:
-				50% Transmissible
+				Very transmissible
 				-40% movement speed
 				-60 attack speed
 				-20% damage
@@ -49,13 +50,13 @@ Incidents:
 			300-600s duration
 		
 		Fibrous Mechanites:
-			Triple normal sickness mental break effect
+			Triple normal sickness Mood debuff
 			+25% Movement Speed
 			+10% Outgoing Damage
 			300-600s duration
 		
 		Sensory Mechanites:
-			Triple normal sickness mental break effect
+			Triple normal sickness Mood debuff
 			+75% Vision
 			300-600s duration
 
@@ -86,13 +87,13 @@ Incidents:
 	Weight: 8
 	Psychic Drone:
 		n/10 chance to be each gender, where n is the number of heroes of that gender
-		+400% mental break chance
+		-6/12/20/35 Mood
 		90-180s duration
 		
 	Weight: 5
 	Psychic Soothe:
 		n/10 chance to be each gender, where n is the number of heroes of that gender
-		0% mental break chance
+		+12 Mood
 		90-180s duration
 		
 	Weight: 5
@@ -167,42 +168,44 @@ Traits:
 	
 
 	Nudist:
-		-75% Mental Break chance if no clothing equipped
-		+25% Mental Break chance per clothing item equipped
+		+12 Mood if no clothing equipped
+		-4 Mood per clothing item equipped
 	
 
 	Too Smart:
 		+50% XP Gain
-		+100% Mental Break chance
+		+12 Mental Break Threshold
 		
 	Relaxed:
 		-25% XP Gain
-		-25% Mental Break chance
+		-8 Mental Break Threshold
 	
 
 	Ascetic:
-		-50/+0/+40/+80/+120% Mental Break chance per allied hero with lower networth (0/1/2/3/4)
+		+12 Mood if lowest networth ally
+		-5 Mood per higher networth ally
 	
 	Greedy:
-		-50/+0/+40/+80/+120% Mental Break chance per allied hero with higher networth (0/1/2/3/4)
+		+12 Mood if highest networth ally
+		-5 Mood per lower networth ally
 
 
 	Night Owl:
-		-50% Mental Break chance during night
-		+50% Mental Break chance during day
+		+12 Mood during night
+		-12 Mood during day
 		+600 Night Vision
 		
 		
 	Optimist:
-		-50% Mental Break chance
+		+8 Mood
 	
 	Pesimist:
-		+50% Mental Break chance
+		-8 Mood
 	
 
 	Neurotic:
 		+20% Outgoing Damage
-		+100% Mental Break chance
+		+12 Mental Break Threshold
 	
 	Tough:
 		-15% Incoming Damage
@@ -318,7 +321,7 @@ Body Parts:
 		Learning Assistant:
 			+20% Experience Gain
 		Joywire:
-			-75% Mental Break Chance
+			+30 Mood
 			-15% Vision
 			-15% Attack Speed
 			-15% Movement Speed

@@ -301,9 +301,7 @@ function CDOTA_BaseNPC_Hero:UpdateMood() -- nil
 	local modifiers = self:FindAllModifiers()
 
 	for _, modifier in pairs(modifiers) do
-		if modifier.GetMoodBonus then
-			mood_target = mood_target + modifier:GetMoodBonus()
-		end
+		mood_target = mood_target + modifier.GetMoodBonus and modifier:GetMoodBonus()
 	end
 
 	-- Slowly move mood towards target
@@ -325,32 +323,15 @@ end
 
 -- Get the hero's mental break threshold, this is used to determine what type of mental break the hero will have should one occur, as well as the likelihood of one occurring.
 function CDOTA_BaseNPC_Hero:GetMentalBreakThresholds() -- int[]: {minor, major, extreme}
-	local threshold_bonus = 0
+	local bonus = 0
 
 	local modifiers = self:FindAllModifiers()
 
 	for _, modifier in pairs(modifiers) do
-		if modifier.GetMentalBreakThresholdBonus then
-			threshold_bonus = threshold_bonus + modifier:GetMentalBreakThresholdBonus()
-		end
+		bonus = bonus + modifier.GetMentalBreakThresholdBonus and modifier:GetMentalBreakThresholdBonus()
 	end
 
-	return {35 + threshold_bonus, 20 + threshold_bonus, 5 + threshold_bonus}
-end
-
--- Get the hero's mental break chance offset
-function CDOTA_BaseNPC_Hero:GetMentalBreakChance() -- float: chance multiplier
-	local chance = 1 -- Default
-
-	local modifiers = self:FindAllModifiers()
-
-	for _, modifier in pairs(modifiers) do
-		if modifier.GetMentalBreakChanceBonus then
-			chance = chance * modifier:GetMentalBreakChanceBonus()
-		end
-	end
-
-	return chance
+	return {35 + bonus, 20 + bonus, 5 + bonus}
 end
 
 -- Get the hero's illness chance offset
@@ -360,9 +341,7 @@ function CDOTA_BaseNPC_Hero:GetIllnessChance() -- float: chance multiplier
 	local modifiers = self:FindAllModifiers()
 
 	for _, modifier in pairs(modifiers) do
-		if modifier.GetIllnessChanceBonus then
-			chance = chance * modifier:GetIllnessChanceBonus()
-		end
+		chance = chance * (1 + modifier.GetIllnessChanceBonus and modifier:GetIllnessChanceBonus() * 0.01)
 	end
 
 	return chance
@@ -375,9 +354,7 @@ function CDOTA_BaseNPC_Hero:GetIllnessDuration() -- float: duration multiplier
 	local modifiers = self:FindAllModifiers()
 
 	for _, modifier in pairs(modifiers) do
-		if modifier.GetIllnessDurationBonus then
-			duration = duration * modifier:GetIllnessDurationBonus()
-		end
+		duration = duration * (1 + modifier.GetIllnessDurationBonus and modifier:GetIllnessDurationBonus() * 0.01)
 	end
 
 	return duration
@@ -390,9 +367,7 @@ function CDOTA_BaseNPC_Hero:GetExperienceMultiplier() -- float: xp multiplier
 	local modifiers = self:FindAllModifiers()
 
 	for _, modifier in pairs(modifiers) do
-		if modifier.GetExperienceMultiplierBonus then
-			multiplier = multiplier * modifier:GetExperienceMultiplierBonus()
-		end
+		multiplier = multiplier * (1 + modifier.GetExperienceMultiplierBonus and modifier:GetExperienceMultiplierBonus() * 0.01)
 	end
 
 	return multiplier
