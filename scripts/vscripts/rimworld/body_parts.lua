@@ -1,8 +1,8 @@
 BodyParts = BodyParts or class({})
 
 function BodyParts:Init()
-	print("[Rimworld] BodyParts Loaded!")
-	
+    print("[Rimworld] BodyParts Loaded!")
+
     for slot, tbl in pairs(self.parts) do
         for _, part in pairs(tbl) do
             LinkLuaModifier("modifier_" .. part, "modifiers/body_parts/" .. slot, LUA_MODIFIER_MOTION_NONE)
@@ -11,11 +11,11 @@ function BodyParts:Init()
 
     local heroes = HeroList:GetAllHeroes()
 
-	for _, hero in pairs(heroes) do
-		if hero:IsRealHero() then
+    for _, hero in pairs(heroes) do
+        if hero:IsRealHero() then
             self:InitiateBodyParts(hero)
-		end
-	end
+        end
+    end
 end
 
 function BodyParts:InitiateBodyParts(hero)

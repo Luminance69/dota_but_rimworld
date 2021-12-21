@@ -6,7 +6,7 @@ if IsServer() then
     function modifier_courier_speed:CheckState()
         if BUTTINGS.COURIER_INVULNERABLE == 1 then
             return {[MODIFIER_STATE_INVULNERABLE ] = true}
-        else return {[MODIFIER_STATE_INVULNERABLE ] = false} end 
+        else return {[MODIFIER_STATE_INVULNERABLE ] = false} end
     end
 
     function modifier_courier_speed:DeclareFunctions() return { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE } end
