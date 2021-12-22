@@ -140,7 +140,6 @@ Clothes.items = {
         "item_hood_of_defiance",
         "item_eternal_shroud",
         "item_satanic",
-        "item_skadi",
         "item_possessed_mask",
         "item_cloak_of_flames",
         "item_psychic_headband",

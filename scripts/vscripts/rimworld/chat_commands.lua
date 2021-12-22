@@ -63,9 +63,11 @@ ChatCommands.bodypart = function(args, hero, ...)
     local slots = args[1]
     local part = args[2]
     
-    BodyParts:AddBodyPart(hero, part)
-
-    print("Added " .. part .. " to " .. hero:GetUnitName())
+    if BodyParts:AddBodyPart(hero, part) then
+        print("Added " .. part .. " to " .. hero:GetUnitName())
+    else
+        print("Failed to add part, hero does not have enough slots")
+    end
 end
 
 -- Usage:
