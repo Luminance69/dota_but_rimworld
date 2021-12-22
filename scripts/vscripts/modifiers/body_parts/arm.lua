@@ -52,11 +52,11 @@ modifier_arm_power_claws = class(base_body_part)
 
 function modifier_arm_power_claws:DeclareFunctions()
     return {
-        MODIFIER_PROPERTY_BONUSDAMAGEOUTGOING_PERCENTAGE, -- GetModifierBonusDamageOutgoing_Percentage
+        MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE, -- GetModifierDamageOutgoing_Percentage
     }
 end
 
-function modifier_arm_power_claws:GetModifierBonusDamageOutgoing_Percentage() return 400 end
+function modifier_arm_power_claws:GetModifierDamageOutgoing_Percentage() return 400 end
 function modifier_arm_power_claws:GetTexture() return "body_parts/power_claws" end
 
 function modifier_arm_power_claws:OnCreated()

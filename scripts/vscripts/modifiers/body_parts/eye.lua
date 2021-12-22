@@ -84,4 +84,6 @@ function modifier_eye_eye_of_apollo:GetModifierOverrideAbilitySpecial(keys)
     end
 end
 
-function modifier_eye_eye_of_apollo:GetModifierOverrideAbilitySpecialValue(keys) return 1.2 end
+function modifier_eye_eye_of_apollo:GetModifierOverrideAbilitySpecialValue(keys)
+    return keys.ability:GetLevelSpecialValueNoOverride(keys.ability_special_value, keys.ability_special_level) * 1.2
+end
