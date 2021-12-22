@@ -60,10 +60,12 @@ end
 -- -bodypart <string: part>
 -- Adds the given body part to your hero
 ChatCommands.bodypart = function(args, hero, ...)
-    local slots = args[1]
+    if IsClient() then return end
+
+    local slot = args[1]
     local part = args[2]
     
-    if BodyParts:AddBodyPart(hero, part) then
+    if BodyParts:AddBodyPart(hero, slot, part) then
         print("Added " .. part .. " to " .. hero:GetUnitName())
     else
         print("Failed to add part, hero does not have enough slots")

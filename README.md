@@ -317,7 +317,7 @@ Body Parts:
 			+4 Armor
 		Eye of Apollo:
 			+30% Vision
-			+30% stats from head items
+			+20% stats from head items
 	Heart:
 		Bionic:
 			+10 Strength
@@ -328,7 +328,7 @@ Body Parts:
 			+175 Health
 			+0.6% Max HP Regen
 		Healing Enhancer:
-			+50% Healing Amplification
+			+75% Healing Amplification
 	Brain:		
 		Learning Assistant:
 			+25% Experience Gain

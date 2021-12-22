@@ -28,16 +28,16 @@ function BodyParts:InitiateBodyParts(hero)
     }
 end
 
-function BodyParts:AddBodyPart(hero, part)
-    local slot = self:GetPartSlot(part)
-
-    if not slot or #hero.body_parts[slot] >= BodyParts.slots[slot] then
+function BodyParts:AddBodyPart(hero, slot, part)
+    if not hero.body_parts or #hero.body_parts[slot] >= BodyParts.slots[slot] then
         return false
     end
 
     table.insert(hero.body_parts[slot], part)
 
     hero:AddNewModifier(hero, nil, "modifier_" .. slot .. "_" .. part, nil)
+
+    return true
 end
 
 function BodyParts:GetPartSlot(part)

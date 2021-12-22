@@ -11,7 +11,7 @@ require("rimworld/clothes")
 			+4 Armor
 		Eye of Apollo:
 			+30% Vision
-			+30% stats from head items
+			+20% stats from head items
 ]]
 
 base_eye = class(base_body_part)
@@ -84,4 +84,4 @@ function modifier_eye_eye_of_apollo:GetModifierOverrideAbilitySpecial(keys)
     end
 end
 
-function modifier_eye_eye_of_apollo:GetModifierOverrideAbilitySpecialValue(keys) return 1.3 end
+function modifier_eye_eye_of_apollo:GetModifierOverrideAbilitySpecialValue(keys) return 1.2 end
