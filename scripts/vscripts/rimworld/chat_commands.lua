@@ -1,7 +1,7 @@
 ChatCommands = ChatCommands or class({})
 
 function ChatCommands:Init()
-    print("[Rimworld] ChatCommands Loaded")
+    print("[Rimworld] ChatCommands Loaded!")
 	ListenToGameEvent(
         "player_chat",
         function(event)

@@ -299,11 +299,11 @@ Body Parts:
 	Arm:
 		Bionic:
 			+10% Attack Speed
-			+10% Casting Point Reduction
+			+10% Cast Point Reduction
 			+3 Armor
 		Archotech:
 			+20% Attack Speed
-			+50% Casting Point Reduction
+			+50% Cast Point Reduction
 			+5 Armor
 		Power Claws:
 			+150% attack damage
@@ -337,4 +337,4 @@ Body Parts:
 			-15% Vision
 			-15% Attack Speed
 			-15% Movement Speed
-			-15% Casting Point Reduction
+			-15% Cast Point Reduction

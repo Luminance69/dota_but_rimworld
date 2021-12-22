@@ -1,5 +1,4 @@
 require("modifiers/body_parts/base_body_part")
-require("rimworld/clothes")
 
 --[[
     Heart:
