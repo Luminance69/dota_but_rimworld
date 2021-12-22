@@ -27,9 +27,11 @@ end
 
 
 function modifier_bloodlust:OnCreated(keys)
+    self:SetHasCustomTransmitterData(true)
     if not IsServer() then return end
 
     self.parent = self:GetParent()
+    self.mood = 0
     self.kill_mood = 0
     self.kill_duration = 120
     self.item_mood = 0
@@ -42,6 +44,8 @@ end
 function modifier_bloodlust:OnIntervalThink()
     self.hpsum = self:GetHPSum()
     self.item_mood = self.item_scaling[self:GetItemSum()] or 0
+    self.mood = self.kill_mood + self.item_mood
+    self:SetStackCount(self.mood)
 end
 
 -- Death in vision range Mood bonus
@@ -64,7 +68,7 @@ end
 -- Attributes
 
 function modifier_bloodlust:GetMoodBonus()
-    return self.kill_mood + self.item_mood
+    return self.mood
 end
 
 function modifier_bloodlust:GetModifierTurnRate_Percentage()
@@ -79,6 +83,21 @@ function modifier_bloodlust:GetModifierPreAttack_CriticalStrike(keys)
             return self.crit_bonus
         end
     end
+end
+
+--------------------------------------------------------------------------------
+-- Transmitter
+
+function modifier_bloodlust:AddCustomTransmitterData()
+    return {
+        kill_mood = self.kill_mood,
+        item_mood = self.item_mood,
+    }
+end
+
+function modifier_bloodlust:HandleCustomTransmitterData(data)
+    self.kill_mood = data.kill_mood
+    self.item_mood = data.item_mood
 end
 
 --------------------------------------------------------------------------------
