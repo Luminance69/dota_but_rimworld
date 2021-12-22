@@ -1,6 +1,6 @@
-game/*.bin
-game/*.cfg
-game/*.tmp
+*.bin
+*.cfg
+*.tmp
 
 *.vpcf_c
 *.vtex_c
