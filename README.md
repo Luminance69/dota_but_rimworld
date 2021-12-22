@@ -306,7 +306,7 @@ Body Parts:
 			+50% Casting Point Reduction
 			+5 Armor
 		Power Claws:
-			+400% attack damage
+			+150% attack damage
 			Unable to use items with handles / gloves
 	Eye:
 		Bionic:

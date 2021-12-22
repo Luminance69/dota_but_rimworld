@@ -12,7 +12,7 @@ require("rimworld/clothes")
 			+50% Casting Point Reduction
 			+5 Armor
 		Power Claws:
-			+400% attack damage
+			+150% attack damage
 			Unable to use items with handles / gloves
 ]]
 
@@ -56,7 +56,7 @@ function modifier_arm_power_claws:DeclareFunctions()
     }
 end
 
-function modifier_arm_power_claws:GetModifierDamageOutgoing_Percentage() return 400 end
+function modifier_arm_power_claws:GetModifierDamageOutgoing_Percentage() return 150 end
 function modifier_arm_power_claws:GetTexture() return "body_parts/power_claws" end
 
 function modifier_arm_power_claws:OnCreated()
