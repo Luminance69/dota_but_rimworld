@@ -47,7 +47,7 @@ function Moods:LinkModifiers(table)
     end
 
     LinkLuaModifier("modifier_insulted", "modifiers/mental_breaks/insulting_spree", LUA_MODIFIER_MOTION_NONE)
-    LinkLuaModifier("modifier_catharsis", "modifiers/mental_breaks/catharsis", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_catharsis", "modifiers/catharsis", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_mood", "modifiers/mood", LUA_MODIFIER_MOTION_NONE)
 end
 

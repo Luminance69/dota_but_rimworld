@@ -293,8 +293,8 @@ Body Parts:
 			+40% Movement Speed
 			+5 Armor
 		Stoneskin Gland:
-			+25 Armor
 			-40% Movement Speed
+			+25 Armor
 			Unable to hold any boots
 	Arm:
 		Bionic:

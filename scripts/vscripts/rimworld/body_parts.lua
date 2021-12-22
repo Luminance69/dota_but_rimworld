@@ -5,7 +5,7 @@ function BodyParts:Init()
 
     for slot, tbl in pairs(self.parts) do
         for _, part in pairs(tbl) do
-            LinkLuaModifier("modifier_" .. part, "modifiers/body_parts/" .. slot, LUA_MODIFIER_MOTION_NONE)
+            LinkLuaModifier("modifier_" .. slot .. "_" .. part, "modifiers/body_parts/" .. slot, LUA_MODIFIER_MOTION_NONE)
         end
     end
 
@@ -31,13 +31,13 @@ end
 function BodyParts:AddBodyPart(hero, part)
     local slot = self:GetPartSlot(part)
 
-    if #hero.body_parts[slot] >= BodyParts.slots[slot] then
+    if not slot or #hero.body_parts[slot] >= BodyParts.slots[slot] then
         return false
     end
 
     table.insert(hero.body_parts[slot], part)
 
-    hero:AddNewModifier(hero, nil, "modifier_" .. part, nil)
+    hero:AddNewModifier(hero, nil, "modifier_" .. slot .. "_" .. part, nil)
 end
 
 function BodyParts:GetPartSlot(part)

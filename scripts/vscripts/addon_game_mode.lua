@@ -63,5 +63,7 @@ ListenToGameEvent("game_rules_state_change", function()
         BodyParts:Init()
 		Moods:Init()
         Traits:Init()
+        
+        ChatCommands:Init()
     end)
 end, nil)
