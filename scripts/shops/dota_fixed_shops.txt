@@ -14,7 +14,15 @@
 		"item"		"item_tome_of_knowledge"
 		"item"		"item_dust"	
 		"item"		"item_bottle"
-		"item"		"item_aghanims_shard"
+
+		"item"		"item_body_part_leg_bionic"
+		"item"		"item_body_part_arm_bionic"
+		"item"		"item_body_part_eye_bionic"
+		"item"		"item_body_part_heart_bionic"
+		"item"		"item_body_part_leg_archotech"
+		"item"		"item_body_part_arm_archotech"
+		"item"		"item_body_part_eye_archotech"
+		"item"		"item_body_part_heart_archotech"
 	}
 
 	"attributes"
@@ -36,13 +44,13 @@
 		"item"		"item_ogre_axe"
 		"item"		"item_blade_of_alacrity"
 		"item"		"item_staff_of_wizardry"
-		"item"		"item_river_painter7"	
-		"item"		"item_river_painter6"	
-		"item"		"item_river_painter5"	
-		"item"		"item_river_painter4"	
-		"item"		"item_river_painter3"	
-		"item"		"item_river_painter2"	
-		"item"		"item_river_painter"	
+		
+		"item"		"item_body_part_leg_stoneskin_gland"
+		"item"		"item_body_part_arm_power_claws"
+		"item"		"item_body_part_eye_eye_of_apollo"
+		"item"		"item_body_part_heart_healing_enhancer"
+		"item"		"item_body_part_brain_learning_assistant"
+		"item"		"item_body_part_brain_joywire"
 	}
 
 	"weapons_armor"
@@ -79,7 +87,8 @@
 		"item"		"item_voodoo_mask"
 		"item"		"item_shadow_amulet"	
 		"item"		"item_ghost"
-		"item"		"item_blink"		
+		"item"		"item_blink"	
+		"item"		"item_aghanims_shard"	
 	}	
 	
 	// Level 1 - Green Recipes

@@ -47,7 +47,7 @@ end
 -- -timescale <float>
 -- Sets the server timescale to given value
 ChatCommands.timescale = function(args, ...)
-    local var = tonumber(arg.args[1])
+    local var = tonumber(args[1])
 
     if var < 0.1 then var = 0.1 end
 

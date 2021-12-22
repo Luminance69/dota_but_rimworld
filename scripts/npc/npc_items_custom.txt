@@ -80,4 +80,180 @@
 		"ItemInitialStockTime"			"0"
 		"ItemInitialStockTimeTurbo"		"0"
 	}
+
+	// idfk what the stuff above here does but i am definitely not gonna touch it.
+	// also aghs shard has 69 stock xddd
+
+	
+	// Body Parts
+	// These are body parts which can be bought in the shop.
+	// They start with 0 stock, and regain stock randomly throughout the game.
+
+	"item_body_part_leg_bionic"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"750"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"2"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/bionic_leg"
+	}
+
+	"item_body_part_leg_archotech"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"3300"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"1"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/archotech_leg"
+	}
+
+	"item_body_part_leg_stoneskin_gland"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"2000"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"1"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/stoneskin_gland"
+	}
+
+	"item_body_part_arm_bionic"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"1250"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"2"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/bionic_arm"
+	}
+
+	"item_body_part_arm_archotech"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"4269"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"1"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/archotech_arm"
+	}
+
+	"item_body_part_arm_power_claws"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"5200"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"1"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/power_claws"
+	}
+
+	"item_body_part_eye_bionic"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"850"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"2"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/bionic_eye"
+	}
+
+	"item_body_part_eye_archotech"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"3700"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"1"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/archotech_eye"
+	}
+
+	"item_body_part_eye_eye_of_apollo"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"4500"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"1"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/eye_of_apollo"
+	}
+
+	"item_body_part_heart_bionic"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"1600"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"2"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/bionic_heart"
+	}
+
+	"item_body_part_heart_archotech"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"3600"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"1"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/archotech_heart"
+	}
+
+	"item_body_part_heart_healing_enhancer"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"3200"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"1"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/healing_enhancer"
+	}
+
+	"item_body_part_brain_learning_assistant"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"900"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"1"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/learning_assistant"
+	}
+
+	"item_body_part_brain_joywire"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"ItemCost"						"69"
+		"ItemStockInitial"				"0"
+		"ItemStockMax"					"1"
+
+        "BaseClass"						"item_datadriven"
+        "AbilityTextureName"			"body_parts/joywire"
+	}
 }

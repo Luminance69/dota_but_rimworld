@@ -20,7 +20,7 @@ function Birthdays:Init()
 
     for _, hero in pairs(heroes) do
         if hero:IsRealHero() then
-            Timers:CreateTimer(RandomInt(90, 690), function()
+            Timers:CreateTimer(RandomInt(0, 595), function()
                 self:DoBirthday(hero)
 
                 return 600

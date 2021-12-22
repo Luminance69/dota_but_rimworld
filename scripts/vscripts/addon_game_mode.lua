@@ -54,6 +54,10 @@ function Spawn()
     FireGameEvent("created_game_mode_entity",{gameModeEntity = GameMode})
 end
 
+function Activate()
+    FireGameEvent("addon_game_mode_activate", nil)
+end
+
 ListenToGameEvent("game_rules_state_change", function()
     if (GameRules:State_Get() ~= DOTA_GAMERULES_STATE_PRE_GAME and not IsInToolsMode()) or (GameRules:State_Get() ~= DOTA_GAMERULES_STATE_GAME_IN_PROGRESS and IsInToolsMode()) then return end
 

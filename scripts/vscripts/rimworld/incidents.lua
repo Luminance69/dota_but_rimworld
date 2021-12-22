@@ -19,7 +19,7 @@ function Incidents:Init()
 
     self:LinkModifiers(Incidents.modifiers)
 
-    Timers:CreateTimer(IsInToolsMode() and 1 or 90, self.DoIncident)
+    Timers:CreateTimer(IsInToolsMode() and 2 or 30, self.DoIncident)
 end
 
 function Incidents:LinkModifiers(table)

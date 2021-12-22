@@ -339,7 +339,7 @@ function CDOTA_BaseNPC_Hero:GetIllnessChance() -- float: chance multiplier
     local modifiers = self:FindAllModifiers()
 
     for _, modifier in pairs(modifiers) do
-        chance = chance * (1 + modifier.GetIllnessChanceBonus and modifier:GetIllnessChanceBonus() * 0.01)
+        chance = chance * (1 + (modifier.GetIllnessChanceBonus and modifier:GetIllnessChanceBonus() or 0) * 0.01)
     end
 
     return chance
@@ -352,7 +352,7 @@ function CDOTA_BaseNPC_Hero:GetIllnessDuration() -- float: duration multiplier
     local modifiers = self:FindAllModifiers()
 
     for _, modifier in pairs(modifiers) do
-        duration = duration * (1 + modifier.GetIllnessDurationBonus and modifier:GetIllnessDurationBonus() * 0.01)
+        duration = duration * (1 + (modifier.GetIllnessDurationBonus and modifier:GetIllnessDurationBonus() or 0) * 0.01)
     end
 
     return duration
@@ -365,7 +365,7 @@ function CDOTA_BaseNPC_Hero:GetExperienceMultiplier() -- float: xp multiplier
     local modifiers = self:FindAllModifiers()
 
     for _, modifier in pairs(modifiers) do
-        multiplier = multiplier * (1 + modifier.GetExperienceMultiplierBonus and modifier:GetExperienceMultiplierBonus() * 0.01)
+        multiplier = multiplier * (1 + (modifier.GetExperienceMultiplierBonus and modifier:GetExperienceMultiplierBonus() or 0) * 0.01)
     end
 
     return multiplier

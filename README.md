@@ -278,12 +278,15 @@ Mental Breaks:
 			Your hero gives up and runs around randomly
 			60s duration
 
+(All implemented!)
 Body Parts:
 
 	Each hero has 8 body parts; 2 legs, 2 arms, 2 eyes, 1 heart, 1 brain.
-
-	Heroes can get part replacement through incidents.
 	You cannot for example, get 3 bionic legs, or both a learning assistance and joywire.
+
+	(implemented) 1. your hero can start with them, maybe like a 40% chance for a random one
+	(implementing) 2. you can buy them from the shop, which will gain random stock occasionally
+	(will do later) 3. you can get given them by incidents
 
 	Leg:
 		Bionic:
@@ -328,7 +331,7 @@ Body Parts:
 			+175 Health
 			+0.6% Max HP Regen
 		Healing Enhancer:
-			+75% Healing Amplification
+			+75% Healing/Regen Amplification
 	Brain:		
 		Learning Assistant:
 			+25% Experience Gain

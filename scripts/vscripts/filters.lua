@@ -77,17 +77,49 @@ function Filters:HealingFilter(event)
     return true
 end
 
+require("rimworld/body_parts")
+
 function Filters:ItemAddedToInventoryFilter(event)
     -- PrintTable(event)
     local inventory = event.inventory_parent_entindex_const and EntIndexToHScript(event.inventory_parent_entindex_const)
     local item = event.item_entindex_const and EntIndexToHScript(event.item_entindex_const)
-    local itemParent = event.item_parent_entindex_const and EntIndexToHScript(event.item_parent_entindex_const)
+    local hero = event.item_parent_entindex_const and EntIndexToHScript(event.item_parent_entindex_const)
     local sugg = event.suggested_slot
 
-    -- --  example
-    -- --  dunno
+    -- This is super dumb, but hey it works so like fuck you :D
 
-    return true
+    if not item or not hero then return true end
+
+    local item_name = item:GetAbilityName()
+
+    if not item_name:match("item_body_part") then return true end
+
+    slot_part = string.sub(item_name, 16, -1)
+
+    local words = {}
+
+    for token in string.gmatch(slot_part, "[^_]+") do
+        table.insert(words, token)
+    end
+
+    slot = table.remove(words, 1)
+
+    part = ""
+
+    for k, v in pairs(words) do
+        part = part .. v .. "_"
+    end
+
+    part = string.sub(part, 1, -2)
+
+    if BodyParts:AddBodyPart(hero, slot, part) then
+        GameRules:IncreaseItemStock(hero:GetTeamNumber(), item:GetAbilityName(), -1, -1)
+        UTIL_Remove(item)
+
+        return true
+    else
+        return false
+    end
 end
 
 function Filters:ModifierGainedFilter(event)
