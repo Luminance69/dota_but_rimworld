@@ -72,7 +72,6 @@ Traits.traits = {
         "tough",
         "wimp",
     },
-    --[[
     {
         "jogger",
         "slowpoke",
@@ -80,6 +79,7 @@ Traits.traits = {
     {
         "nimble",
     },
+    --[[
     {
         "bloodlust",
     },
