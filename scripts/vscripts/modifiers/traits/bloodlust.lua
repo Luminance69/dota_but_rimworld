@@ -5,7 +5,7 @@
     -- Unique count for deaths and kills
 -- hpsum = sum of lost hp within vision radius
     -- (hpsum/50)x turn rate
-    -- (hpsum/100)% chance for 1.2x crit
+    -- hpsum/(hpsum+7500) chance for 1.2x crit
 
 require("modifiers/traits/base_trait")
 require("rimworld/clothes")
