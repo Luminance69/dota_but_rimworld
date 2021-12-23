@@ -1,7 +1,8 @@
 -- Bloodlust:
     -- +[3,5,7,8,9,10,11] Mood for n "bloody" items equipped
-    -- +8 Mood for 120s after watching a hero die
-    -- +13 Mood for 120s after killing an enemy hero
+    -- +[3/5/7/8/8/...] Mood for 120s after watching a hero die
+    -- +[3/5/7/8/8/...] extra Mood if the parent made the kill
+    -- Unique count for deaths and kills
 -- hpsum = sum of lost hp within vision radius
     -- (hpsum/50)x turn rate
     -- (hpsum/100)% chance for 1.2x crit
@@ -32,8 +33,13 @@ function modifier_bloodlust:OnCreated(keys)
 
     self.parent = self:GetParent()
     self.mood = 0
+    self.deaths = 0
+    self.death_mood = 0
+    self.death_duration = 120
+    self.death_scaling = {3,5,7,8}
+    self.kills = 0
     self.kill_mood = 0
-    self.kill_duration = 120
+    self.kill_scaling = {3,5,7,8}
     self.item_mood = 0
     self.item_scaling = {3,5,7,8,9,10,11}
     self.crit_bonus = 120
@@ -44,7 +50,7 @@ end
 function modifier_bloodlust:OnIntervalThink()
     self.hpsum = self:GetHPSum()
     self.item_mood = self.item_scaling[self:GetItemSum()] or 0
-    self.mood = self.kill_mood + self.item_mood
+    self.mood = self.death_mood + self.kill_mood + self.item_mood
     self:SetStackCount(self.mood)
 end
 
@@ -55,12 +61,21 @@ function modifier_bloodlust:OnDeath(keys)
         or CalcDistanceBetweenEntityOBB(self.parent, keys.unit) > self.parent:GetCurrentVisionRange()
     then return end
 
-    local bonus = 8
-    if keys.attacker == self.parent then bonus = 13 end
-    self.kill_mood = self.kill_mood + bonus
+    self.deaths = self.deaths + 1
+    local death_bonus = self.death_scaling[self.deaths]
+                     or self.death_scaling[#self.death_scaling]
+    self.death_mood = self.death_mood + death_bonus
 
-    Timers:CreateTimer(self.kill_duration, function()
-        self.kill_mood = self.kill_mood - bonus
+    if keys.attacker == self.parent then
+        self.kills = self.kills + 1
+        local kill_bonus = self.kill_scaling[self.kills]
+                        or self.kill_scaling[#self.kill_scaling]
+        self.kill_mood = self.kill_mood + kill_bonus
+    end
+
+    Timers:CreateTimer(self.death_duration, function()
+        self.death_mood = self.death_mood - death_bonus
+        self.kill_mood = self.kill_mood - (kill_bonus or 0)
     end)
 end
 
@@ -90,12 +105,14 @@ end
 
 function modifier_bloodlust:AddCustomTransmitterData()
     return {
+        death_mood = self.death_mood,
         kill_mood = self.kill_mood,
         item_mood = self.item_mood,
     }
 end
 
 function modifier_bloodlust:HandleCustomTransmitterData(data)
+    self.death_mood = data.death_mood
     self.kill_mood = data.kill_mood
     self.item_mood = data.item_mood
 end
