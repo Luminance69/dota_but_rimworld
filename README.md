@@ -226,7 +226,14 @@ Traits:
 		+40 Attack Speed
 	
 	Bloodlust:
-		Basically atrophy aura
+    		+[2/4/6/8/11/14/18] Mood for n "bloody" items equipped
+    		+[3/5/7/8/8/...] Mood for 120s after watching a hero die
+    		+[3/5/7/8/8/...] extra Mood if the parent made the kill
+    	-- Unique count for deaths and kills
+	-- hpsum = sum of lost hp within vision radius
+    		(hpsum/50)x turn rate
+    		hpsum/(hpsum+7500) chance for 1.2x crit
+
 	
 	Super-Immune:
 		-50% Sickness Duration
