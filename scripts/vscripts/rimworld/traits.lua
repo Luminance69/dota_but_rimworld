@@ -83,9 +83,9 @@ Traits.traits = {
     {
         "bloodlust",
     },
+    ]]
     {
         "super_immune",
         "sickly",
     },
-    ]]
 }
