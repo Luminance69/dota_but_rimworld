@@ -200,4 +200,22 @@ Clothes.items = {
         "item_force_boots",
         "item_pirate_hat",
     },
+    -- Items considered "bloody" for the bloodlust trait
+    ["bloody"] = {
+        "item_aegis",
+        "item_armlet",
+        "item_basher",
+        "item_bloodstone",
+        "item_bloodthorn",
+        "item_dragon_scale",
+        "item_heart",
+        "item_rod_of_atos",
+        "item_satanic",
+        "item_sheepstick",
+        "item_soul_ring",
+        "item_titan_sliver",
+        "item_unstable_wand",
+        "item_vanguard",
+        "item_vladmir",
+    }
 }
