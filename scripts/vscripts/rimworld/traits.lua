@@ -60,7 +60,6 @@ Traits.traits = {
         "ascetic",
         "greedy",
     },
-    --[[
     {
         "night_owl",
     },
@@ -73,6 +72,7 @@ Traits.traits = {
         "tough",
         "wimp",
     },
+    --[[
     {
         "jogger",
         "slowpoke",
