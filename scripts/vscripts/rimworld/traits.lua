@@ -19,7 +19,7 @@ function Traits:Init()
 end
 
 function Traits:AddTraits(hero)
-    local traits = self:GetRandomTraits(RandomInt(2, 2)) -- TODO: add more so it doesnt break when set to 2, 3
+    local traits = self:GetRandomTraits(RandomInt(2, 3))
 
     print("Adding traits to " .. hero:GetUnitName() .. ":")
 
@@ -56,11 +56,11 @@ Traits.traits = {
         "too_smart",
         "relaxed",
     },
-    --[[
     {
         "ascetic",
         "greedy",
     },
+    --[[
     {
         "night_owl",
     },

@@ -238,6 +238,7 @@ Mental Breaks:
 
 	Happens based on hero's mood
 	
+	(All implemented!)
 	Minor:
 		Sad Wander:
 			Your hero goes on a sad wander randomly
@@ -285,7 +286,7 @@ Body Parts:
 	You cannot for example, get 3 bionic legs, or both a learning assistance and joywire.
 
 	(implemented) 1. your hero can start with them, maybe like a 40% chance for a random one
-	(implementing) 2. you can buy them from the shop, which will gain random stock occasionally
+	(implemented) 2. you can buy them from the shop, which will gain random stock occasionally
 	(will do later) 3. you can get given them by incidents
 
 	Leg:
