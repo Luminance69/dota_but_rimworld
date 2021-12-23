@@ -94,7 +94,7 @@ end
 
 function modifier_bloodlust:GetModifierPreAttack_CriticalStrike(keys)
     if IsServer() and self.hpsum then
-        if math.random() < self.hpsum/(self.hpsum + 7500) then
+        if RandomFloat(0, 1) < self.hpsum/(self.hpsum + 7500) then
             return self.crit_bonus
         end
     end
