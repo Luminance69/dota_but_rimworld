@@ -47,7 +47,7 @@ modifier_insulted = class(base_mental_break)
 function modifier_insulted:GetTexture() return "mental_breaks/insulted" end
 
 function modifier_insulted:GetMoodBonus()
-    return - (5 + self:GetStackCount() * 2)
+    return - (2 + self:GetStackCount() * 2)
 end
 
 function modifier_sad_wander:DeclareFunctions()
@@ -57,5 +57,5 @@ function modifier_sad_wander:DeclareFunctions()
 end
 
 function modifier_insulted:OnTooltip()
-    return - (2 + self:GetStackCount() * 2)
+    return 2 + self:GetStackCount() * 2
 end

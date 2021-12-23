@@ -254,8 +254,8 @@ Mental Breaks:
 
 	Major:
 		Sadistic Rage:
-			Your hero will target a nearby enemy basic unit and kill it (basically troll ulti)
-			30s duration (or when unit dies)
+			Your hero will kill the nearest enemy units (basically troll ulti)
+			30s duration
 		
 		Slaughterer:
 			Your hero will kill the nearest friendly basic units (basically ww ulti)
