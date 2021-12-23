@@ -323,10 +323,12 @@ function CDOTA_BaseNPC_Hero:GetMentalBreakThresholds() -- int[]: {minor, major, 
         bonus = bonus + (modifier.GetMentalBreakThresholdBonus and modifier:GetMentalBreakThresholdBonus() or 0)
     end
 
+    local minor = 35 + bonus
+
     return {
-        35 + bonus, 
-        20 + bonus, 
-        5 + bonus
+        minor, 
+        math.floor(minor * 4 / 7), 
+        math.floor(minor / 7),
     }
 end
 
