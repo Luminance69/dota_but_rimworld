@@ -147,7 +147,7 @@ Birthdays:
 
 	Weight: 5
 	Cataract:
-		-25% vision
+		-25% vision (Multiplicative)
 
 	Weight: 5
 	Gift:
@@ -160,8 +160,10 @@ Birthdays:
 
 	Weight: 1
 	Heart Attack:
-		Take 15% max HP DPS for 20 seconds
+		Take 15% max HP DPS for 10-20 seconds, after which you die
+		Purged with healing salve
 
+(All implemented!)
 Traits:
 
 	2-3 Traits are randomly assigned to each hero at the start of the game.

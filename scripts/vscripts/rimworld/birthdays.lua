@@ -1,10 +1,10 @@
 Birthdays = Birthdays or class({})
 
 Birthdays.incidents = {
-    ["bad_back"] = 5222,
+    ["bad_back"] = 5,
     ["dementia"] = 5,
     ["cataract"] = 5,
-    ["heart_attack"] = 1,
+    ["heart_attack"] = 111111,
     ["gift"] = 5,
     ["wisdom"] = 5,
 }
@@ -20,7 +20,7 @@ function Birthdays:Init()
 
     for _, hero in pairs(heroes) do
         if hero:IsRealHero() then
-            Timers:CreateTimer(RandomInt(0, 595), function()
+            Timers:CreateTimer(RandomInt(0, 1), function()
                 self:DoBirthday(hero)
 
                 return 600

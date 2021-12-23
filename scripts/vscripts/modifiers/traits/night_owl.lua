@@ -9,7 +9,7 @@ require("modifiers/traits/base_trait")
 
 modifier_night_owl = class(base_trait)
 
-function modifier_night_owl:IsDebuff() return false end
+function modifier_night_owl:IsDebuff() return self.bonus and self.bonus < 0 end
 
 function modifier_night_owl:DeclareFunctions()
     return {
@@ -19,11 +19,11 @@ function modifier_night_owl:DeclareFunctions()
 end
 
 function modifier_night_owl:GetMoodBonus()
-    return GameRules:IsDaytime() and -12 or 12
+    return self.bonus
 end
 
 function modifier_night_owl:OnTooltip()
-    return GameRules:IsDaytime() and -12 or 12
+    return self.bonus
 end
 
 function modifier_night_owl:GetBonusNightVision()
@@ -31,9 +31,26 @@ function modifier_night_owl:GetBonusNightVision()
 end
 
 function modifier_night_owl:OnCreated()
+    self:SetHasCustomTransmitterData(true)
+
+    self:SetStackCount(12)
+
+    if IsClient() then return end
+    
     self:StartIntervalThink(1)
 end
 
 function modifier_night_owl:OnIntervalThink()
-    self:SetStackCount(GameRules:IsDaytime() and -12 or 12)
+    self.bonus = GameRules:IsDaytime() and -12 or 12
+    self:SendBuffRefreshToClients()
+end
+
+function modifier_night_owl:AddCustomTransmitterData()
+    return {
+        bonus = self.bonus,
+    }
+end
+
+function modifier_night_owl:HandleCustomTransmitterData(data)
+    self.bonus = data.bonus
 end
