@@ -61,6 +61,7 @@ function modifier_bloodlust:OnDeath(keys)
         or not keys.unit:IsRealHero()
         or keys.unit:IsTempestDouble()
         or keys.unit:WillReincarnate()
+        or not self.parent:CanEntityBeSeenByMyTeam(keys.unit)
         or CalcDistanceBetweenEntityOBB(self.parent, keys.unit) > self.parent:GetCurrentVisionRange()
     then return end
 
