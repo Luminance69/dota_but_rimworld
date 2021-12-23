@@ -58,6 +58,9 @@ end
 function modifier_bloodlust:OnDeath(keys)
     if
         not IsServer()
+        or not keys.unit:IsRealHero()
+        or keys.unit:IsTempestDouble()
+        or keys.unit:WillReincarnate()
         or CalcDistanceBetweenEntityOBB(self.parent, keys.unit) > self.parent:GetCurrentVisionRange()
     then return end
 
