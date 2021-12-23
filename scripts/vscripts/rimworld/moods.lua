@@ -2,8 +2,8 @@ Moods = Moods or class({})
 
 Moods.mental_breaks = {
     ["minor"] = {
-        "sad_wander",
-        --"hide_under_tower",
+        --"sad_wander",
+        "hide_under_tower",
         --"insulting_spree",
     },
     --[[
@@ -49,6 +49,9 @@ function Moods:LinkModifiers(table)
     LinkLuaModifier("modifier_insulted", "modifiers/mental_breaks/insulting_spree", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_catharsis", "modifiers/catharsis", LUA_MODIFIER_MOTION_NONE)
     LinkLuaModifier("modifier_mood", "modifiers/mood", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_break_risk_minor", "modifiers/mood", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_break_risk_major", "modifiers/mood", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_break_risk_extreme", "modifiers/mood", LUA_MODIFIER_MOTION_NONE)
 end
 
 function Moods:DoMoodUpdate(hero)
@@ -56,7 +59,7 @@ function Moods:DoMoodUpdate(hero)
 
     if not hero:HasModifier("modifier_catharsis") then
         local mood = hero:GetMood()
-        local thresholds = Moods:Clamp(hero:GetMentalBreakThresholds())
+        local thresholds = hero:GetMentalBreakThresholds()
 
         local mental_break
 
@@ -83,16 +86,4 @@ function Moods:DoMoodUpdate(hero)
     end
 
     return 1
-end
-
-function Moods:Clamp(table)
-    for k, v in pairs(table) do
-        if v < 0 then 
-            table[k] = 0
-        elseif v > 100 then 
-            table[k] = 100
-        end
-    end
-    
-    return table
 end

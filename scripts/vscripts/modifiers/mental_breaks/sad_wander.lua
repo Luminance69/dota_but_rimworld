@@ -1,7 +1,9 @@
--- Sad Wander:
--- Your hero goes on a sad wander
--- 10s duration
--- -50% movement speed
+--[[
+    Sad Wander:
+        Your hero goes on a sad wander
+        10s duration
+        -50% movement speed
+]]
 
 require("modifiers/mental_breaks/base_mental_break")
 
@@ -27,11 +29,17 @@ function modifier_sad_wander:DeclareFunctions()
     }
 end
 
+function modifier_sad_wander:OnRemoved()
+    if IsClient() then return end
+    
+    self:GetParent():Stop()
+end
+
 function modifier_sad_wander:GetModifierMoveSpeedBonus_Percentage()
     return -50
 end
 
-function modifier_sad_wander:ModifierState()
+function modifier_sad_wander:CheckState()
     return {
         [MODIFIER_STATE_COMMAND_RESTRICTED] = true,
     }

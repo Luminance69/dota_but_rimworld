@@ -1,4 +1,4 @@
--- This modifier acts purely as a display for the player to tell them what their mood is. Panorama is hard ok :/
+-- These modifiers act purely as a display for the player to tell them what their mood & break risk is. Panorama is hard ok :/
 
 modifier_mood = modifier_mood or class({})
 
@@ -6,6 +6,7 @@ function modifier_mood:AllowIllusionDuplicate() return false end
 function modifier_mood:HeroEffectPriority() return MODIFIER_PRIORITY_SUPER_ULTRA end
 
 function modifier_mood:IsHidden() return false end
+function modifier_mood:IsDebuff() return self.below_threshold == 1 or false end -- For some reason transmitters just change the type to number
 function modifier_mood:IsPermanent() return true end
 function modifier_mood:IsPurgable() return false end
 
@@ -15,13 +16,46 @@ function modifier_mood:OnCreated()
     self:SetHasCustomTransmitterData(true)
     if IsClient() then return end
 
+    self.risk_names = {
+        "modifier_break_risk_minor",
+        "modifier_break_risk_major",
+        "modifier_break_risk_extreme",
+    }
+
     self:StartIntervalThink(1)
 end
 
 function modifier_mood:OnIntervalThink()
-    self.mood = math.floor(self:GetParent():GetMood() + 0.5)
-    self.mood_target = math.floor(self:GetParent():GetMoodTarget() + 0.5)
+    local parent = self:GetParent()
+
+    self.mood = math.floor(parent:GetMood() + 0.5)
+    self.mood_target = math.floor(parent:GetMoodTarget() + 0.5)
+
     self:SetStackCount(self.mood)
+
+    local thresholds = parent:GetMentalBreakThresholds()
+
+    if self.mood < thresholds[1] then
+        self.below_threshold = true
+
+        for i = 3, 1, -1 do
+            if self.mood < thresholds[i] and not parent:HasModifier(self.risk_names[i]) then
+                if i ~= 1 then parent:RemoveModifierByName(self.risk_names[1]) end
+                if i ~= 2 then parent:RemoveModifierByName(self.risk_names[2]) end
+                if i ~= 3 then parent:RemoveModifierByName(self.risk_names[3]) end
+
+                parent:AddNewModifier(parent, nil, self.risk_names[i], nil)
+
+                break
+            end
+        end
+    else
+        parent:RemoveModifierByName(self.risk_names[1])
+        parent:RemoveModifierByName(self.risk_names[2])
+        parent:RemoveModifierByName(self.risk_names[3])
+
+        self.below_threshold = false
+    end
 end
 
 function modifier_mood:DeclareFunctions()
@@ -44,10 +78,106 @@ function modifier_mood:AddCustomTransmitterData( )
     {
         mood = self.mood,
         mood_target = self.mood_target,
+        below_threshold = self.below_threshold,
     }
 end
 
 function modifier_mood:HandleCustomTransmitterData( data )
     self.mood = data.mood
     self.mood_target = data.mood_target
+    self.below_threshold = data.below_threshold
+end
+
+
+
+modifier_break_risk = modifier_break_risk or class({})
+
+function modifier_break_risk:AllowIllusionDuplicate() return false end
+function modifier_break_risk:HeroEffectPriority() return MODIFIER_PRIORITY_SUPER_ULTRA end
+
+function modifier_break_risk:IsHidden() return false end
+function modifier_break_risk:IsDebuff() return true end
+function modifier_break_risk:IsPermanent() return true end
+function modifier_break_risk:IsPurgable() return false end
+
+function modifier_break_risk:GetTexture() return "mental_breaks/mood" end
+
+function modifier_break_risk:OnCreated()
+    self:SetHasCustomTransmitterData(true)
+    if IsClient() then return end
+
+    self.thresholds = self:GetParent():GetMentalBreakThresholds()
+
+    self:StartIntervalThink(1)
+end
+
+function modifier_break_risk:OnIntervalThink()
+    self.thresholds = self:GetParent():GetMentalBreakThresholds()
+end
+
+function modifier_break_risk:AddCustomTransmitterData( )
+    return
+    {
+        threshold1 = self.thresholds and self.thresholds[1],
+        threshold2 = self.thresholds and self.thresholds[2],
+        threshold3 = self.thresholds and self.thresholds[3],
+    }
+end
+
+function modifier_break_risk:HandleCustomTransmitterData( data )
+    self.threshold1 = data.threshold1
+    self.threshold2 = data.threshold2
+    self.threshold3 = data.threshold3
+end
+
+
+
+modifier_break_risk_minor = class(modifier_break_risk)
+
+function modifier_break_risk_minor:DeclareFunctions()
+    return {
+        MODIFIER_PROPERTY_TOOLTIP,
+        MODIFIER_PROPERTY_TOOLTIP2,
+    }
+end
+
+function modifier_break_risk_minor:OnTooltip()
+    return self.threshold1
+end
+
+function modifier_break_risk_minor:OnTooltip2()
+    return self.threshold2
+end
+
+
+
+modifier_break_risk_major = class(modifier_break_risk)
+
+function modifier_break_risk_major:DeclareFunctions()
+    return {
+        MODIFIER_PROPERTY_TOOLTIP,
+        MODIFIER_PROPERTY_TOOLTIP2,
+    }
+end
+
+function modifier_break_risk_major:OnTooltip()
+    return self.threshold2
+end
+
+function modifier_break_risk_major:OnTooltip2()
+    return self.threshold3
+end
+
+
+
+modifier_break_risk_extreme = class(modifier_break_risk)
+
+function modifier_break_risk_extreme:DeclareFunctions()
+    return {
+        MODIFIER_PROPERTY_TOOLTIP,
+    }
+end
+
+function modifier_break_risk_extreme:OnTooltip()
+    return self.threshold3
 end

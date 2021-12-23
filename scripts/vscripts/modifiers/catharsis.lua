@@ -20,5 +20,5 @@ function modifier_catharsis:OnTooltip()
 end
 
 function modifier_catharsis:GetMoodBonus()
-    return 40
+    return -40
 end

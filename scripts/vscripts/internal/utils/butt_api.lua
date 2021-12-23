@@ -299,12 +299,10 @@ function CDOTA_BaseNPC_Hero:UpdateMood() -- nil
     local mood_target = self:GetMoodTarget()
 
     -- Slowly move mood towards target
-    if math.abs(mood_target - self.mood) < 0.1 then
+    if math.abs(mood_target - self.mood) < 0.2 then
         self.mood = mood_target
-    elseif mood_target < self.mood then
-        self.mood = self.mood - 0.1
     else
-        self.mood = self.mood + 0.1
+        self.mood = self.mood + 0.05 * (mood_target - self.mood)
     end
 
     -- Clamp to between 0 and 100
@@ -379,12 +377,19 @@ function CDOTA_BaseNPC_Hero:GetMoodTarget() -- float: mood_target
     for _, modifier in pairs(modifiers) do
         mood_target = mood_target + (modifier.GetMoodBonus and modifier:GetMoodBonus() or 0)
     end
+    
+    -- Clamp to between 0 and 100
+    if mood_target < 1 then
+        mood_target = 1
+    elseif mood_target > 100 then
+        mood_target = 100
+    end
 
     return mood_target
 end
 
 function CDOTA_BaseNPC_Hero:GetMood() -- float: mood
-    return self.mood or 42
+    return math.floor((self.mood or 42) + 0.5)
 end
 
 ------------

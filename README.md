@@ -275,8 +275,8 @@ Mental Breaks:
 			60s duration
 
 		Give Up:
-			Your hero gives up and runs around randomly
-			60s duration
+			Your hero gives up and walks towards the enemies base
+			30s duration
 
 (All implemented!)
 Body Parts:

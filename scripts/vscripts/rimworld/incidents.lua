@@ -46,7 +46,7 @@ function Incidents:DoIncident()
     return 1
 end
 
-Incidents.creep_disease = function(args)
+Incidents.creep_disease = function()
     print("creep disease")
 end
 
