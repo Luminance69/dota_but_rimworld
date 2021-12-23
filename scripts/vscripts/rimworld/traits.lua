@@ -79,11 +79,9 @@ Traits.traits = {
     {
         "nimble",
     },
-    --[[
     {
         "bloodlust",
     },
-    ]]
     {
         "super_immune",
         "sickly",
