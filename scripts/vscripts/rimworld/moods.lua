@@ -2,8 +2,8 @@ Moods = Moods or class({})
 
 Moods.mental_breaks = {
     ["minor"] = {
-        --"sad_wander",
-        --"hide_under_tower",
+        "sad_wander",
+        "hide_under_tower",
         "insulting_spree",
     },
     --[[
@@ -72,7 +72,7 @@ function Moods:DoMoodUpdate(hero)
                 mental_break = Moods.mental_breaks["major"][RandomInt(1, #Moods.mental_breaks["major"])]
             end
         elseif mood < thresholds[1] then
-            if RandomInt(1, 1) == 1 then
+            if RandomInt(1, 200) == 1 then
                 mental_break = Moods.mental_breaks["minor"][RandomInt(1, #Moods.mental_breaks["minor"])]
             end
         end
