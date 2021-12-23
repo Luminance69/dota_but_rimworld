@@ -22,6 +22,8 @@ function modifier_bloodlust:DeclareFunctions()
         MODIFIER_EVENT_ON_DEATH,
         MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
         MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
+        MODIFIER_PROPERTY_TOOLTIP,
+        MODIFIER_PROPERTY_TOOLTIP2,
     }
     return funcs
 end
@@ -49,6 +51,8 @@ end
 
 function modifier_bloodlust:OnIntervalThink()
     self.hpsum = self:GetHPSum()
+    self.crit_chance = self.hpsum / (self.hpsum+7500)
+    self.turn_rate = self.hpsum / 50
     self.item_mood = self.item_scaling[self:GetItemSum()] or 0
     self.mood = self.death_mood + self.kill_mood + self.item_mood
     self:SetStackCount(self.mood)
@@ -92,13 +96,13 @@ end
 
 function modifier_bloodlust:GetModifierTurnRate_Percentage()
     if self.hpsum then
-        return self.hpsum / 50
+        return self.turn_rate
     end
 end
 
 function modifier_bloodlust:GetModifierPreAttack_CriticalStrike(keys)
     if IsServer() and self.hpsum then
-        if RandomFloat(0, 1) < self.hpsum/(self.hpsum + 7500) then
+        if RandomFloat(0, 1) < self.crit_chance then
             return self.crit_bonus
         end
     end
@@ -107,18 +111,24 @@ end
 --------------------------------------------------------------------------------
 -- Transmitter
 
+function modifier_bloodlust:OnTooltip()
+    return self.turn_rate
+end
+
+function modifier_bloodlust:OnTooltip2()
+    return self.crit_chance
+end
+
 function modifier_bloodlust:AddCustomTransmitterData()
     return {
-        death_mood = self.death_mood,
-        kill_mood = self.kill_mood,
-        item_mood = self.item_mood,
+        turn_rate = self.turn_rate,
+        crit_chance = self.crit_chance,
     }
 end
 
 function modifier_bloodlust:HandleCustomTransmitterData(data)
-    self.death_mood = data.death_mood
-    self.kill_mood = data.kill_mood
-    self.item_mood = data.item_mood
+    self.turn_rate = data.turn_rate
+    self.crit_chance = data.crit_chance
 end
 
 --------------------------------------------------------------------------------
