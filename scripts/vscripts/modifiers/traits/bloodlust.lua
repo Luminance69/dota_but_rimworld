@@ -1,5 +1,5 @@
 -- Bloodlust:
-    -- +[3,5,7,8,9,10,11] Mood for n "bloody" items equipped
+    -- +[2/4/6/8/11/14/18] Mood for n "bloody" items equipped
     -- +[3/5/7/8/8/...] Mood for 120s after watching a hero die
     -- +[3/5/7/8/8/...] extra Mood if the parent made the kill
     -- Unique count for deaths and kills
@@ -41,7 +41,7 @@ function modifier_bloodlust:OnCreated(keys)
     self.kill_mood = 0
     self.kill_scaling = {3,5,7,8}
     self.item_mood = 0
-    self.item_scaling = {3,5,7,8,9,10,11}
+    self.item_scaling = {2,4,6,8,11,14,18}
     self.crit_bonus = 120
 
     self:StartIntervalThink(1)
