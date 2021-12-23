@@ -161,14 +161,8 @@ function modifier_bloodlust:GetItemSum()
 
     for _, slot in pairs({0,1,2,3,4,5,16}) do
         item = self.parent:GetItemInSlot(slot)
-
-        if item then
-            local types = Clothes:GetItemTypes(item:GetAbilityName())
-
-            if types and types["bloody"] then
-                sum = sum + 1
-            end
-        end
+        sum = sum + (Clothes:HasType(item, "bloody") and 1 or 0)
     end
+
     return sum
 end

@@ -30,12 +30,8 @@ function modifier_nudist:OnIntervalThink()
     for _, slot in pairs(self.slots) do
         local item = self.parent:GetItemInSlot(slot)
 
-        if item then
-            local types = Clothes:GetItemTypes(item:GetAbilityName())
-
-            if types and types["clothes"] then
-                self.bonus = self.bonus - 4
-            end
+        if item and Clothes:HasType(item, "clothes") then
+            self.bonus = self.bonus - 4
         end
     end
 

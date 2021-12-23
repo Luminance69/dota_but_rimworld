@@ -68,10 +68,8 @@ function modifier_eye_eye_of_apollo:GetModifierOverrideAbilitySpecial(keys)
 
     local item = keys.ability
     local special_value = keys.ability_special_value
-    
-    local types = Clothes:GetItemTypes(item:GetAbilityName())
 
-    if types and types["head"] then
+    if Clothes:HasType(item, "head") then
         local item_name = item:GetAbilityName()
 
         if exclusions[item_name] and exclusions[item_name][special_value] then

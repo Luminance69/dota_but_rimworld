@@ -60,15 +60,11 @@ function modifier_leg_stoneskin_gland:OnIntervalThink()
     for _, slot in pairs(self.slots) do
         local item = self.parent:GetItemInSlot(slot)
 
-        if item and item:IsActivated() then
-            local types = Clothes:GetItemTypes(item:GetAbilityName())
+        if item and item:IsActivated() and Clothes:HasType(item, "boots") then
+            item:SetActivated(false)
 
-            if types and types["boots"] then
-                item:SetActivated(false)
-
-                item:OnUnequip()
-                item:OnEquip()
-            end
+            item:OnUnequip()
+            item:OnEquip()
         end
     end
 end
@@ -87,4 +83,3 @@ function modifier_leg_stoneskin_gland:OnDestroy()
         end
     end
 end
-
