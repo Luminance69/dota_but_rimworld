@@ -21,15 +21,24 @@ end
 function modifier_insulting_spree:OnIntervalThink()
     local parent = self:GetParent()
 
-    local allies = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, -1, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_FARTHEST, false)
+    local allies = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, -1, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_FARTHEST, false)
 
     if #allies <= 1 then return end
 
+    -- remove parent
     table.remove(allies, #allies)
+
+    local real_allies = {}
+
+    for _, ally in pairs(allies) do
+        if PlayerResources:GetSelectedHeroEntity(ally:GetPlayerID()) == ally then
+            table.insert(real_allies, ally)
+        end
+    end
 
     -- This is what we call a pro gamer move
     -- Basically just weights it so that closer allied heroes are more likely to be chosen.
-    local ally = allies[floor(sqrt(RandomInt(1, #allies * #allies)))]
+    local ally = real_allies[floor(sqrt(RandomInt(1, #real_allies * #real_allies)))]
 
     local modifier = ally:FindModifierByName("modifier_insulted")
 
