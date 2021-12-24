@@ -131,6 +131,7 @@ Incidents:
 			50 + stack count magic DPS
 			permanent -25% movespeed
 	
+(All implemented!)
 Birthdays:
 
 	Happens every 10 minutes after a random time in the first 10 minutes.
