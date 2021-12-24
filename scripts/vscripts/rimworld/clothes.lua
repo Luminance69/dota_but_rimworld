@@ -1,22 +1,6 @@
 Clothes = Clothes or class({})
 
-function Clothes:GetItemTypes(item)
-    local types = {}
-
-    for type, tbl in pairs(Clothes.items) do
-        for _, v in pairs(tbl) do
-            if not types[v] then
-                types[v] = {}
-            end
-            types[v][type] = true
-        end
-    end
-
-    return types[item]
-end
-
-
-Clothes.items = {
+local types = {
     -- Any item considered boots for stoneskin gland
     ["boots"] = {
         "item_slippers",
@@ -219,3 +203,17 @@ Clothes.items = {
         "item_vladmir",
     }
 }
+
+-- Compile type categories into a lookup table
+local compiled = {}
+for type, items in pairs(types) do
+    compiled[type] = {}
+    for _, item in pairs(items) do
+        compiled[type][item] = true
+    end
+end
+
+function Clothes:HasType(item, type)
+    if not item then return false end
+    return compiled[type][item:GetAbilityName()] or false
+end
