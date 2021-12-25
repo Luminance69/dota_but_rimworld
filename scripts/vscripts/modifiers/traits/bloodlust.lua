@@ -37,14 +37,14 @@ function modifier_bloodlust:OnCreated(keys)
     self.mood = 0
     self.deaths = 0
     self.death_mood = 0
-    self.death_duration = 120
-    self.death_scaling = {3,5,7,8}
+    self.death_duration = 30
+    self.death_scaling = {1,1,2,2,3}
     self.kills = 0
     self.kill_mood = 0
-    self.kill_scaling = {3,5,7,8}
+    self.kill_scaling = {1,2,3,4,5}
     self.item_mood = 0
     self.item_scaling = {2,4,6,8,11,14,18}
-    self.crit_bonus = 120
+    self.crit_bonus = 110
 
     self:StartIntervalThink(1)
 end
