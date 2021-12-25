@@ -74,16 +74,17 @@ function modifier_bloodlust:OnDeath(keys)
                      or self.death_scaling[#self.death_scaling]
     self.death_mood = self.death_mood + death_bonus
 
+    local kill_bonus = 0
     if keys.attacker == self.parent then
         self.kills = self.kills + 1
-        local kill_bonus = self.kill_scaling[self.kills]
+        kill_bonus = self.kill_scaling[self.kills]
                         or self.kill_scaling[#self.kill_scaling]
         self.kill_mood = self.kill_mood + kill_bonus
     end
 
     Timers:CreateTimer(self.death_duration, function()
         self.death_mood = self.death_mood - death_bonus
-        self.kill_mood = self.kill_mood - (kill_bonus or 0)
+        self.kill_mood = self.kill_mood - kill_bonus
     end)
 end
 
