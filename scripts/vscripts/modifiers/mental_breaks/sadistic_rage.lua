@@ -45,6 +45,7 @@ function modifier_sadistic_rage:OnRemoved()
     if IsClient() then return end
     
     self:GetParent():Stop()
+    self:GetParent():SetForceAttackTarget(nil)
 end
 
 function modifier_sadistic_rage:CheckState()

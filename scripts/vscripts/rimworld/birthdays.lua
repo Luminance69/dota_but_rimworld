@@ -4,7 +4,7 @@ Birthdays.incidents = {
     ["bad_back"] = 5,
     ["dementia"] = 5,
     ["cataract"] = 5,
-    ["heart_attack"] = 111111,
+    ["heart_attack"] = 1,
     ["gift"] = 5,
     ["wisdom"] = 5,
 }

@@ -6,7 +6,6 @@ Moods.mental_breaks = {
         "hide_under_tower",
         "insulting_spree",
     },
-    --[[
     ["major"] = {
         "sadistic_rage",
         "slaughterer",
@@ -17,7 +16,6 @@ Moods.mental_breaks = {
         "catatonic",
         "give_up",
     },
-    ]]
 }
 
 function Moods:Init()

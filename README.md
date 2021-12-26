@@ -169,7 +169,6 @@ Traits:
 
 	2-3 Traits are randomly assigned to each hero at the start of the game.
 	
-
 	Nudist:
 		+12 Mood if no clothing equipped
 		-4 Mood per clothing item equipped
@@ -244,11 +243,11 @@ Traits:
 	Sickly:
 		+200% Sickness Chance
 
+(All implemented!)
 Mental Breaks:
 
 	Happens based on hero's mood
 	
-	(All implemented!)
 	Minor:
 		Sad Wander:
 			Your hero goes on a sad wander randomly

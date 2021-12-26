@@ -44,7 +44,7 @@ function ChatCommands:OnPlayerChat(event)
 end
 
 -- Usage:
--- -timescale <float>
+-- -timescale <number: scale>
 -- Sets the server timescale to given value
 ChatCommands.timescale = function(args, ...)
     local var = tonumber(args[1])
@@ -77,9 +77,24 @@ end
 -- Adds the given trait to your hero
 -- Please note this has no sanitisation, and will probably break if given an invalid trait.
 ChatCommands.trait = function(args, hero, ...)
+    if IsClient() then return end
+
     local trait = args[1]
 
     hero:AddNewModifier(hero, nil, "modifier_" .. trait, nil)
 
     print("Added " .. trait .. " to " .. hero:GetUnitName())
+end
+
+-- Usage:
+-- -mood <number: mood>
+-- Sets your mood to the given value
+ChatCommands.mood = function(args, hero, ...)
+    if IsClient() then return end
+
+    local mood = args[1]
+
+    hero.mood = tonumber(mood)
+    
+    print("Set " .. hero:GetUnitName() .. "\'s mood to: " .. mood)
 end

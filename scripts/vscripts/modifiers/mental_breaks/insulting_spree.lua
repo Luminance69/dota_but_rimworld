@@ -31,7 +31,7 @@ function modifier_insulting_spree:OnIntervalThink()
     local real_allies = {}
 
     for _, ally in pairs(allies) do
-        if PlayerResources:GetSelectedHeroEntity(ally:GetPlayerID()) == ally then
+        if PlayerResources and PlayerResources:GetSelectedHeroEntity(ally:GetPlayerID()) == ally then
             table.insert(real_allies, ally)
         end
     end
@@ -59,7 +59,7 @@ function modifier_insulted:GetMoodBonus()
     return - (2 + self:GetStackCount() * 2)
 end
 
-function modifier_sad_wander:DeclareFunctions()
+function modifier_insulted:DeclareFunctions()
     return {
         MODIFIER_PROPERTY_TOOLTIP, -- GetModifierMoveSpeedBonus_Percentage
     }

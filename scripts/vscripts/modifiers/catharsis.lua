@@ -1,7 +1,7 @@
 modifier_catharsis = modifier_catharsis or class({})
 
 function modifier_catharsis:AllowIllusionDuplicate() return false end
-function modifier_catharsis:HeroEffectPriority() return MODIFIER_PRIORITY_SUPER_ULTRA end
+function modifier_catharsis:GetPriority() return MODIFIER_PRIORITY_SUPER_ULTRA end
 
 function modifier_catharsis:IsHidden() return false end
 function modifier_catharsis:IsPermanent() return true end

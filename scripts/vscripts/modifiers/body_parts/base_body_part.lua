@@ -1,7 +1,7 @@
 base_body_part = base_body_part or class({})
 
 function base_body_part:AllowIllusionDuplicate() return false end
-function base_body_part:HeroEffectPriority() return MODIFIER_PRIORITY_HIGH end
+function base_body_part:GetPriority() return MODIFIER_PRIORITY_HIGH end
 
 function base_body_part:IsHidden() return false end
 function base_body_part:IsPermanent() return true end
