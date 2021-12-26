@@ -37,14 +37,14 @@ function modifier_bloodlust:OnCreated(keys)
     self.mood = 0
     self.deaths = 0
     self.death_mood = 0
-    self.death_duration = 120
-    self.death_scaling = {3,5,7,8}
+    self.death_duration = 30
+    self.death_scaling = {1,1,2,2,3}
     self.kills = 0
     self.kill_mood = 0
-    self.kill_scaling = {3,5,7,8}
+    self.kill_scaling = {1,2,3,4,5}
     self.item_mood = 0
     self.item_scaling = {2,4,6,8,11,14,18}
-    self.crit_bonus = 120
+    self.crit_bonus = 110
 
     self:StartIntervalThink(1)
 end
@@ -62,8 +62,8 @@ end
 function modifier_bloodlust:OnDeath(keys)
     if
         not IsServer()
-        or not keys.unit:IsRealHero()
-        or keys.unit:IsTempestDouble()
+        or keys.unit == self.parent
+        or not keys.unit:IsRealHero() or keys.unit:IsTempestDouble()
         or keys.unit:WillReincarnate()
         or not self.parent:CanEntityBeSeenByMyTeam(keys.unit)
         or CalcDistanceBetweenEntityOBB(self.parent, keys.unit) > self.parent:GetCurrentVisionRange()
@@ -74,16 +74,17 @@ function modifier_bloodlust:OnDeath(keys)
                      or self.death_scaling[#self.death_scaling]
     self.death_mood = self.death_mood + death_bonus
 
+    local kill_bonus = 0
     if keys.attacker == self.parent then
         self.kills = self.kills + 1
-        local kill_bonus = self.kill_scaling[self.kills]
+        kill_bonus = self.kill_scaling[self.kills]
                         or self.kill_scaling[#self.kill_scaling]
         self.kill_mood = self.kill_mood + kill_bonus
     end
 
     Timers:CreateTimer(self.death_duration, function()
         self.death_mood = self.death_mood - death_bonus
-        self.kill_mood = self.kill_mood - (kill_bonus or 0)
+        self.kill_mood = self.kill_mood - kill_bonus
     end)
 end
 
