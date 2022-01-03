@@ -7,6 +7,12 @@ require("rimworld/clothes")
 
 modifier_nudist = class(base_trait)
 
+function modifier_nudist:DeclareFunctions()
+    return {
+        MODIFIER_PROPERTY_TOOLTIP,
+    }
+end
+
 function modifier_nudist:OnCreated()
     self:SetHasCustomTransmitterData(true)
     if IsClient() then return end
@@ -43,6 +49,10 @@ function modifier_nudist:OnIntervalThink()
 end
 
 function modifier_nudist:GetMoodBonus()
+    return self.bonus or 12
+end
+
+function modifier_nudist:OnTooltip()
     return self.bonus or 12
 end
 

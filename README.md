@@ -342,6 +342,7 @@ Body Parts:
 			+0.6% Max HP Regen
 		Healing Enhancer:
 			+75% Healing/Regen Amplification
+			-50% Sickness Duration
 	Brain:		
 		Learning Assistant:
 			+25% Experience Gain
@@ -351,3 +352,50 @@ Body Parts:
 			-15% Attack Speed
 			-15% Movement Speed
 			-15% Cast Point Reduction
+
+Things to add:
+	Noise when hero dies
+	Incidents
+	Assorted mood buffs/debuffs:
+		Expectations: 30/20/10/0/-10 mood for <1500/4000/75000/15000/15000+ networth
+		Wet: -6 for 30 seconds after standing in the river, purged on death
+		Pain: -3/-6/-10/-15 for missing 25/50/75/90% HP
+		Darkness: -20% movement speed & -4 mood when not near a building at night time
+		Aroura: no darkness debuff, +6 mood
+		Ally died: -2 mood while an ally is dead
+		Slept in the heat/cold: randomly given out at the start of each day time, -3 mood, lasts 450 seconds.
+		
+		Generic sadgeness, randomly given, lasts a random time, -3 to -5 mood:
+			Awful bedroom, hungry, tired, ate without table
+
+
+	At the start of every game, random biases are chosen for certain things:
+		- Difficulty is chosen, changing the base mood from between 25 and 42
+
+		- Temperature and Climate are chosen:
+			Neutral (temperate forest):
+				wet debuff
+				normal sickness
+			Hot + Wet (jungle):
+				double chance for all sicknesses
+				hot debuff
+			Hot + Dry (desert): 
+				hot + thirsty debuffs
+				no wet debuff
+				heatstroke
+			Cold + Wet (swamp):
+				cold debuff
+				wet debuff lasts 3x
+			Cold + Dry (ice sheets): 
+				cold + thirsty debuffs
+				wet debuff lasts 3x
+		
+
+	Health + body parts:
+		- Cataracts should be healed by installing a special eye, and shouldn't affect anyone with 2 special eyes
+		- Heart attacks shouldn't affect anyone with a special heart
+		- Dementia should have triple chance for people with joywires (meaning it can double up and get multiple ailments from one birthday)
+	
+	Health + traits:
+		- Tough halves chance for bad back
+		- Neurotic doubles chance for dementia (can double up)

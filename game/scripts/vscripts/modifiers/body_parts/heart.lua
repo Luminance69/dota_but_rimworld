@@ -47,9 +47,12 @@ function modifier_heart_healing_enhancer:DeclareFunctions()
     return {
         MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE_SOURCE, -- GetModifierHealAmplify_PercentageSource
         MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE, -- GetModifierHPRegenAmplify_Percentage
+        MODIFIER_PROPERTY_TOOLTIP, -- OnTooltip + GetIllnessDurationBonus
     }
 end
 
 function modifier_heart_healing_enhancer:GetModifierHealAmplify_PercentageSource() return 75 end
 function modifier_heart_healing_enhancer:GetModifierHPRegenAmplify_Percentage() return 75 end
+function modifier_heart_healing_enhancer:OnTooltip() return 50 end
+function modifier_heart_healing_enhancer:GetIllnessDurationBonus() return -50 end
 function modifier_heart_healing_enhancer:GetTexture() return "body_parts/healing_enhancer" end

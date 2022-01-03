@@ -225,7 +225,7 @@
 	{
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
-		"ItemCost"						"3200"
+		"ItemCost"						"3500"
 		"ItemStockInitial"				"0"
 		"ItemStockMax"					"1"
 
