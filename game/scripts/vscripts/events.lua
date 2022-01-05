@@ -1,3 +1,8 @@
+ListenToGameEvent("player_chat", function(keys)
+    -- Panorama debug tools
+    CustomGameEventManager:Send_ServerToAllClients("player_chat", keys)
+end, nil)
+
 ListenToGameEvent("dota_player_killed",function(keys)
     -- for k,v in pairs(keys) do print("dota_player_killed",k,v) end
     local playerID = keys.PlayerID

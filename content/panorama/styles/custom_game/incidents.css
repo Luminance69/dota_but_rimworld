@@ -1,0 +1,38 @@
+#Incidents {
+    horizontal-align: right;
+    height: 70%;
+    flow-children: up;
+}
+
+@keyframes 'dropin' {
+    from {
+        transform: translateY(-250px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+#Incident {
+    horizontal-align: right;
+    animation-name: dropin;
+    animation-duration: 1s;
+    animation-delay: 0s;
+}
+
+#Incident > Image {
+    horizontal-align: right;
+    transition-property: box-shadow;
+    transition-duration: 1s;
+}
+
+#Incident > Label {
+    align: center center;
+    color: white;
+    font-family: Arial;
+    font-size: 19;
+    background-color: gradient(linear, 130% 0%, 0% 130%, from(rgba(0,0,0,0.05)), color-stop(0.5, rgba(0,0,0,0.5)), to(rgba(0,0,0,0.05)));
+}
