@@ -15,6 +15,7 @@ class Incident {
         this.name = panel.FindChild("Name");
         // Hover detection
         this.tooltipDummy = panel.FindChild("TooltipDummy");
+        this.tooltipDummy.SetPanelEvent("oncontextmenu", () => ui.Delete(this));
         // Allow positioning tooltip entirely outside dummy
         this.tooltipContainer = panel.FindChildTraverse("TooltipContainer");
         this.tooltip = panel.FindChildTraverse("Tooltip");

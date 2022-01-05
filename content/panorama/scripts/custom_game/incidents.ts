@@ -10,7 +10,7 @@ class Incident {
     colour: string;
     letter: ImagePanel;
     name: LabelPanel;
-    tooltipDummy: Panel;
+    tooltipDummy: Button;
     tooltipContainer: Panel;
     tooltip: LabelPanel;
 
@@ -24,7 +24,8 @@ class Incident {
         this.name = panel.FindChild("Name") as LabelPanel;
 
         // Hover detection
-        this.tooltipDummy = panel.FindChild("TooltipDummy") as Panel;
+        this.tooltipDummy = panel.FindChild("TooltipDummy") as Button;
+        this.tooltipDummy.SetPanelEvent("oncontextmenu", () => ui.Delete(this));
         // Allow positioning tooltip entirely outside dummy
         this.tooltipContainer = panel.FindChildTraverse("TooltipContainer") as Panel;
         this.tooltip = panel.FindChildTraverse("Tooltip") as LabelPanel;

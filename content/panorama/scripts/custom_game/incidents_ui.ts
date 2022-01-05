@@ -10,6 +10,12 @@ class UI {
         GameEvents.Subscribe<PlayerChatEvent>("player_chat", (event) => this.OnPlayerChat(event));
     }
 
+    // Remove and cleanup incident notifications
+    Delete(incident: Incident) {
+        this.incidents.splice(this.incidents.indexOf(incident), 1);
+        incident.panel.DeleteAsync(0);
+    }
+
     OnPlayerChat(event: PlayerChatEvent) {
         if (!event.text.startsWith("?")) return;
 

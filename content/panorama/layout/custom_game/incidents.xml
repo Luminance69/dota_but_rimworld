@@ -11,13 +11,13 @@
     <snippets>
         <snippet name="Incident">
             <Panel id="Incident" hittest="false">
-                <Image id="Letter" />
-                <Label id="Name" />
-                <Panel id="TooltipDummy">
-                    <Panel id="TooltipContainer">
-                        <Label id="Tooltip" />
+                <Image id="Letter" hittest="false" />
+                <Label id="Name" hittest="false" />
+                <Button id="TooltipDummy">
+                    <Panel id="TooltipContainer" hittest="false">
+                        <Label id="Tooltip" hittest="false" />
                     </Panel>
-                </Panel>
+                </Button>
             </Panel>
         </snippet>
     </snippets>
