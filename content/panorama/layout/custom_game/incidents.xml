@@ -13,6 +13,11 @@
             <Panel id="Incident" hittest="false">
                 <Image id="Letter" />
                 <Label id="Name" />
+                <Panel id="TooltipDummy">
+                    <Panel id="TooltipContainer">
+                        <Label id="Tooltip" />
+                    </Panel>
+                </Panel>
             </Panel>
         </snippet>
     </snippets>
