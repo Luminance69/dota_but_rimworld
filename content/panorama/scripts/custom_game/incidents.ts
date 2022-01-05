@@ -57,9 +57,11 @@ class Incident {
         this.tooltipContainer.style.marginRight = `${MARGIN}px`;
 
         // Awful hack to centre text while allowing overflow into margin
-        $.Schedule(0.2, () =>
-            this.panel.style.width = `${this.panel.actuallayoutwidth + 25}px`
-        );
+        (function centre(panel) {
+            !panel.actuallayoutwidth
+            ? $.Schedule(0.1, () => centre(panel))
+            : panel.style.width = `${panel.actuallayoutwidth + 25}px`;
+        })(this.panel);
     }
 
     // Simulates a keyframe with dynamic colouring
