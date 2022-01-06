@@ -8,6 +8,7 @@ const Severity: Record<string, string> = {
 class Incident {
     panel: Panel;
     colour: string;
+    desc: string;
     letter: ImagePanel;
     name: LabelPanel;
     tooltipDummy: Button;
@@ -19,22 +20,43 @@ class Incident {
         panel.BLoadLayoutSnippet("Incident");
         this.panel = panel;
         this.colour = Severity[severity];
+        this.desc = "A group of pirates from The Mantiss of Oppression have arrived nearby.\n\nIt looks like they want to besiege the colony and pound you with mortars from a distance. You can try to wait them out - or go get them.";
 
         this.letter = panel.FindChild("Letter") as ImagePanel;
         this.name = panel.FindChild("Name") as LabelPanel;
 
-        // Hover detection
+        // Hover and click detection
         this.tooltipDummy = panel.FindChild("TooltipDummy") as Button;
         this.tooltipDummy.SetPanelEvent("oncontextmenu", () => ui.Delete(this));
+        this.tooltipDummy.SetPanelEvent("onmouseactivate", () => this.OnLeftClick());
         // Allow positioning tooltip entirely outside dummy
         this.tooltipContainer = panel.FindChildTraverse("TooltipContainer") as Panel;
         this.tooltip = panel.FindChildTraverse("Tooltip") as LabelPanel;
 
         this.letter.SetImage("file://{images}/custom_game/letter.png");
         this.name.text = name;
-        this.tooltip.text = "A group of pirates from The Mantiss of Opression have arrived nearby.\n\nIt looks like the want to besiege the colony and pound you with mortars from a distance. You can try to wait them out - or go get them."
+        this.tooltip.text = this.desc;
         this.Style();
         this.Glow();
+    }
+
+    OnLeftClick() {
+        const tooltipLarge = $.CreatePanel("Label", $.GetContextPanel(), "TooltipLarge");
+        tooltipLarge.BLoadLayoutSnippet("TooltipLarge")
+        tooltipLarge.text = this.desc;
+
+        // Close tooltip and notification
+        (<TextButton>tooltipLarge.FindChild("Close")).SetPanelEvent("onactivate", () => {
+            tooltipLarge.DeleteAsync(0);
+            ui.Delete(this);
+        });
+
+        // Move camera to relevant target and close incident
+        (<TextButton>tooltipLarge.FindChild("Jump")).SetPanelEvent("onactivate", () => {
+            GameUI.MoveCameraToEntity(Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()));
+            tooltipLarge.DeleteAsync(0);
+            ui.Delete(this);
+        });
     }
 
     Style() {

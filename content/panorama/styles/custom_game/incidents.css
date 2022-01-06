@@ -58,5 +58,32 @@
     max-width: 350px;
     padding: 20px 10px;
     border: 2px solid #616c7b;
+    border-right: 1px solid #616c7b;
     background-color: #15191e;
+}
+
+/*----------------------------------------------------------------------------*/
+
+#TooltipLarge {
+    flow-children: up;
+    color: white;
+    font-family: Arial;
+    font-size: 19px;
+    align: middle middle;
+    width: 750px;
+    height: 550px;
+    padding: 20px;
+    border: 2px solid #616c7b;
+    background-color: #15191e;
+}
+
+#TooltipLarge > TextButton {
+    color: #b8c3e6;
+    vertical-align: top;
+    width: 100%;
+    margin: 10px;
+}
+
+#TooltipLarge > TextButton:hover {
+    color: yellow;
 }

@@ -20,6 +20,13 @@
                 </Button>
             </Panel>
         </snippet>
+
+        <snippet name="TooltipLarge">
+            <Label id="TooltipLarge">
+                <TextButton id="Jump" text="Jump to location" />
+                <TextButton id="Close" text="Close" />
+            </Label>
+        </snippet>
     </snippets>
 
     <Panel hittest="false" style="width: 100%; height: 100%;">
