@@ -4,6 +4,7 @@
     </styles>
 
     <scripts>
+        <include src="file://{resources}/scripts/custom_game/rwutils.js" />
         <include src="file://{resources}/scripts/custom_game/incidents_ui.js" />
         <include src="file://{resources}/scripts/custom_game/incidents.js" />
     </scripts>
@@ -11,7 +12,7 @@
     <snippets>
         <snippet name="Incident">
             <Panel id="Incident" hittest="false">
-                <Image id="Letter" hittest="false" />
+                <Image id="Letter" hittest="false" src="file://{images}/custom_game/letter.png" />
                 <Label id="Name" hittest="false" />
                 <Button id="TooltipDummy">
                     <Panel id="TooltipContainer" hittest="false">
@@ -31,5 +32,6 @@
 
     <Panel hittest="false" style="width: 100%; height: 100%;">
         <Panel id="Incidents" hittest="false" />
+        <Image id="Arrow" enabled="false" hittest="false" src="file://{images}/custom_game/arrow.png" />
     </Panel>
 </root>

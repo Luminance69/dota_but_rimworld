@@ -87,3 +87,17 @@
 #TooltipLarge > TextButton:hover {
     color: yellow;
 }
+
+/*----------------------------------------------------------------------------*/
+
+#Arrow {
+    opacity: 0;
+    height: 50px;
+    width: 50px;
+}
+
+#Arrow:enabled {
+    opacity: 1;
+    transition-property: transform;
+    transition-duration: 0.01s;
+}

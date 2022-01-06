@@ -14,6 +14,7 @@ class Incident {
     tooltipDummy: Button;
     tooltipContainer: Panel;
     tooltip: LabelPanel;
+    arrow: ImagePanel;
 
     constructor(parent: Panel, severity: string, name: string) {
         const panel = $.CreatePanel("Panel", parent, "Incident");
@@ -33,11 +34,53 @@ class Incident {
         this.tooltipContainer = panel.FindChildTraverse("TooltipContainer") as Panel;
         this.tooltip = panel.FindChildTraverse("Tooltip") as LabelPanel;
 
-        this.letter.SetImage("file://{images}/custom_game/letter.png");
+        // Arrow pointing to incident target
+        this.arrow = $.GetContextPanel().FindChildTraverse("Arrow") as ImagePanel;
+        this.tooltipDummy.SetPanelEvent("onmouseover", () => {
+            this.arrow.enabled = true;
+            this.WhileHover(Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()));
+        });
+
+        this.tooltipDummy.SetPanelEvent("onmouseout", () => {
+            this.arrow.enabled = false;
+            this.arrow.style.transform = null;
+            // Why does this work??
+            this.arrow.SetPositionInPixels(
+                (1920 - 50) / 2,
+                (1080 - 50) / 2,
+                0
+            );
+        });
+
+        // Styles and effects
         this.name.text = name;
         this.tooltip.text = this.desc;
         this.Style();
         this.Glow();
+    }
+
+    WhileHover(target: EntityIndex) {
+        if (!this.arrow.enabled) return;
+
+        const r = 0.2 * Game.GetScreenHeight(); // Arrow pivot radius
+        const cam = GameUI.GetCameraLookAtPosition(); // Camera pos
+        const ent = Entities.GetAbsOrigin(target); // Target pos
+        const dir = [ent[0]-cam[0], ent[1]-cam[1]]; // ent - cam
+        const dist = Math.sqrt(dir[0]**2 + dir[1]**2); // |dir|
+
+        if (dist > r+300) {
+            // deg: Angle between ent-cam and the y vector
+            let deg = Math.acos(dir[1] / Math.sqrt(dir[0]**2 + dir[1]**2));
+            deg *= 180/Math.PI;
+            deg *= Math.sign(dir[0]);
+
+            this.arrow.style.transform = `translateY(-${r}px) rotateZ(${deg}deg)`;
+        } else {
+            this.arrow.style.transform = null;
+            MovePanelToWorldPos(this.arrow, ent);
+        }
+
+        $.Schedule(0.01, () => this.WhileHover(target));
     }
 
     OnLeftClick() {
