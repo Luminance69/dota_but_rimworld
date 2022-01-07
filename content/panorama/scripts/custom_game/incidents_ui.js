@@ -2,7 +2,6 @@
 class UI {
     constructor(panel) {
         this.incidents = [];
-        $.Msg("UI loaded!", panel);
         this.container = panel.FindChild("Incidents");
         GameEvents.Subscribe("send_incident_letter", (event) => this.New(event));
         GameEvents.Subscribe("player_chat", (event) => this.OnPlayerChat(event));

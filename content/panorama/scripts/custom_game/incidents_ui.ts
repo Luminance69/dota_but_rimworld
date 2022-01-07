@@ -10,8 +10,6 @@ class UI {
     incidents: Incident[] = [];
 
     constructor(panel: Panel) {
-        $.Msg("UI loaded!", panel);
-
         this.container = panel.FindChild("Incidents")!;
 
         GameEvents.Subscribe<SendIncidentLetterEvent>("send_incident_letter", (event) => this.New(event));
