@@ -40,4 +40,12 @@
 	"addon_game_mode_activate"
 	{
 	}
+
+	"send_incident_letter"
+	{
+		"name"			"string"
+		"description"	"string"
+		"severity"		"string"
+		"target"		"local"
+	}
 }

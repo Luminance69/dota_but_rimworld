@@ -4,7 +4,13 @@ class UI {
         this.incidents = [];
         $.Msg("UI loaded!", panel);
         this.container = panel.FindChild("Incidents");
+        GameEvents.Subscribe("send_incident_letter", (event) => this.New(event));
         GameEvents.Subscribe("player_chat", (event) => this.OnPlayerChat(event));
+    }
+    // Create a new incident letter
+    New(event) {
+        const inc = new Incident(this.container, event.name, event.description, event.severity, event.target);
+        this.incidents.push(inc);
     }
     // Remove and cleanup incident notifications
     Delete(incident) {
@@ -20,7 +26,7 @@ class UI {
             case "?event":
                 const severity = args[1];
                 const name = args.slice(2).join(" ");
-                this.incidents.push(new Incident(this.container, severity, name));
+                this.incidents.push(new Incident(this.container, name, "description", severity, Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer())));
                 $.Msg("Added new incident: " + name);
                 break;
             // Clear all events

@@ -3,6 +3,30 @@ ListenToGameEvent("player_chat", function(keys)
     CustomGameEventManager:Send_ServerToAllClients("player_chat", keys)
 end, nil)
 
+-- Send a new incident letter to the given player
+-- keys: {name, description, severity, target}
+--       [string, string, Severity, EntityIndex]
+function SendIncidentLetter(player, keys)
+    CustomGameEventManager:Send_ServerToPlayer(player, "send_incident_letter", keys)
+end
+
+function SendIncidentLetterTeam(team, keys)
+    CustomGameEventManager:Send_ServerToTeam(team, "send_incident_letter", keys)
+end
+
+function SendIncidentLetterAll(keys)
+    CustomGameEventManager:Send_ServerToAllClients("send_incident_letter", keys)
+end
+
+Severity = {
+    White = "#ffffff",
+    Blue = "#79afdb",
+    Yellow = "#ccc47f",
+    Red = "#ca7471",
+}
+
+--------------------------------------------------------------------------------
+
 ListenToGameEvent("dota_player_killed",function(keys)
     -- for k,v in pairs(keys) do print("dota_player_killed",k,v) end
     local playerID = keys.PlayerID
