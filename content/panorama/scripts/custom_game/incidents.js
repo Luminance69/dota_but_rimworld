@@ -43,15 +43,15 @@ class Incident {
         if (!this.arrow.enabled)
             return;
         const r = 0.2 * Game.GetScreenHeight(); // Arrow pivot radius
-        const cam = GameUI.GetCameraLookAtPosition(); // Camera pos
-        const ent = Entities.GetAbsOrigin(target); // Target pos
-        const dir = [ent[0] - cam[0], ent[1] - cam[1]]; // ent - cam
-        const dist = Math.sqrt(dir[0] ** 2 + dir[1] ** 2); // |dir|
+        const cam = Vec(...GameUI.GetCameraLookAtPosition()); // Camera pos
+        const ent = Vec(...Entities.GetAbsOrigin(target)); // Target pos
+        const dir = Vector.sub(ent, cam); // ent - cam
+        const dist = Math.sqrt(dir.x ** 2 + dir.y ** 2); // |dir|
         if (dist > r + 300) {
             // deg: Angle between ent-cam and the y vector
-            let deg = Math.acos(dir[1] / Math.sqrt(dir[0] ** 2 + dir[1] ** 2));
+            let deg = Math.acos(dir.y / Math.sqrt(dir.x ** 2 + dir.y ** 2));
             deg *= 180 / Math.PI;
-            deg *= Math.sign(dir[0]);
+            deg *= Math.sign(dir.x);
             this.arrow.style.transform = `translateY(-${r}px) rotateZ(${deg}deg)`;
         }
         else {
