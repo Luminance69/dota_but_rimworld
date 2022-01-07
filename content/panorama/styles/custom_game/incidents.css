@@ -1,0 +1,103 @@
+#Incidents {
+    horizontal-align: right;
+    height: 70%;
+    flow-children: up;
+}
+
+@keyframes 'dropin' {
+    from {
+        transform: translateY(-250px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+#Incident {
+    horizontal-align: right;
+    animation-name: dropin;
+    animation-duration: 1s;
+    animation-delay: 0s;
+}
+
+#Incident > Image {
+    horizontal-align: right;
+    transition-property: box-shadow;
+    transition-duration: 1s;
+}
+
+#Incident > Label {
+    align: center center;
+    color: white;
+    font-family: Arial;
+    font-size: 19;
+    background-color: gradient(linear, 130% 0%, 0% 130%, from(rgba(0,0,0,0.05)), color-stop(0.5, rgba(0,0,0,0.5)), to(rgba(0,0,0,0.05)));
+}
+
+#Incident #TooltipDummy,
+#Incident #TooltipContainer {
+    horizontal-align: right;
+    height: 100%;
+    overflow: noclip;
+}
+
+#Incident #TooltipDummy #Tooltip {
+    opacity: 0;
+}
+
+#Incident #TooltipDummy:hover #Tooltip {
+    opacity: 1;
+    color: white;
+    font-family: Arial;
+    font-size: 19;
+    align: right bottom;
+    transform: translate3d(-90%, 100%, 0px);
+    max-width: 350px;
+    padding: 20px 10px;
+    border: 2px solid #616c7b;
+    border-right: 1px solid #616c7b;
+    background-color: #15191e;
+}
+
+/*----------------------------------------------------------------------------*/
+
+#TooltipLarge {
+    flow-children: up;
+    color: white;
+    font-family: Arial;
+    font-size: 19px;
+    align: middle middle;
+    width: 750px;
+    height: 550px;
+    padding: 20px;
+    border: 2px solid #616c7b;
+    background-color: #15191e;
+}
+
+#TooltipLarge > TextButton {
+    color: #b8c3e6;
+    vertical-align: top;
+    width: 100%;
+    margin: 10px;
+}
+
+#TooltipLarge > TextButton:hover {
+    color: yellow;
+}
+
+/*----------------------------------------------------------------------------*/
+
+#Arrow {
+    opacity: 0;
+    height: 50px;
+    width: 50px;
+}
+
+#Arrow:enabled {
+    opacity: 1;
+    transition-property: transform;
+    transition-duration: 0.01s;
+}

@@ -1,13 +1,8 @@
+node_modules
+
 *.bin
 *.cfg
 *.tmp
-
-# TS compiled
-*.js
-!courier_fix.js
-!multiteam_end_screen_butt.js
-!team_select_butt.js
-!util.js
 
 # Valve compiled
 *.vpk
