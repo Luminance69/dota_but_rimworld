@@ -37,10 +37,10 @@ end
 function Incidents:DoIncident()
     local incident = GetWeightedChoice(Incidents.incidents)
 
-    if self[incident] then
-        self[incident]()
-
+    if self[incident] and self[incident]() then
+        
         -- Do notification/sound etc. (maybe panorama? :P)
+        
     end
 
     return 1
@@ -48,6 +48,20 @@ end
 
 Incidents.creep_disease = function()
     print("creep disease")
+
+    local team = RandomInt(2, 3)
+
+    local creeps = FindUnitsInRadius(team, Vector(0, 0, 0), nil, -1, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+    if #creeps < 1 then return false end
+
+    for _, creep in pairs(creeps) do
+        if not creep:IsOwnedByAnyPlayer() and RandomFloat(0, 1) < 0.5 then
+            creep:AddNewModifier(creep, nil, "modifier_creep_disease_minor", nil)
+        end
+    end
+
+    return true
 end
 
 Incidents.modifiers = {
