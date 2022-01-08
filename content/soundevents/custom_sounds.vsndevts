@@ -270,12 +270,13 @@
                     {
                         "value"
                         {
-                              "value0"        "sounds/mouseoverbutton.vsnd"
+                              "value0"        "sounds/mouseoverbuttoncategory_2a.vsnd"
+                              "value1"        "sounds/mouseoverbuttoncategory_2b.vsnd"
+                              "value2"        "sounds/mouseoverbuttoncategory_2c.vsnd"
+                              "value3"        "sounds/mouseoverbuttoncategory_2d.vsnd"
                         }
                     }
                     "volume"            {   "value"     "0.20000"   }
-                    "pitch_rand_min"    {   "value"     "-0.05000"  }
-                    "pitch_rand_max"    {   "value"     "0.050000"  }
                     "pitch"             {   "value"     "1.000000"  }
                     "soundlevel"        {   "value"     "100.00000" }
                 }
