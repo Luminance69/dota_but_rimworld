@@ -60,6 +60,7 @@
     border: 2px solid #616c7b;
     border-right: 1px solid #616c7b;
     background-color: #15191e;
+    sound: "MouseoverButton";
 }
 
 /*----------------------------------------------------------------------------*/
@@ -86,6 +87,7 @@
 
 #TooltipLarge > TextButton:hover {
     color: yellow;
+    sound: "MouseoverButton";
 }
 
 /*----------------------------------------------------------------------------*/

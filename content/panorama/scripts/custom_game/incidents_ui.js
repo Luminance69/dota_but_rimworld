@@ -10,6 +10,7 @@ class UI {
     New(event) {
         const inc = new Incident(this.container, event.name, event.description, event.severity, event.target);
         this.incidents.push(inc);
+        Game.EmitSound(event.sound);
     }
     // Remove and cleanup incident notifications
     Delete(incident) {
@@ -25,7 +26,13 @@ class UI {
             case "?event":
                 const severity = args[1];
                 const name = args.slice(2).join(" ");
-                this.incidents.push(new Incident(this.container, name, "description", severity, Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer())));
+                this.New({
+                    name: name,
+                    description: "Default description.",
+                    severity: severity,
+                    sound: "LetterArriveBadUrgentBig",
+                    target: Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()),
+                });
                 $.Msg("Added new incident: " + name);
                 break;
             // Clear all events

@@ -8,8 +8,16 @@ class Incident {
         this.name = panel.FindChild("Name");
         // Hover and click detection
         this.tooltipDummy = panel.FindChild("TooltipDummy");
-        this.tooltipDummy.SetPanelEvent("oncontextmenu", () => ui.Delete(this));
-        this.tooltipDummy.SetPanelEvent("onmouseactivate", () => this.OnLeftClick(description));
+        // Incident right click
+        this.tooltipDummy.SetPanelEvent("oncontextmenu", () => {
+            Game.EmitSound("Click");
+            ui.Delete(this);
+        });
+        // Incident left click
+        this.tooltipDummy.SetPanelEvent("onmouseactivate", () => {
+            Game.EmitSound("CommsWindow_Open");
+            this.CreateLargeTooltip(description);
+        });
         // Allow positioning tooltip entirely outside dummy
         this.tooltipContainer = panel.FindChildTraverse("TooltipContainer");
         this.tooltip = panel.FindChildTraverse("Tooltip");
@@ -52,17 +60,19 @@ class Incident {
         }
         $.Schedule(0.01, () => this.WhileHover(target));
     }
-    OnLeftClick(text) {
+    CreateLargeTooltip(text) {
         const tooltipLarge = $.CreatePanel("Label", $.GetContextPanel(), "TooltipLarge");
         tooltipLarge.BLoadLayoutSnippet("TooltipLarge");
         tooltipLarge.text = text;
-        // Close tooltip and notification
+        // Close tooltip/incident
         tooltipLarge.FindChild("Close").SetPanelEvent("onactivate", () => {
+            Game.EmitSound("CommsWindow_Close");
             tooltipLarge.DeleteAsync(0);
             ui.Delete(this);
         });
-        // Move camera to relevant target and close incident
+        // Move camera to relevant target and close tooltip/incident
         tooltipLarge.FindChild("Jump").SetPanelEvent("onactivate", () => {
+            Game.EmitSound("CommsWindow_Close");
             GameUI.MoveCameraToEntity(Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()));
             tooltipLarge.DeleteAsync(0);
             ui.Delete(this);

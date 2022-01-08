@@ -2,6 +2,7 @@ interface SendIncidentLetterEvent {
     name: string;
     description: string;
     severity: string;
+    sound: string;
     target: EntityIndex;
 }
 
@@ -27,6 +28,7 @@ class UI {
         );
 
         this.incidents.push(inc);
+        Game.EmitSound(event.sound);
     }
 
     // Remove and cleanup incident notifications
@@ -44,13 +46,13 @@ class UI {
             case "?event":
                 const severity = args[1];
                 const name = args.slice(2).join(" ");
-                this.incidents.push(new Incident(
-                    this.container,
-                    name,
-                    "description",
-                    severity,
-                    Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer())
-                ));
+                this.New({
+                    name: name,
+                    description: "Default description.",
+                    severity: severity,
+                    sound: "LetterArriveBadUrgentBig",
+                    target: Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()),
+                });
 
                 $.Msg("Added new incident: " + name);
                 break;
