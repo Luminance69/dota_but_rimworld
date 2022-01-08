@@ -2,7 +2,7 @@ interface SendIncidentLetterEvent {
     name: string;
     description: string;
     severity: string;
-    sound: string;
+    sounds: string;
     target: EntityIndex;
 }
 
@@ -28,7 +28,7 @@ class UI {
         );
 
         this.incidents.push(inc);
-        Game.EmitSound(event.sound);
+        event.sounds.split(" ").forEach((s) => Game.EmitSound(s));
     }
 
     // Remove and cleanup incident notifications
@@ -50,7 +50,7 @@ class UI {
                     name: name,
                     description: "Default description.",
                     severity: severity,
-                    sound: "LetterArriveBadUrgentBig",
+                    sounds: "LetterArriveBadUrgentBig",
                     target: Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()),
                 });
 

@@ -270,12 +270,74 @@
                     {
                         "value"
                         {
-                              "value0"        "sounds/mouseoverbutton.vsnd"
+                              "value0"        "sounds/mouseoverbuttoncategory_2a.vsnd"
+                              "value1"        "sounds/mouseoverbuttoncategory_2b.vsnd"
+                              "value2"        "sounds/mouseoverbuttoncategory_2c.vsnd"
+                              "value3"        "sounds/mouseoverbuttoncategory_2d.vsnd"
                         }
                     }
                     "volume"            {   "value"     "0.20000"   }
-                    "pitch_rand_min"    {   "value"     "-0.05000"  }
-                    "pitch_rand_max"    {   "value"     "0.050000"  }
+                    "pitch"             {   "value"     "1.000000"  }
+                    "soundlevel"        {   "value"     "100.00000" }
+                }
+            }
+        }
+    }
+}
+
+"PsychicSoothe"
+{
+    "operator_stacks"
+    {
+        "update_stack"
+        {
+            "reference_operator"
+            {
+                "operator"              "sos_reference_stack"
+                "reference_stack"       "dota_src1_3d"
+                "operator_variables"
+                {
+                    "vsnd_files"
+                    {
+                        "value"
+                        {
+                              "value0"        "sounds/psychic_soothe_pulser_01a.vsnd"
+                              "value1"        "sounds/psychic_soothe_pulser_01b.vsnd"
+                              "value2"        "sounds/psychic_soothe_pulser_01c.vsnd"
+                              "value3"        "sounds/psychic_soothe_pulser_01d.vsnd"
+                        }
+                    }
+                    "volume"            {   "value"     "1.00000"   }
+                    "pitch"             {   "value"     "1.000000"  }
+                    "soundlevel"        {   "value"     "100.00000" }
+                }
+            }
+        }
+    }
+}
+
+"PsychicDrone"
+{
+    "operator_stacks"
+    {
+        "update_stack"
+        {
+            "reference_operator"
+            {
+                "operator"              "sos_reference_stack"
+                "reference_stack"       "dota_src1_3d"
+                "operator_variables"
+                {
+                    "vsnd_files"
+                    {
+                        "value"
+                        {
+                              "value0"        "sounds/psychicpulse__2a.vsnd"
+                              "value1"        "sounds/psychicpulse__2b.vsnd"
+                              "value2"        "sounds/psychicpulse__2c.vsnd"
+                        }
+                    }
+                    "volume"            {   "value"     "1.00000"   }
                     "pitch"             {   "value"     "1.000000"  }
                     "soundlevel"        {   "value"     "100.00000" }
                 }
