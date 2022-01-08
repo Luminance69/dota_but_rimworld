@@ -358,6 +358,17 @@ function CDOTA_BaseNPC_Hero:GetIllnessDuration() -- float: duration multiplier
     return duration
 end
 
+-- Add a new illness to the hero, taking illness modifiers into account
+function CDOTA_BaseNPC_Hero:AddNewIllness(caster, modifier_name, params) -- user_data: modifier
+    caster = caster or self
+
+    if not (caster and modfiier_name and params and params.duration) then return end
+
+    params.duration = params.duration * self:GetIllnessDuration()
+
+    return self:AddNewModifier(caster, nil, modifier_name, params)
+end
+
 -- Get the hero's experience gain offset
 function CDOTA_BaseNPC_Hero:GetExperienceMultiplier() -- float: xp multiplier
     local multiplier = 1 -- Default
