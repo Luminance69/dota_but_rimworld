@@ -16,14 +16,14 @@
                 <Label id="Name" hittest="false" />
                 <Button id="TooltipDummy">
                     <Panel id="TooltipContainer" hittest="false">
-                        <Label id="Tooltip" hittest="false" />
+                        <Label id="Tooltip" hittest="false" html="true" />
                     </Panel>
                 </Button>
             </Panel>
         </snippet>
 
         <snippet name="TooltipLarge">
-            <Label id="TooltipLarge">
+            <Label id="TooltipLarge" html="true">
                 <TextButton id="Jump" text="Jump to location" />
                 <TextButton id="Close" text="Close" />
             </Label>
