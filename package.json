@@ -1,22 +1,6 @@
 {
-  "private": true,
-  "name": "dota_but_rimworld",
-  "scripts": {
-    "postinstall": "node scripts/install.js",
-    "launch": "node scripts/launch.js"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
   "devDependencies": {
-    "find-steam-app": "^1.0.2",
-    "husky": "^4.2.5",
-    "npm-run-all": "^4.1.5",
     "panorama-types": "^1.6.1",
-    "prettier": "^2.0.5",
-    "pretty-quick": "^2.0.1",
     "typescript": "^4.5.4"
   }
 }
