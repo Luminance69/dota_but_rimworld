@@ -40,21 +40,22 @@ class UI {
     OnPlayerChat(event: PlayerChatEvent) {
         if (!event.text.startsWith("?")) return;
 
-        const args = event.text.split(" ");
+        const args = ParseChatArgs(event.text);
         switch(args[0]) {
             // Add a new event
-            case "?event":
-                const severity = args[1];
-                const name = args.slice(2).join(" ");
+            case "?incident":
                 this.New({
-                    name: name,
-                    description: "Default description.",
-                    severity: severity,
-                    sounds: "LetterArriveBadUrgentBig",
-                    targets: [Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer())],
+                    name: args[1] || "Siege",
+                    description: args[2] || "A group of pirates from The Mantiss of Oppression have arrived nearby.<br><br>It looks like they want to besiege the colony and pound you with mortars from a distance. You can try to wait them out - or go get them.",
+                    severity: args[3] || "#ca7471",
+                    sounds: args[4] || "LetterArriveBadUrgentBig",
+                    targets:
+                        args[5]
+                        ? args[5].split(" ").reduce((o,v,i) => (Object.assign(o, {[i]: Entities.GetAllEntitiesByName("npc_dota_hero_"+v)[0]})), {})
+                        : Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()),
                 });
 
-                $.Msg("Added new incident: " + name);
+                $.Msg("Added new incident: " + args[1]);
                 break;
 
             // Clear all events

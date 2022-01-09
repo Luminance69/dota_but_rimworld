@@ -37,3 +37,13 @@ function ParseLuaArray(array) {
         ? Object.values(array)
         : [array];
 }
+function ParseChatArgs(text) {
+    const exp = /[^\s"]+|"([^"]*)"/g;
+    let args = [];
+    do {
+        var match = exp.exec(text);
+        if (match)
+            args.push(match[1] ? match[1] : match[0]);
+    } while (match);
+    return args;
+}
