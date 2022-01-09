@@ -50,3 +50,9 @@ function WorldToScreen(pos: Vector) {
         Game.WorldToScreenY(pos.x, pos.y, pos.z),
     )
 }
+
+function ParseLuaArray<T>(array: T | Record<number, T>): T[] {
+    return typeof array === "object"
+    ? Object.values(array)
+    : [array];
+}

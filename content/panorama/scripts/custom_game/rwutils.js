@@ -32,3 +32,8 @@ function MovePanelToWorldPos(panel, wPos) {
 function WorldToScreen(pos) {
     return Vec(Game.WorldToScreenX(pos.x, pos.y, pos.z), Game.WorldToScreenY(pos.x, pos.y, pos.z));
 }
+function ParseLuaArray(array) {
+    return typeof array === "object"
+        ? Object.values(array)
+        : [array];
+}

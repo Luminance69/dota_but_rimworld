@@ -2,8 +2,8 @@ interface SendIncidentLetterEvent {
     name: string;
     description: string;
     severity: string;
-    sounds: string;
-    target: EntityIndex;
+    sounds: string | Record<number, string>;
+    targets: EntityIndex | Record<number, EntityIndex>;
 }
 
 class UI {
@@ -24,14 +24,14 @@ class UI {
             event.name,
             event.description,
             event.severity,
-            event.target,
+            ParseLuaArray<EntityIndex>(event.targets),
         );
 
         this.incidents.push(inc);
-        event.sounds.split(" ").forEach((s) => Game.EmitSound(s));
+        ParseLuaArray<string>(event.sounds).forEach(s => Game.EmitSound(s));
     }
 
-    // Remove and cleanup incident notifications
+    // Remove and cleanup incident letter
     Delete(incident: Incident) {
         this.incidents.splice(this.incidents.indexOf(incident), 1);
         incident.panel.DeleteAsync(0);
@@ -51,7 +51,7 @@ class UI {
                     description: "Default description.",
                     severity: severity,
                     sounds: "LetterArriveBadUrgentBig",
-                    target: Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()),
+                    targets: [Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer())],
                 });
 
                 $.Msg("Added new incident: " + name);

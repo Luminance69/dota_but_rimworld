@@ -8,11 +8,11 @@ class UI {
     }
     // Create a new incident letter
     New(event) {
-        const inc = new Incident(this.container, event.name, event.description, event.severity, event.target);
+        const inc = new Incident(this.container, event.name, event.description, event.severity, ParseLuaArray(event.targets));
         this.incidents.push(inc);
-        event.sounds.split(" ").forEach((s) => Game.EmitSound(s));
+        ParseLuaArray(event.sounds).forEach(s => Game.EmitSound(s));
     }
-    // Remove and cleanup incident notifications
+    // Remove and cleanup incident letter
     Delete(incident) {
         this.incidents.splice(this.incidents.indexOf(incident), 1);
         incident.panel.DeleteAsync(0);
@@ -31,7 +31,7 @@ class UI {
                     description: "Default description.",
                     severity: severity,
                     sounds: "LetterArriveBadUrgentBig",
-                    target: Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()),
+                    targets: [Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer())],
                 });
                 $.Msg("Added new incident: " + name);
                 break;

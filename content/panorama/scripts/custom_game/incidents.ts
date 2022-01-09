@@ -5,9 +5,9 @@ class Incident {
     tooltipDummy: Button;
     tooltipContainer: Panel;
     tooltip: LabelPanel;
-    arrow: ImagePanel;
+    arrows: Arrow[] = [];
 
-    constructor(parent: Panel, name: string, description: string, colour: string, target: EntityIndex) {
+    constructor(parent: Panel, name: string, description: string, colour: string, targets: EntityIndex[]) {
         const panel = $.CreatePanel("Panel", parent, "Incident");
         panel.BLoadLayoutSnippet("Incident");
         this.panel = panel;
@@ -33,21 +33,15 @@ class Incident {
         this.tooltip = panel.FindChildTraverse("Tooltip") as LabelPanel;
 
         // Arrow pointing to incident target
-        this.arrow = $.GetContextPanel().FindChildTraverse("Arrow") as ImagePanel;
+        // this.arrow = $.GetContextPanel().FindChildTraverse("Arrow") as ImagePanel;
         this.tooltipDummy.SetPanelEvent("onmouseover", () => {
-            this.arrow.enabled = true;
-            this.WhileHover(target);
+            targets.forEach(t => this.arrows.push(new Arrow(t)));
         });
 
         this.tooltipDummy.SetPanelEvent("onmouseout", () => {
-            this.arrow.enabled = false;
-            this.arrow.style.transform = null;
-            // Why does this work??
-            this.arrow.SetPositionInPixels(
-                (1920 - 50) / 2,
-                (1080 - 50) / 2,
-                0
-            );
+            this.arrows.forEach(a => a.panel.DeleteAsync(0));
+            this.arrows = [];
+
         });
 
         // Styles and effects
@@ -55,30 +49,6 @@ class Incident {
         this.tooltip.text = description;
         this.Style(colour);
         this.Glow(colour);
-    }
-
-    WhileHover(target: EntityIndex) {
-        if (!this.arrow.enabled) return;
-
-        const r = 0.2 * Game.GetScreenHeight(); // Arrow pivot radius
-        const cam = Vec(...GameUI.GetCameraLookAtPosition()); // Camera pos
-        const ent = Vec(...Entities.GetAbsOrigin(target)); // Target pos
-        const dir = Vector.sub(ent, cam); // ent - cam
-        const dist = Math.sqrt(dir.x**2 + dir.y**2); // |dir|
-
-        if (dist > r+300) {
-            // deg: Angle between ent-cam and the y vector
-            let deg = Math.acos(dir.y / Math.sqrt(dir.x**2 + dir.y**2));
-            deg *= 180/Math.PI;
-            deg *= Math.sign(dir.x);
-
-            this.arrow.style.transform = `translateY(-${r}px) rotateZ(${deg}deg)`;
-        } else {
-            this.arrow.style.transform = null;
-            MovePanelToWorldPos(this.arrow, ent);
-        }
-
-        $.Schedule(0.01, () => this.WhileHover(target));
     }
 
     CreateLargeTooltip(text: string) {
@@ -139,5 +109,49 @@ class Incident {
                 this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`
             );
         });
+    }
+}
+
+class Arrow {
+    panel: ImagePanel;
+    target: EntityIndex;
+    latched: boolean = true; // Cleanup when attaching/detaching
+
+    constructor(target: EntityIndex) {
+        this.panel = $.CreatePanel("Image", $.GetContextPanel(), "Arrow");
+        this.panel.BLoadLayoutSnippet("Arrow");
+        this.target = target;
+        this.Update();
+    }
+
+    Update() {
+        if (!this.panel.IsValid()) return;
+
+        const r = 0.2 * Game.GetScreenHeight(); // Arrow pivot radius
+        const cam = Vec(...GameUI.GetCameraLookAtPosition()); // Camera pos
+        const ent = Vec(...Entities.GetAbsOrigin(this.target)); // Target pos
+        const dir = Vector.sub(ent, cam); // ent - cam
+        const dist = Math.sqrt(dir.x**2 + dir.y**2); // |dir|
+
+        if (dist > r+300) {
+            // Centre arrow after detaching
+            if (this.latched) {
+                this.latched = false;
+                this.panel.SetPositionInPixels(935, 515, 0);
+            };
+
+            // deg: Angle between ent-cam and the y vector
+            let deg = Math.acos(dir.y / Math.sqrt(dir.x**2 + dir.y**2));
+            deg *= 180/Math.PI;
+            deg *= Math.sign(dir.x);
+
+            this.panel.style.transform = `translateY(-${r}px) rotateZ(${deg}deg)`;
+        } else {
+            this.latched = true;
+            this.panel.style.transform = null;
+            MovePanelToWorldPos(this.panel, ent);
+        }
+
+        $.Schedule(0.01, () => this.Update());
     }
 }
