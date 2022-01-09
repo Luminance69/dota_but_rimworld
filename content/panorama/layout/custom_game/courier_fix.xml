@@ -1,6 +1,6 @@
 <root>
 	<scripts>
-		<include src="file://{resources}/scripts/custom_game/courier_fix.js" />
+		<include src="file://{resources}/scripts/custom_game/butt/courier_fix.js" />
 	</scripts>
 
     <Panel hittest="false"/>

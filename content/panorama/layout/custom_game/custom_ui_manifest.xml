@@ -1,6 +1,6 @@
 <root>
 	<scripts>
-		<include src="file://{resources}/scripts/custom_game/util.js" />
+		<include src="file://{resources}/scripts/custom_game/butt/util.js" />
 	</scripts>
 	<script>
 		// Credits: EarthSalamander #42

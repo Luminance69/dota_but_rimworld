@@ -1,5 +1,8 @@
 node_modules
 
+# TS compiled
+/content/panorama/scripts/custom_game/*.js
+
 *.bin
 *.cfg
 *.tmp

@@ -4,7 +4,7 @@
 		<include src="file://{resources}/styles/custom_game/team_select_butt.css"/>
 	</styles>
 	<scripts>
-		<include src="file://{resources}/scripts/custom_game/team_select_butt.js"/>
+		<include src="file://{resources}/scripts/custom_game/butt/team_select_butt.js"/>
 	</scripts>
 	<Panel hittest="false">
 		<Label id="GAME_TITLE" class="GameTitle" text="#addon_game_name"/>
