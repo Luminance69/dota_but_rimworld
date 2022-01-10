@@ -95,6 +95,4 @@
 #Arrow {
     height: 50px;
     width: 50px;
-    transition-property: transform;
-    transition-duration: 0.01s;
 }
