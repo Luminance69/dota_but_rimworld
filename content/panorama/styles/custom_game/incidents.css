@@ -93,6 +93,7 @@
 /*----------------------------------------------------------------------------*/
 
 #Arrow {
+    opacity: 0.0001; /* Fixes inital frame incorrectly displaying */
     height: 60px;
     width: 60px;
 }

@@ -113,7 +113,11 @@ class Arrow {
         this.panel = $.CreatePanel("Image", $.GetContextPanel(), "Arrow");
         this.panel.BLoadLayoutSnippet("Arrow");
         this.target = target;
-        this.Update();
+
+        this.panel.SetPanelEvent("onload", () => {
+            this.Update();
+            this.panel.style.opacity = "1";
+        });
     }
 
     Update() {
@@ -129,11 +133,7 @@ class Arrow {
             // Centre arrow after detaching
             if (this.latched) {
                 this.latched = false;
-                this.panel.SetPositionInPixels(
-                    (1920 - this.panel.actuallayoutwidth)/2,
-                    (1080 - this.panel.actuallayoutheight)/2,
-                    0
-                );
+                this.Centre();
             };
 
             // deg: Angle between ent-cam and the y vector
@@ -149,5 +149,13 @@ class Arrow {
         }
 
         $.Schedule(0.01, () => this.Update());
+    }
+
+    Centre() {
+        this.panel.SetPositionInPixels(
+            (1920 - this.panel.actuallayoutwidth)/2,
+            (1080 - this.panel.actuallayoutheight)/2,
+            0
+        );
     }
 }
