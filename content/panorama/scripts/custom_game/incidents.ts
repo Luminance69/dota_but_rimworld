@@ -29,7 +29,7 @@ class Incident {
         });
 
         // Allow positioning tooltip entirely outside dummy
-        this.tooltipContainer = panel.FindChildTraverse("TooltipContainer") as Panel;
+        this.tooltipContainer = panel.FindChildTraverse("TooltipContainer")!;
         this.tooltip = panel.FindChildTraverse("Tooltip") as LabelPanel;
 
         // Arrow pointing to incident target
@@ -84,19 +84,12 @@ class Incident {
 
         this.letter.style.washColor = `${colour}`
         this.letter.style.width = `${WIDTH}px`;
-        this.letter.style.marginRight = `${MARGIN}px`;
+        this.letter.style.margin = `0px ${MARGIN}px`; // Left margin to centre name
 
         this.tooltipDummy.style.width = `${WIDTH}px`;
         this.tooltipDummy.style.marginRight = `${MARGIN}px`;
         this.tooltipContainer.style.width = `${WIDTH + MARGIN}px`
         this.tooltipContainer.style.marginRight = `${MARGIN}px`;
-
-        // Awful hack to centre text while allowing overflow into margin
-        (function centre(panel) {
-            !panel.actuallayoutwidth
-            ? $.Schedule(0.1, () => centre(panel))
-            : panel.style.width = `${panel.actuallayoutwidth + 25}px`;
-        })(this.panel);
     }
 
     // Simulates a keyframe with dynamic colouring
