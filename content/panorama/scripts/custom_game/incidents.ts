@@ -126,17 +126,21 @@ class Arrow {
     Update() {
         if (!this.panel.IsValid()) return;
 
-        const r = 0.2 * Game.GetScreenHeight(); // Arrow pivot radius
+        const r = 0.25 * Game.GetScreenHeight(); // Arrow pivot radius
         const cam = Vec(...GameUI.GetCameraLookAtPosition()); // Camera pos
         const ent = Vec(...Entities.GetAbsOrigin(this.target)); // Target pos
         const dir = Vector.sub(ent, cam); // ent - cam
         const dist = Math.sqrt(dir.x**2 + dir.y**2); // |dir|
 
-        if (dist > r+300) {
+        if (dist > r+350) {
             // Centre arrow after detaching
             if (this.latched) {
                 this.latched = false;
-                this.panel.SetPositionInPixels(935, 515, 0);
+                this.panel.SetPositionInPixels(
+                    (1920 - this.panel.actuallayoutwidth)/2,
+                    (1080 - this.panel.actuallayoutheight)/2,
+                    0
+                );
             };
 
             // deg: Angle between ent-cam and the y vector
