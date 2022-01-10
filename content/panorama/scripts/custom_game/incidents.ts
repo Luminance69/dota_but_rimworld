@@ -33,7 +33,6 @@ class Incident {
         this.tooltip = panel.FindChildTraverse("Tooltip") as LabelPanel;
 
         // Arrow pointing to incident target
-        // this.arrow = $.GetContextPanel().FindChildTraverse("Arrow") as ImagePanel;
         this.tooltipDummy.SetPanelEvent("onmouseover", () => {
             targets.forEach(t => this.arrows.push(new Arrow(t)));
         });
