@@ -8,19 +8,29 @@ interface SendIncidentLetterEvent {
 
 class UI {
     container: Panel;
+    iContainer: Panel;
+    pContainer: Panel;
     incidents: Incident[] = [];
+    problems: Problem[] = [];
 
     constructor(panel: Panel) {
-        this.container = panel.FindChild("Incidents")!;
+        this.container = panel.FindChild("Container")!;
+        this.iContainer = panel.FindChildTraverse("Incidents")!;
+        this.pContainer = panel.FindChildTraverse("Problems")!;
 
-        GameEvents.Subscribe<SendIncidentLetterEvent>("send_incident_letter", (event) => this.New(event));
+        GameEvents.Subscribe<SendIncidentLetterEvent>("send_incident_letter", (event) => this.NewIncident(event));
         GameEvents.Subscribe<PlayerChatEvent>("player_chat", (event) => this.OnPlayerChat(event));
     }
 
+    // Create a new problem alarm
+    NewProblem(name: string) {
+        this.problems.push(new Problem(this.pContainer, name))
+    }
+
     // Create a new incident letter
-    New(event: SendIncidentLetterEvent) {
+    NewIncident(event: SendIncidentLetterEvent) {
         const inc = new Incident(
-            this.container,
+            this.iContainer,
             event.name,
             event.description,
             event.severity,
@@ -44,7 +54,7 @@ class UI {
         switch(args[0]) {
             // Add a new event
             case "?incident":
-                this.New({
+                this.NewIncident({
                     name: args[1] || "Siege",
                     description: args[2] || "A group of pirates from The Mantiss of Oppression have arrived nearby.<br><br>It looks like they want to besiege the colony and pound you with mortars from a distance. You can try to wait them out - or go get them.",
                     severity: args[3] || "#ca7471",
@@ -58,10 +68,17 @@ class UI {
                 $.Msg("Added new incident: " + args[1]);
                 break;
 
+            case "?problem":
+                this.NewProblem(args[1]);
+                $.Msg("Added new problem: " + args[1])
+                break;
+
             // Clear all events
             case "?clear":
                 this.incidents = [];
-                this.container.RemoveAndDeleteChildren();
+                this.problems = []
+                this.iContainer.RemoveAndDeleteChildren();
+                this.pContainer.RemoveAndDeleteChildren();
 
                 $.Msg("Cleared all events");
                 break;

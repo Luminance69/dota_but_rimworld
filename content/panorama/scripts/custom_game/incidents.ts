@@ -104,6 +104,16 @@ class Incident {
     }
 }
 
+class Problem {
+    panel: LabelPanel;
+
+    constructor(parent: Panel, name: string) {
+        this.panel = $.CreatePanel("Label", parent, "Problem") as LabelPanel;
+        this.panel.BLoadLayoutSnippet("Problem");
+        this.panel.text = name;
+    }
+}
+
 class Arrow {
     panel: ImagePanel;
     target: EntityIndex;

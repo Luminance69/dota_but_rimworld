@@ -1,8 +1,22 @@
-#Incidents {
+#Container {
     horizontal-align: right;
     height: 70%;
     flow-children: up;
 }
+
+#Problems {
+    horizontal-align: right;
+    width: 210px;
+    margin-bottom: 10px;
+    flow-children: up;
+}
+
+#Incidents {
+    horizontal-align: right;
+    flow-children: up;
+}
+
+/*----------------------------------------------------------------------------*/
 
 @keyframes 'dropin' {
     from {
@@ -44,7 +58,41 @@
     overflow: noclip;
 }
 
-#Incident #TooltipDummy #Tooltip {
+/*----------------------------------------------------------------------------*/
+
+#Problem {
+    horizontal-align: right;
+    text-align: right;
+    color: white;
+    font-family: Arial;
+    font-size: 19px;
+    width: 100%;
+    padding: 5px 10px;
+    /* text-overflow: noclip; */
+}
+
+#Problem:hover {
+    saturation: 0.975;
+    sound: "MouseoverButton";
+}
+
+@keyframes 'pulse' {
+    0% {background-color: #990000;}
+    20% {background-color: #990000;}
+    50% {background-color: #ff0000;}
+    80% {background-color: #930000;}
+    100% {background-color: #990000;}
+}
+
+#Problem.Major {
+    animation-name: pulse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+/*----------------------------------------------------------------------------*/
+
+#Tooltip {
     opacity: 0;
 }
 
@@ -62,8 +110,6 @@
     background-color: #15191e;
     sound: "MouseoverButton";
 }
-
-/*----------------------------------------------------------------------------*/
 
 #TooltipLarge {
     flow-children: up;

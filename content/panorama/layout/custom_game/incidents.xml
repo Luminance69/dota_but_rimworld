@@ -22,6 +22,10 @@
             </Panel>
         </snippet>
 
+        <snippet name="Problem">
+            <Label id="Problem" />
+        </snippet>
+
         <snippet name="TooltipLarge">
             <Label id="TooltipLarge" html="true">
                 <TextButton id="Jump" text="Jump to location" />
@@ -35,6 +39,9 @@
     </snippets>
 
     <Panel hittest="false" style="width: 100%; height: 100%;">
-        <Panel id="Incidents" hittest="false" />
+        <Panel id="Container" hittest="false">
+            <Panel id="Incidents" hittest="false" />
+            <Panel id="Problems" hittest="false" />
+        </Panel>
     </Panel>
 </root>
