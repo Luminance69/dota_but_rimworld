@@ -12,6 +12,7 @@ interface SendIncidentLetterEvent {
 interface UpdateProblemAlarmEvent {
     type: ProblemType;
     targets: LuaArray<EntityIndex>;
+    major: 0 | 1;
     increment: 0 | 1;
 }
 
@@ -77,7 +78,7 @@ class UI {
         Object.assign(main, concat);
         const description = Object.values(main).join("");
 
-        return [name, description, targets, data.major];
+        return [name, description, targets, Boolean(event.major)];
     }
 
     // Create a new incident letter
@@ -128,6 +129,7 @@ class UI {
                         args[2]
                         ? args[2].split(" ").reduce((o,v,i) => (Object.assign(o, {[i]: Entities.GetAllEntitiesByName("npc_dota_hero_"+v)[0]})), {})
                         : Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()),
+                    major: Number(args[3] || 1) as 0|1,
                     increment: Number(args[4] || 1) as 0|1,
                 });
                 $.Msg("Added new problem: " + args[1])

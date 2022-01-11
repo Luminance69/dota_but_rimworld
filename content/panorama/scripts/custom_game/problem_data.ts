@@ -16,7 +16,6 @@ const ProblemData =
                 1: "<br>&nbsp;&nbsp;- <span color='#d09b61'>{t}</span>",
             },
         },
-        major: true,
     },
 
     MinorBreak:
@@ -34,6 +33,5 @@ const ProblemData =
                 1: "<br>&nbsp;&nbsp;- <span color='#d09b61'>{t}</span>",
             },
         },
-        major: false,
     },
 }
