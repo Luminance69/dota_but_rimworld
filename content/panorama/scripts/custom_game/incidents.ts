@@ -154,7 +154,7 @@ class Problem {
 
             // Lock y-level to cursor y-level
             (function UpdateY() {
-                if (!tooltipSmall) return;
+                if (!tooltipSmall.IsValid()) return;
 
                 let [,y] = GameUI.GetCursorPosition();
                 tooltipSmall.SetPositionInPixels(x, y, 0);
