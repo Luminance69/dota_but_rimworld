@@ -106,11 +106,48 @@ class Incident {
 
 class Problem {
     panel: LabelPanel;
+    tooltip: LabelPanel;
+    targets: EntityIndex[];
+    arrows: Arrow[] = [];
 
-    constructor(parent: Panel, name: string) {
-        this.panel = $.CreatePanel("Label", parent, "Problem") as LabelPanel;
-        this.panel.BLoadLayoutSnippet("Problem");
+    constructor(parent: Panel, name: string, description: string, targets: EntityIndex[], major: boolean) {
+        const panel = $.CreatePanel("Label", parent, "Problem") as LabelPanel;
+        panel.BLoadLayoutSnippet("Problem");
+        this.panel = panel;
+        this.targets = targets;
+
+        // Arrow pointing to problem target
+        panel.SetPanelEvent("onmouseover", () => {
+            targets.forEach(t => this.arrows.push(new Arrow(t)));
+        });
+
+        panel.SetPanelEvent("onmouseout", () => {
+            this.arrows.forEach(a => a.panel.DeleteAsync(0));
+            this.arrows = [];
+
+        });
+
+        this.tooltip = panel.FindChild("Tooltip") as LabelPanel;
+
         this.panel.text = name;
+        // this.tooltip.text = description;
+        if (major) panel.AddClass("Major");
+    }
+
+    UpdateTargets(targets: EntityIndex[], increment: boolean) {
+        increment
+        ? this.targets = this.targets.concat(targets)
+        : this.targets = this.targets.filter((t) => !(t in targets))
+
+        this.panel.SetPanelEvent("onmouseover", () => {
+            this.targets.forEach(t => this.arrows.push(new Arrow(t)));
+        });
+
+        this.panel.SetPanelEvent("onmouseout", () => {
+            this.arrows.forEach(a => a.panel.DeleteAsync(0));
+            this.arrows = [];
+
+        });
     }
 }
 

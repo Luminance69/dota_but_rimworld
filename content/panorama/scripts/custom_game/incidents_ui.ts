@@ -6,12 +6,19 @@ interface SendIncidentLetterEvent {
     targets: EntityIndex | Record<number, EntityIndex>;
 }
 
+type ProblemType = keyof typeof ProblemData;
+interface UpdateProblemAlarmEvent {
+    type: ProblemType;
+    targets: EntityIndex | Record<number, EntityIndex>;
+    increment: 0 | 1;
+}
+
 class UI {
     container: Panel;
     iContainer: Panel;
     pContainer: Panel;
     incidents: Incident[] = [];
-    problems: Problem[] = [];
+    problems: Record<string, Problem> = {};
 
     constructor(panel: Panel) {
         this.container = panel.FindChild("Container")!;
@@ -19,12 +26,53 @@ class UI {
         this.pContainer = panel.FindChildTraverse("Problems")!;
 
         GameEvents.Subscribe<SendIncidentLetterEvent>("send_incident_letter", (event) => this.NewIncident(event));
+        GameEvents.Subscribe<UpdateProblemAlarmEvent>("update_problem_alarm", (event) => this.UpdateProblem(event));
         GameEvents.Subscribe<PlayerChatEvent>("player_chat", (event) => this.OnPlayerChat(event));
     }
 
-    // Create a new problem alarm
-    NewProblem(name: string) {
-        this.problems.push(new Problem(this.pContainer, name))
+    // Increment/decrement a problem alarm
+    UpdateProblem(event: UpdateProblemAlarmEvent) {
+        const [name, description, targets, major] = this.ConstructProblem(event);
+
+        this.problems[event.type]
+        ? this.problems[event.type].UpdateTargets(targets, Boolean(event.increment))
+        : this.problems[event.type] = new Problem(
+            this.pContainer,
+            name,
+            description,
+            targets,
+            major,
+        );
+    }
+
+    ConstructProblem(event: UpdateProblemAlarmEvent): [string, string, EntityIndex[], boolean] {
+        const data = ProblemData[event.type];
+        const targets = ParseLuaArray<EntityIndex>(event.targets);
+        const n = targets.length;
+
+        // Replace all enumerators in name
+        let name = "";
+        n > 1
+        ? name = data.name.replace(/{xn}/g, ` x${n}`)
+        : name = data.name.replace(/{xn}/g, "");
+        name = name.replace(/{n}/g, `${n}`);
+
+        // Replace placeholders and duplicate repeatable string for each target
+        const repeat: Record<number, string> = data.description.repeat;
+        let concat: Record<number, string> = {};
+        for (const k in repeat) {
+            concat[k] = "";
+            targets.forEach(t =>
+                concat[k] += repeat[k].replace(/{t}/g, $.Localize(Entities.GetUnitName(t)))
+            );
+        }
+
+        // Combine updated strings
+        let main = data.description.main;
+        Object.assign(main, concat);
+        const description = Object.values(main).join();
+
+        return [name, description, targets, data.major];
     }
 
     // Create a new incident letter
@@ -69,14 +117,21 @@ class UI {
                 break;
 
             case "?problem":
-                this.NewProblem(args[1]);
+                this.UpdateProblem({
+                    type: args[1] as ProblemType || "MajorBreak" as ProblemType,
+                    targets:
+                        args[2]
+                        ? args[2].split(" ").reduce((o,v,i) => (Object.assign(o, {[i]: Entities.GetAllEntitiesByName("npc_dota_hero_"+v)[0]})), {})
+                        : Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()),
+                    increment: Number(args[3] || 1) as 0|1,
+                });
                 $.Msg("Added new problem: " + args[1])
                 break;
 
             // Clear all events
             case "?clear":
                 this.incidents = [];
-                this.problems = []
+                this.problems = {};
                 this.iContainer.RemoveAndDeleteChildren();
                 this.pContainer.RemoveAndDeleteChildren();
 

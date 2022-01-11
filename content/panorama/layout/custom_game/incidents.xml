@@ -5,6 +5,7 @@
 
     <scripts>
         <include src="file://{resources}/scripts/custom_game/rwutils.js" />
+        <include src="file://{resources}/scripts/custom_game/problem_data.js" />
         <include src="file://{resources}/scripts/custom_game/incidents_ui.js" />
         <include src="file://{resources}/scripts/custom_game/incidents.js" />
     </scripts>
@@ -23,7 +24,9 @@
         </snippet>
 
         <snippet name="Problem">
-            <Label id="Problem" />
+            <Label id="Problem">
+                <Label id="Tooltip" hittest="false" html="true" />
+            </Label>
         </snippet>
 
         <snippet name="TooltipLarge">
