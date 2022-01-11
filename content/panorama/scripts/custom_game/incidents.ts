@@ -140,6 +140,8 @@ class Problem {
         });
 
         this.panel.text = name;
+        Game.EmitSound("TinyBell");
+        if (parent === ui.pMajor) Game.EmitSound("AlertRed");
     }
 
     CreateSmallTooltip(text: string) {
