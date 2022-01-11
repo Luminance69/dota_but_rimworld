@@ -254,7 +254,7 @@
     }
 }
 
-"MouseoverButton"
+"MouseoverButtonHigh"
 {
     "operator_stacks"
     {
@@ -277,7 +277,9 @@
                         }
                     }
                     "volume"            {   "value"     "0.20000"   }
-                    "pitch"             {   "value"     "1.000000"  }
+                    "pitch_rand_min"    {   "value"     "-0.05000"  }
+                    "pitch_rand_max"    {   "value"     "0.05000"   }
+                    "pitch"             {   "value"     "1.20000"   }
                     "soundlevel"        {   "value"     "100.00000" }
                 }
             }

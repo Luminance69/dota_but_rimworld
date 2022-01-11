@@ -112,7 +112,7 @@
     border: 2px solid lGrey;
     border-right: 1px solid lGrey;
     background-color: dGrey;
-    sound: "MouseoverButton";
+    sound: "MouseoverButtonHigh";
 }
 
 #TooltipLarge {
@@ -137,7 +137,7 @@
 
 #TooltipLarge > TextButton:hover {
     color: yellow;
-    sound: "MouseoverButton";
+    sound: "MouseoverButtonHigh";
 }
 
 /*----------------------------------------------------------------------------*/
