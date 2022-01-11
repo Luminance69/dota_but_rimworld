@@ -1,3 +1,9 @@
+@define font-color: white;
+@define font-size: 19px;
+@define font-family: Arial;
+@define lGrey: #616c7b;
+@define dGrey: #15191e;
+
 #Container {
     horizontal-align: right;
     height: 70%;
@@ -45,9 +51,9 @@
 
 #Incident > Label {
     align: center center;
-    color: white;
-    font-family: Arial;
-    font-size: 19;
+    color: font-color;
+    font-family: font-family;
+    font-size: font-size;
     background-color: gradient(linear, 130% 0%, 0% 130%, from(rgba(0,0,0,0.05)), color-stop(0.5, rgba(0,0,0,0.5)), to(rgba(0,0,0,0.05)));
 }
 
@@ -62,12 +68,11 @@
 #Problem {
     horizontal-align: right;
     text-align: right;
-    color: white;
-    font-family: Arial;
-    font-size: 19px;
+    color: font-color;
+    font-family: font-family;
+    font-size: font-size;
     width: 100%;
     padding: 5px 10px;
-    /* text-overflow: noclip; */
 }
 
 #Problem:hover {
@@ -99,28 +104,28 @@
 
 #TooltipSmall {
     opacity: 0.0001; /* Fixes inital frame incorrectly displaying */
-    color: white;
-    font-family: Arial;
-    font-size: 19;
+    color: font-color;
+    font-family: font-family;
+    font-size: font-size;
     max-width: 350px;
     padding: 20px 10px;
-    border: 2px solid #616c7b;
-    border-right: 1px solid #616c7b;
-    background-color: #15191e;
+    border: 2px solid lGrey;
+    border-right: 1px solid lGrey;
+    background-color: dGrey;
     sound: "MouseoverButton";
 }
 
 #TooltipLarge {
     flow-children: up;
-    color: white;
-    font-family: Arial;
-    font-size: 19px;
+    color: font-color;
+    font-family: font-family;
+    font-size: font-size;
     align: middle middle;
     width: 750px;
     height: 550px;
     padding: 20px;
-    border: 2px solid #616c7b;
-    background-color: #15191e;
+    border: 2px solid lGrey;
+    background-color: dGrey;
 }
 
 #TooltipLarge > TextButton {
