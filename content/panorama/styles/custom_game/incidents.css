@@ -59,6 +59,16 @@
 
 /*----------------------------------------------------------------------------*/
 
+#Problems > #Major {
+    width: 100%;
+    flow-children: down;
+}
+
+#Problems > #Minor {
+    width: 100%;
+    flow-children: down;
+}
+
 #Problem {
     horizontal-align: right;
     text-align: right;

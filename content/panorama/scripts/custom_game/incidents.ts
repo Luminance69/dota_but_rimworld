@@ -120,7 +120,7 @@ class Problem {
     targets: EntityIndex[];
     arrows: Arrow[] = [];
 
-    constructor(parent: Panel, name: string, description: string, targets: EntityIndex[], major: boolean) {
+    constructor(parent: Panel, name: string, description: string, targets: EntityIndex[]) {
         const panel = $.CreatePanel("Label", parent, "Problem") as LabelPanel;
         panel.BLoadLayoutSnippet("Problem");
         this.panel = panel;
@@ -140,7 +140,6 @@ class Problem {
         });
 
         this.panel.text = name;
-        if (major) panel.AddClass("Major");
     }
 
     CreateSmallTooltip(text: string) {

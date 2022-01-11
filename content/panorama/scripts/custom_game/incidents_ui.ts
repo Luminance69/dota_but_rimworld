@@ -19,6 +19,8 @@ class UI {
     container: Panel;
     iContainer: Panel;
     pContainer: Panel;
+    pMajor: Panel;
+    pMinor: Panel;
     incidents: Incident[] = [];
     problems: Record<string, Problem> = {};
 
@@ -26,6 +28,8 @@ class UI {
         this.container = panel.FindChild("Container")!;
         this.iContainer = panel.FindChildTraverse("Incidents")!;
         this.pContainer = panel.FindChildTraverse("Problems")!;
+        this.pMajor = panel.FindChildTraverse("Major")!;
+        this.pMinor = panel.FindChildTraverse("Minor")!;
 
         GameEvents.Subscribe<SendIncidentLetterEvent>("send_incident_letter", (event) => this.NewIncident(event));
         GameEvents.Subscribe<UpdateProblemAlarmEvent>("update_problem_alarm", (event) => this.UpdateProblem(event));
@@ -39,11 +43,10 @@ class UI {
         this.problems[event.type]
         ? this.problems[event.type].UpdateTargets(targets, Boolean(event.increment))
         : this.problems[event.type] = new Problem(
-            this.pContainer,
+            major ? this.pMajor : this.pMinor,
             name,
             description,
             targets,
-            major,
         );
     }
 
@@ -125,7 +128,7 @@ class UI {
                         args[2]
                         ? args[2].split(" ").reduce((o,v,i) => (Object.assign(o, {[i]: Entities.GetAllEntitiesByName("npc_dota_hero_"+v)[0]})), {})
                         : Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()),
-                    increment: Number(args[3] || 1) as 0|1,
+                    increment: Number(args[4] || 1) as 0|1,
                 });
                 $.Msg("Added new problem: " + args[1])
                 break;
@@ -135,7 +138,8 @@ class UI {
                 this.incidents = [];
                 this.problems = {};
                 this.iContainer.RemoveAndDeleteChildren();
-                this.pContainer.RemoveAndDeleteChildren();
+                this.pMajor.RemoveAndDeleteChildren();
+                this.pMinor.RemoveAndDeleteChildren();
 
                 $.Msg("Cleared all events");
                 break;
