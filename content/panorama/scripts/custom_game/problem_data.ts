@@ -13,7 +13,7 @@ const ProblemData =
             },
             repeat:
             {
-                1: "<br> - <span style='color: orange'>{t}</span>",
+                1: "<br> - <span color='#d09b61'>{t}</span>",
             },
         },
         major: true

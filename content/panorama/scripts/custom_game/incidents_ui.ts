@@ -72,7 +72,7 @@ class UI {
         // Combine updated strings
         let main = data.description.main;
         Object.assign(main, concat);
-        const description = Object.values(main).join();
+        const description = Object.values(main).join("");
 
         return [name, description, targets, data.major];
     }
