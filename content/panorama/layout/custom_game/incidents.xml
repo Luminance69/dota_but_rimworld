@@ -15,18 +15,16 @@
             <Panel id="Incident" hittest="false">
                 <Image id="Letter" hittest="false" src="file://{images}/custom_game/letter.png" />
                 <Label id="Name" hittest="false" />
-                <Button id="TooltipDummy">
-                    <Panel id="TooltipContainer" hittest="false">
-                        <Label id="Tooltip" hittest="false" html="true" />
-                    </Panel>
-                </Button>
+                <Button id="TooltipDummy" />
             </Panel>
         </snippet>
 
         <snippet name="Problem">
-            <Label id="Problem">
-                <Label id="Tooltip" hittest="false" html="true" />
-            </Label>
+            <Label id="Problem" />
+        </snippet>
+
+        <snippet name="TooltipSmall">
+            <Label id="TooltipSmall" hittest="false" html="true" />
         </snippet>
 
         <snippet name="TooltipLarge">

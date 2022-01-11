@@ -51,8 +51,7 @@
     background-color: gradient(linear, 130% 0%, 0% 130%, from(rgba(0,0,0,0.05)), color-stop(0.5, rgba(0,0,0,0.5)), to(rgba(0,0,0,0.05)));
 }
 
-#Incident #TooltipDummy,
-#Incident #TooltipContainer {
+#Incident > #TooltipDummy {
     horizontal-align: right;
     height: 100%;
     overflow: noclip;
@@ -73,7 +72,6 @@
 
 #Problem:hover {
     saturation: 0.975;
-    sound: "MouseoverButton";
 }
 
 @keyframes 'pulse' {
@@ -92,17 +90,11 @@
 
 /*----------------------------------------------------------------------------*/
 
-#Tooltip {
-    opacity: 0;
-}
-
-#Incident #TooltipDummy:hover #Tooltip {
-    opacity: 1;
+#TooltipSmall {
+    opacity: 0.0001; /* Fixes inital frame incorrectly displaying */
     color: white;
     font-family: Arial;
     font-size: 19;
-    align: right bottom;
-    transform: translate3d(-90%, 100%, 0px);
     max-width: 350px;
     padding: 20px 10px;
     border: 2px solid #616c7b;

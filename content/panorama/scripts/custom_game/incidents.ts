@@ -3,8 +3,7 @@ class Incident {
     letter: ImagePanel;
     name: LabelPanel;
     tooltipDummy: Button;
-    tooltipContainer: Panel;
-    tooltip: LabelPanel;
+    tooltipSmall?: LabelPanel;
     arrows: Arrow[] = [];
 
     constructor(parent: Panel, name: string, description: string, colour: string, targets: EntityIndex[]) {
@@ -16,6 +15,7 @@ class Incident {
 
         // Hover and click detection
         this.tooltipDummy = panel.FindChild("TooltipDummy") as Button;
+
         // Incident right click
         this.tooltipDummy.SetPanelEvent("oncontextmenu", () => {
             Game.EmitSound("Click");
@@ -28,26 +28,38 @@ class Incident {
             this.CreateLargeTooltip(description);
         });
 
-        // Allow positioning tooltip entirely outside dummy
-        this.tooltipContainer = panel.FindChildTraverse("TooltipContainer")!;
-        this.tooltip = panel.FindChildTraverse("Tooltip") as LabelPanel;
-
-        // Arrow pointing to incident target
+        // Small tooltip and arrow on hover
         this.tooltipDummy.SetPanelEvent("onmouseover", () => {
+            this.tooltipSmall = this.CreateSmallTooltip(description);
             targets.forEach(t => this.arrows.push(new Arrow(t)));
         });
 
+        // Cleanup small tooltip and arrow
         this.tooltipDummy.SetPanelEvent("onmouseout", () => {
+            this.tooltipSmall!.DeleteAsync(0);
             this.arrows.forEach(a => a.panel.DeleteAsync(0));
             this.arrows = [];
-
         });
 
         // Styles and effects
         this.name.text = name;
-        this.tooltip.text = description;
         this.Style(colour);
         this.Glow(colour);
+    }
+
+    CreateSmallTooltip(text: string) {
+        const tooltipSmall = $.CreatePanel("Label", $.GetContextPanel(), "TooltipSmall");
+        tooltipSmall.BLoadLayoutSnippet("TooltipSmall");
+        tooltipSmall.text = text;
+
+        tooltipSmall.SetPanelEvent("onload", () => {
+            let {x, y} = this.panel.GetPositionWithinWindow();
+            x -= tooltipSmall.actuallayoutwidth/2 + 2*20;
+            tooltipSmall.SetPositionInPixels(x, y, 0);
+            tooltipSmall.style.opacity = "1";
+        });
+
+        return tooltipSmall;
     }
 
     CreateLargeTooltip(text: string) {
@@ -88,8 +100,6 @@ class Incident {
 
         this.tooltipDummy.style.width = `${WIDTH}px`;
         this.tooltipDummy.style.marginRight = `${MARGIN}px`;
-        this.tooltipContainer.style.width = `${WIDTH + MARGIN}px`
-        this.tooltipContainer.style.marginRight = `${MARGIN}px`;
     }
 
     // Simulates a keyframe with dynamic colouring
@@ -106,7 +116,7 @@ class Incident {
 
 class Problem {
     panel: LabelPanel;
-    tooltip: LabelPanel;
+    tooltipSmall?: LabelPanel;
     targets: EntityIndex[];
     arrows: Arrow[] = [];
 
@@ -116,22 +126,46 @@ class Problem {
         this.panel = panel;
         this.targets = targets;
 
-        // Arrow pointing to problem target
+        // Small tooltip and arrow on hover
         panel.SetPanelEvent("onmouseover", () => {
+            this.tooltipSmall = this.CreateSmallTooltip(description);
             targets.forEach(t => this.arrows.push(new Arrow(t)));
         });
 
+        // Cleanup small tooltip and arrow
         panel.SetPanelEvent("onmouseout", () => {
+            this.tooltipSmall!.DeleteAsync(0);
             this.arrows.forEach(a => a.panel.DeleteAsync(0));
             this.arrows = [];
-
         });
 
-        this.tooltip = panel.FindChild("Tooltip") as LabelPanel;
-
         this.panel.text = name;
-        // this.tooltip.text = description;
         if (major) panel.AddClass("Major");
+    }
+
+    CreateSmallTooltip(text: string) {
+        const tooltipSmall = $.CreatePanel("Label", $.GetContextPanel(), "TooltipSmall");
+        tooltipSmall.BLoadLayoutSnippet("TooltipSmall");
+        tooltipSmall.text = text;
+
+        tooltipSmall.SetPanelEvent("onload", () => {
+            let {x,} = this.panel.GetPositionWithinWindow();
+            x -= this.panel.actuallayoutwidth + 2*20;
+
+            // Lock y-level to cursor y-level
+            (function UpdateY() {
+                if (!tooltipSmall) return;
+
+                let [,y] = GameUI.GetCursorPosition();
+                tooltipSmall.SetPositionInPixels(x, y, 0);
+
+                $.Schedule(0.02, () => UpdateY());
+            })();
+
+            tooltipSmall.style.opacity = "1";
+        });
+
+        return tooltipSmall;
     }
 
     UpdateTargets(targets: EntityIndex[], increment: boolean) {
