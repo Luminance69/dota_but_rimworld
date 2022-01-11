@@ -13,7 +13,7 @@ const ProblemData =
             },
             repeat:
             {
-                1: "<br>    - <span color='#d09b61'>{t}</span>",
+                1: "<br>&nbsp;&nbsp;- <span color='#d09b61'>{t}</span>",
             },
         },
         major: true,
@@ -31,7 +31,7 @@ const ProblemData =
             },
             repeat:
             {
-                1: "<br>    - <span color='#d09b61'>{t}</span>",
+                1: "<br>&nbsp;&nbsp;- <span color='#d09b61'>{t}</span>",
             },
         },
         major: false,
