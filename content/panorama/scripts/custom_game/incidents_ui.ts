@@ -1,15 +1,17 @@
+type LuaArray<T> = T | Record<number, T>;
+type ProblemType = keyof typeof ProblemData;
+
 interface SendIncidentLetterEvent {
     name: string;
     description: string;
     severity: string;
-    sounds: string | Record<number, string>;
-    targets: EntityIndex | Record<number, EntityIndex>;
+    sounds: LuaArray<string>;
+    targets: LuaArray<EntityIndex>;
 }
 
-type ProblemType = keyof typeof ProblemData;
 interface UpdateProblemAlarmEvent {
     type: ProblemType;
-    targets: EntityIndex | Record<number, EntityIndex>;
+    targets: LuaArray<EntityIndex>;
     increment: 0 | 1;
 }
 
@@ -47,7 +49,7 @@ class UI {
 
     ConstructProblem(event: UpdateProblemAlarmEvent): [string, string, EntityIndex[], boolean] {
         const data = ProblemData[event.type];
-        const targets = ParseLuaArray<EntityIndex>(event.targets);
+        const targets = ParseLuaArray(event.targets);
         const n = targets.length;
 
         // Replace all enumerators in name
@@ -82,11 +84,11 @@ class UI {
             event.name,
             event.description,
             event.severity,
-            ParseLuaArray<EntityIndex>(event.targets),
+            ParseLuaArray(event.targets),
         );
 
         this.incidents.push(inc);
-        ParseLuaArray<string>(event.sounds).forEach(s => Game.EmitSound(s));
+        ParseLuaArray(event.sounds).forEach(s => Game.EmitSound(s));
     }
 
     // Remove and cleanup incident letter
