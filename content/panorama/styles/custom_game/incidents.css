@@ -4,29 +4,11 @@
 @define lGrey: #616c7b;
 @define dGrey: #15191e;
 
-#Container {
-    horizontal-align: right;
-    height: 70%;
-    flow-children: up;
-}
-
-#Problems {
-    horizontal-align: right;
-    width: 210px;
-    margin-bottom: 10px;
-    flow-children: down;
-}
-
-#Incidents {
-    horizontal-align: right;
-    flow-children: down;
-}
-
-/*----------------------------------------------------------------------------*/
-
+@define dropHeight: 350px;
+@define -dropHeight: -350px;
 @keyframes 'dropin' {
     from {
-        transform: translateY(-250px);
+        transform: translateY(-dropHeight);
         opacity: 0;
     }
 
@@ -36,11 +18,51 @@
     }
 }
 
+@keyframes 'bouncein' {
+    0% {animation-timing-function: cubic-bezier(.6, .3, .9, .8); transform: translateX(-400px);}
+    40% {animation-timing-function: cubic-bezier(1, 0, 1, 0); transform: translateX(0px);}
+    57% {animation-timing-function: ease-out; transform: translateX(-50px);}
+    80% {animation-timing-function: ease-in; transform: translateX(0px);}
+    91% {animation-timing-function: ease-out; transform: translateX(-5px);}
+    100% {animation-timing-function: ease-in; transform: translateX(0px);}
+}
+
+@keyframes 'pulse' {
+    0% {background-color: #990000;}
+    20% {background-color: #990000;}
+    50% {background-color: #ff0000;}
+    80% {background-color: #930000;}
+    100% {background-color: #990000;}
+}
+
+#Container {
+    horizontal-align: right;
+    height: 70%;
+    width: 100%;
+    flow-children: up;
+}
+
+#Problems {
+    horizontal-align: right;
+    width: 100%;
+    margin-bottom: 10px;
+    flow-children: down;
+}
+
+#Incidents {
+    overflow: scroll;
+    horizontal-align: right;
+    padding-top: dropHeight; /* Fixes animation playing outside parent */
+    margin-top: -dropHeight; /*                                        */
+    flow-children: down;
+}
+
+/*----------------------------------------------------------------------------*/
+
 #Incident {
     horizontal-align: right;
     animation-name: dropin;
-    animation-duration: 1s;
-    animation-delay: 0s;
+    animation-duration: 2s;
 }
 
 #Incident > Image {
@@ -68,9 +90,6 @@
 #Problems > #Major {
     width: 100%;
     flow-children: down;
-    animation-name: pulse;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
 }
 
 #Problems > #Minor {
@@ -84,8 +103,16 @@
     color: font-color;
     font-family: font-family;
     font-size: font-size;
-    width: 100%;
+    width: 210px;
     padding: 5px 10px;
+    animation-name: bouncein;
+    animation-duration: 1.5s;
+}
+
+#Problems > #Major > #Problem {
+    animation-name: bouncein, pulse;
+    animation-duration: 1.5s, 2s;
+    animation-iteration-count: 1, infinite;
 }
 
 #Problems > #Major > #Problem:hover {
@@ -94,14 +121,6 @@
 
 #Problems > #Minor > #Problem:hover {
     background-color: #ffffff10;
-}
-
-@keyframes 'pulse' {
-    0% {background-color: #990000;}
-    20% {background-color: #990000;}
-    50% {background-color: #ff0000;}
-    80% {background-color: #930000;}
-    100% {background-color: #990000;}
 }
 
 /*----------------------------------------------------------------------------*/

@@ -45,8 +45,9 @@ class Incident {
 
         // Styles and effects
         this.name.text = name;
+        this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`;
         this.Style(colour);
-        this.Glow(colour);
+        $.Schedule(2, () => this.Glow(colour));
     }
 
     CreateSmallTooltip(text: string) {
@@ -108,13 +109,10 @@ class Incident {
 
     // Simulates a keyframe with dynamic colouring
     Glow(colour: string) {
-        this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`;
-        $.Schedule(1, () => {
-            this.letter.style.boxShadow = `${colour}60 100px 0px 450px 0px`;
-            $.Schedule(1, () =>
-                this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`
-            );
-        });
+        this.letter.style.boxShadow = `${colour}60 100px 0px 450px 0px`;
+        $.Schedule(1, () =>
+            this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`
+        );
     }
 }
 
