@@ -80,6 +80,7 @@ class Incident {
         (<TextButton>tooltipLarge.FindChild("Jump")).SetPanelEvent("onactivate", () => {
             Game.EmitSound("CommsWindow_Close");
             GameUI.MoveCameraToEntity(this.targets[0]);
+            GameUI.SelectUnit(this.targets[0], false);
             tooltipLarge.DeleteAsync(0);
             ui.DeleteIncident(this);
         });
@@ -146,6 +147,7 @@ class Problem {
         this.panel.SetPanelEvent("oncontextmenu", () => {
             if (this.cycle > targets.length-1) this.cycle = 0;
             GameUI.MoveCameraToEntity(targets[this.cycle]);
+            GameUI.SelectUnit(targets[this.cycle], false);
             ++this.cycle
         });
 
@@ -153,6 +155,7 @@ class Problem {
         this.panel.SetPanelEvent("onactivate", () => {
             if (this.cycle > targets.length-1) this.cycle = 0;
             GameUI.MoveCameraToEntity(targets[this.cycle]);
+            GameUI.SelectUnit(targets[this.cycle], false);
             ++this.cycle
         });
 
