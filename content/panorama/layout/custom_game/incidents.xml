@@ -24,10 +24,12 @@
         </snippet>
 
         <snippet name="TooltipLarge">
-            <Label id="TooltipLarge" html="true">
-                <TextButton id="Jump" text="Jump to location" />
-                <TextButton id="Close" text="Close" />
-            </Label>
+            <Button id="HitBlocker" hittest="true" style="width: 100%; height: 100%;">
+                <Label id="TooltipLarge" html="true">
+                    <TextButton id="Jump" text="Jump to location" />
+                    <TextButton id="Close" text="Close" />
+                </Label>
+            </Button>
         </snippet>
 
         <snippet name="Arrow">

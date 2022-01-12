@@ -65,14 +65,15 @@ class Incident {
     }
 
     CreateLargeTooltip(text: string) {
-        const tooltipLarge = $.CreatePanel("Label", $.GetContextPanel(), "TooltipLarge");
-        tooltipLarge.BLoadLayoutSnippet("TooltipLarge");
+        const container = $.CreatePanel("Button", $.GetContextPanel(), "");
+        container.BLoadLayoutSnippet("TooltipLarge");
+        const tooltipLarge = container.FindChild("TooltipLarge") as LabelPanel;
         tooltipLarge.text = text;
 
         // Close tooltip/incident
         (<TextButton>tooltipLarge.FindChild("Close")).SetPanelEvent("onactivate", () => {
             Game.EmitSound("CommsWindow_Close");
-            tooltipLarge.DeleteAsync(0);
+            container.DeleteAsync(0);
             ui.DeleteIncident(this);
         });
 
@@ -81,7 +82,7 @@ class Incident {
             Game.EmitSound("CommsWindow_Close");
             GameUI.MoveCameraToEntity(this.targets[0]);
             GameUI.SelectUnit(this.targets[0], false);
-            tooltipLarge.DeleteAsync(0);
+            container.DeleteAsync(0);
             ui.DeleteIncident(this);
         });
     }
