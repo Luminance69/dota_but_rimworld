@@ -3,6 +3,21 @@ ListenToGameEvent("player_chat", function(keys)
     CustomGameEventManager:Send_ServerToAllClients("player_chat", keys)
 end, nil)
 
+-- Update the targets of a problem alarm
+-- keys: {type, targets, major, increment} **{increment: false} will decrement**
+--       [string, EntityIndex | EntityIndex[], bool, bool]
+function UpdateProblemAlarm(player, keys)
+    CustomGameEventManager:Send_ServerToTeam(player, "update_problem_alarm", keys)
+end
+
+function UpdateProblemAlarmTeam(team, keys)
+    CustomGameEventManager:Send_ServerToTeam(team, "update_problem_alarm", keys)
+end
+
+function UpdateProblemAlarmAll(keys)
+    CustomGameEventManager:Send_ServerToAllClients("update_problem_alarm", keys)
+end
+
 -- Send a new incident letter to the given player
 -- keys: {name, description, severity, sounds, targets}
 --       [string, string, Severity, string | string[], EntityIndex | EntityIndex[]]
