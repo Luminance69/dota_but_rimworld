@@ -39,25 +39,44 @@ class UI {
 
     // Increment/decrement a problem alarm
     UpdateProblem(event: UpdateProblemAlarmEvent) {
-        const [name, description, targets, major] = this.ConstructProblem(event);
+        const problem = this.problems[event.type];
 
-        this.problems[event.type]
-        ? this.problems[event.type].UpdateTargets(targets, Boolean(event.increment))
-        : this.problems[event.type] = new Problem(
-            major ? this.pMajor : this.pMinor,
-            name,
-            description,
-            targets,
-        );
+        if (problem) {
+            const old = problem.targets;
+            const [name, description, targets, major] = this.ConstructProblem(event, old);
+            problem.UpdateTargets(
+                name,
+                description,
+                targets,
+                major,
+            );
+        } else {
+            const [name, description, targets, major] = this.ConstructProblem(event);
+            this.problems[event.type] = new Problem(
+                major ? this.pMajor : this.pMinor,
+                event.type,
+                name,
+                description,
+                targets,
+                major,
+            );
+        };
     }
 
-    ConstructProblem(event: UpdateProblemAlarmEvent): [string, string, EntityIndex[], boolean] {
+    ConstructProblem(event: UpdateProblemAlarmEvent, oldTargets?: EntityIndex[]): [string, string, EntityIndex[], boolean] {
         const data = ProblemData[event.type];
-        const targets = ParseLuaArray(event.targets);
-        const n = targets.length;
+        let targets = ParseLuaArray(event.targets);
+
+        // Increment/decrement targets
+        if (oldTargets) {
+            event.increment
+            ? targets = oldTargets.concat(targets)
+            : targets = oldTargets.filter(t => !targets.includes(t));
+        };
 
         // Replace all enumerators in name
         let name = "";
+        const n = targets.length;
         n > 1
         ? name = data.name.replace(/{xn}/g, ` x${n}`)
         : name = data.name.replace(/{xn}/g, "");
@@ -81,6 +100,12 @@ class UI {
         return [name, description, targets, Boolean(event.major)];
     }
 
+    // Remove and cleanup problem alarm
+    DeleteProblem(problem: Problem) {
+        delete this.problems[problem.type];
+        problem.panel.DeleteAsync(0);
+    }
+
     // Create a new incident letter
     NewIncident(event: SendIncidentLetterEvent) {
         const inc = new Incident(
@@ -96,7 +121,7 @@ class UI {
     }
 
     // Remove and cleanup incident letter
-    Delete(incident: Incident) {
+    DeleteIncident(incident: Incident) {
         this.incidents.splice(this.incidents.indexOf(incident), 1);
         incident.panel.DeleteAsync(0);
     }

@@ -19,7 +19,7 @@ class Incident {
         // Incident right click
         this.tooltipDummy.SetPanelEvent("oncontextmenu", () => {
             Game.EmitSound("Click");
-            ui.Delete(this);
+            ui.DeleteIncident(this);
         });
 
         // Incident left click
@@ -71,7 +71,7 @@ class Incident {
         (<TextButton>tooltipLarge.FindChild("Close")).SetPanelEvent("onactivate", () => {
             Game.EmitSound("CommsWindow_Close");
             tooltipLarge.DeleteAsync(0);
-            ui.Delete(this);
+            ui.DeleteIncident(this);
         });
 
         // Move camera to relevant target and close tooltip/incident
@@ -79,7 +79,7 @@ class Incident {
             Game.EmitSound("CommsWindow_Close");
             GameUI.MoveCameraToEntity(Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()));
             tooltipLarge.DeleteAsync(0);
-            ui.Delete(this);
+            ui.DeleteIncident(this);
         });
     }
 
@@ -116,32 +116,45 @@ class Incident {
 
 class Problem {
     panel: LabelPanel;
-    tooltipSmall?: LabelPanel;
+    type: string;
     targets: EntityIndex[];
+    tooltipSmall?: LabelPanel;
     arrows: Arrow[] = [];
 
-    constructor(parent: Panel, name: string, description: string, targets: EntityIndex[]) {
+    constructor(parent: Panel, type: string, name: string, description: string, targets: EntityIndex[], major: boolean) {
         const panel = $.CreatePanel("Label", parent, "Problem") as LabelPanel;
         panel.BLoadLayoutSnippet("Problem");
         this.panel = panel;
+        this.type = type;
+        this.targets = targets;
+
+        this.UpdateTargets(name, description, targets, major);
+
+        Game.EmitSound("TinyBell");
+        if (major) Game.EmitSound("AlertRed");
+    }
+
+    // Reapply text and targets to closure
+    // Decrementing to 0 targets deletes itself
+    UpdateTargets(name: string, description: string, targets: EntityIndex[], major: boolean) {
+        if (!targets.length) ui.DeleteProblem(this);
         this.targets = targets;
 
         // Small tooltip and arrow on hover
-        panel.SetPanelEvent("onmouseover", () => {
+        this.panel.SetPanelEvent("onmouseover", () => {
             this.tooltipSmall = this.CreateSmallTooltip(description);
-            targets.forEach(t => this.arrows.push(new Arrow(t)));
+            this.targets.forEach(t => this.arrows.push(new Arrow(t)));
         });
 
         // Cleanup small tooltip and arrow
-        panel.SetPanelEvent("onmouseout", () => {
+        this.panel.SetPanelEvent("onmouseout", () => {
             this.tooltipSmall!.DeleteAsync(0);
             this.arrows.forEach(a => a.panel.DeleteAsync(0));
             this.arrows = [];
         });
 
         this.panel.text = name;
-        Game.EmitSound("TinyBell");
-        if (parent === ui.pMajor) Game.EmitSound("AlertRed");
+        major ? this.panel.SetParent(ui.pMajor) : this.panel.SetParent(ui.pMinor);
     }
 
     CreateSmallTooltip(text: string) {
@@ -167,22 +180,6 @@ class Problem {
         });
 
         return tooltipSmall;
-    }
-
-    UpdateTargets(targets: EntityIndex[], increment: boolean) {
-        increment
-        ? this.targets = this.targets.concat(targets)
-        : this.targets = this.targets.filter((t) => !(t in targets))
-
-        this.panel.SetPanelEvent("onmouseover", () => {
-            this.targets.forEach(t => this.arrows.push(new Arrow(t)));
-        });
-
-        this.panel.SetPanelEvent("onmouseout", () => {
-            this.arrows.forEach(a => a.panel.DeleteAsync(0));
-            this.arrows = [];
-
-        });
     }
 }
 
