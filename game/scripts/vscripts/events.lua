@@ -4,8 +4,8 @@ ListenToGameEvent("player_chat", function(keys)
 end, nil)
 
 -- Send a new incident letter to the given player
--- keys: {name, description, severity, sound, target}
---       [string, string, Severity, string, EntityIndex]
+-- keys: {name, description, severity, sounds, targets}
+--       [string, string, Severity, string | string[], EntityIndex | EntityIndex[]]
 function SendIncidentLetter(player, keys)
     CustomGameEventManager:Send_ServerToPlayer(player, "send_incident_letter", keys)
 end
