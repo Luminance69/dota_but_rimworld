@@ -19,10 +19,6 @@
             </Panel>
         </snippet>
 
-        <snippet name="Problem">
-            <Label id="Problem" />
-        </snippet>
-
         <snippet name="TooltipSmall">
             <Label id="TooltipSmall" hittest="false" html="true" />
         </snippet>

@@ -123,7 +123,6 @@ class Problem {
 
     constructor(parent: Panel, type: string, name: string, description: string, targets: EntityIndex[], major: boolean) {
         const panel = $.CreatePanel("Label", parent, "Problem") as LabelPanel;
-        panel.BLoadLayoutSnippet("Problem");
         this.panel = panel;
         this.type = type;
         this.targets = targets;
