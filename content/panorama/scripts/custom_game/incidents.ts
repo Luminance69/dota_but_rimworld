@@ -1,5 +1,6 @@
 class Incident {
     panel: Panel;
+    targets: EntityIndex[];
     letter: ImagePanel;
     name: LabelPanel;
     tooltipDummy: Button;
@@ -10,6 +11,7 @@ class Incident {
         const panel = $.CreatePanel("Panel", parent, "Incident");
         panel.BLoadLayoutSnippet("Incident");
         this.panel = panel;
+        this.targets = targets;
         this.letter = panel.FindChild("Letter") as ImagePanel;
         this.name = panel.FindChild("Name") as LabelPanel;
 
@@ -77,7 +79,7 @@ class Incident {
         // Move camera to relevant target and close tooltip/incident
         (<TextButton>tooltipLarge.FindChild("Jump")).SetPanelEvent("onactivate", () => {
             Game.EmitSound("CommsWindow_Close");
-            GameUI.MoveCameraToEntity(Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()));
+            GameUI.MoveCameraToEntity(this.targets[0]);
             tooltipLarge.DeleteAsync(0);
             ui.DeleteIncident(this);
         });
