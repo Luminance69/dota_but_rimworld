@@ -12,19 +12,19 @@
 
     <snippets>
         <snippet name="Incident">
-            <Panel id="Incident" hittest="false">
-                <Image id="Letter" hittest="false" src="file://{images}/custom_game/letter.png" />
-                <Label id="Name" hittest="false" />
+            <Panel id="Incident">
+                <Image id="Letter" src="file://{images}/custom_game/letter.png" />
+                <Label id="Name" />
                 <Button id="TooltipDummy" />
             </Panel>
         </snippet>
 
         <snippet name="TooltipSmall">
-            <Label id="TooltipSmall" hittest="false" html="true" />
+            <Label id="TooltipSmall" html="true" />
         </snippet>
 
         <snippet name="TooltipLarge">
-            <Button id="HitBlocker" hittest="true" style="width: 100%; height: 100%;">
+            <Button id="HitBlocker" style="width: 100%; height: 100%;">
                 <Label id="TooltipLarge" html="true">
                     <TextButton id="Jump" text="Jump to location" />
                     <TextButton id="Close" text="Close" />
@@ -33,16 +33,16 @@
         </snippet>
 
         <snippet name="Arrow">
-            <Image id="Arrow" hittest="false" src="file://{images}/custom_game/arrow.png" />
+            <Image id="Arrow" src="file://{images}/custom_game/arrow.png" />
         </snippet>
     </snippets>
 
-    <Panel hittest="false" style="width: 100%; height: 100%;">
-        <Panel id="Container" hittest="false">
-            <Panel id="Incidents" hittest="false" />
-            <Panel id="Problems" hittest="false">
-                <Panel id="Major" hittest="false" />
-                <Panel id="Minor" hittest="false" />
+    <Panel style="width: 100%; height: 100%;">
+        <Panel id="Container">
+            <Panel id="Incidents" />
+            <Panel id="Problems">
+                <Panel id="Major" />
+                <Panel id="Minor" />
             </Panel>
         </Panel>
     </Panel>
