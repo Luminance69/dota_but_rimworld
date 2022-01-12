@@ -118,6 +118,7 @@ class Problem {
     panel: LabelPanel;
     type: string;
     targets: EntityIndex[];
+    cycle: number = 0;
     tooltipSmall?: LabelPanel;
     arrows: Arrow[] = [];
 
@@ -139,10 +140,24 @@ class Problem {
         if (!targets.length) ui.DeleteProblem(this);
         this.targets = targets;
 
+        // Jump on right click
+        this.panel.SetPanelEvent("oncontextmenu", () => {
+            if (this.cycle > targets.length-1) this.cycle = 0;
+            GameUI.MoveCameraToEntity(targets[this.cycle]);
+            ++this.cycle
+        });
+
+        // Jump on left click
+        this.panel.SetPanelEvent("onactivate", () => {
+            if (this.cycle > targets.length-1) this.cycle = 0;
+            GameUI.MoveCameraToEntity(targets[this.cycle]);
+            ++this.cycle
+        });
+
         // Small tooltip and arrow on hover
         this.panel.SetPanelEvent("onmouseover", () => {
             this.tooltipSmall = this.CreateSmallTooltip(description);
-            this.targets.forEach(t => this.arrows.push(new Arrow(t)));
+            targets.forEach(t => this.arrows.push(new Arrow(t)));
         });
 
         // Cleanup small tooltip and arrow

@@ -95,7 +95,8 @@ class UI {
         // Combine updated strings
         let main = data.description.main;
         Object.assign(main, concat);
-        const description = Object.values(main).join("");
+        let description = Object.values(main).join("");
+        description += "<br><br>(Click to jump to problem)";
 
         return [name, description, targets, Boolean(event.major)];
     }
