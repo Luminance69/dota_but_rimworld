@@ -88,8 +88,12 @@
     padding: 5px 10px;
 }
 
-#Problem:hover {
+#Problems > #Major > #Problem:hover {
     background-color: #ffffff04;
+}
+
+#Problems > #Minor > #Problem:hover {
+    background-color: #ffffff10;
 }
 
 @keyframes 'pulse' {
