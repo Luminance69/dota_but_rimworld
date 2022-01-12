@@ -39,8 +39,8 @@
         <Panel id="Container" hittest="false">
             <Panel id="Incidents" hittest="false" />
             <Panel id="Problems" hittest="false">
-                <Panel id="Minor" hittest="false" />
                 <Panel id="Major" hittest="false" />
+                <Panel id="Minor" hittest="false" />
             </Panel>
         </Panel>
     </Panel>
