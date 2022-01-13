@@ -1,3 +1,10 @@
+const _WIDTH = 76; // Original letter width
+const _HEIGHT = 60; // Original letter height
+const SCALING = 0.75;
+const WIDTH = _WIDTH * SCALING;
+const HEIGHT = _HEIGHT * SCALING;
+const MARGIN = 20;
+
 class Incident {
     panel: Panel;
     targets: EntityIndex[];
@@ -45,8 +52,8 @@ class Incident {
 
         // Styles and effects
         this.name.text = name;
-        this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`;
         this.Style(colour);
+        this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`;
         $.Schedule(2, () => this.Glow(colour));
     }
 
@@ -57,7 +64,7 @@ class Incident {
 
         tooltipSmall.SetPanelEvent("onload", () => {
             let {x, y} = this.panel.GetPositionWithinWindow();
-            x -= tooltipSmall.actuallayoutwidth/2 + 2*20;
+            x -= tooltipSmall.actuallayoutwidth/2 + 2*MARGIN;
             tooltipSmall.SetPositionInPixels(x, y, 0);
             tooltipSmall.style.opacity = "1";
         });
@@ -89,13 +96,6 @@ class Incident {
     }
 
     Style(colour: string) {
-        const _WIDTH = 76; // Original letter width
-        const _HEIGHT = 60; // Original letter height
-        const SCALING = 0.75;
-        const WIDTH = _WIDTH * SCALING
-        const HEIGHT = _HEIGHT * SCALING
-        const MARGIN = 20;
-
         this.panel.style.height = `${HEIGHT}px`;
         this.panel.style.margin = `${MARGIN / 2}px 0px`;
 
@@ -182,7 +182,7 @@ class Problem {
 
         tooltipSmall.SetPanelEvent("onload", () => {
             let {x,} = this.panel.GetPositionWithinWindow();
-            x -= this.panel.actuallayoutwidth + 2*20;
+            x -= this.panel.actuallayoutwidth + 2*MARGIN;
 
             // Lock y-level to cursor y-level
             (function UpdateY() {
