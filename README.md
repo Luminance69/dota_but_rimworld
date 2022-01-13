@@ -465,6 +465,7 @@ Body Parts:
     		-15% Cast Point Reduction
 
 Things to add:
+
 	Noise when hero dies
 	Incidents
 	Consider the following stuff:
