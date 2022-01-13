@@ -19,7 +19,6 @@ interface UpdateProblemAlarmEvent {
 class UI {
     container: Panel;
     iContainer: Panel;
-    pContainer: Panel;
     pMajor: Panel;
     pMinor: Panel;
     incidents: Incident[] = [];
@@ -28,7 +27,6 @@ class UI {
     constructor(panel: Panel) {
         this.container = panel.FindChild("Container")!;
         this.iContainer = panel.FindChildTraverse("Incidents")!;
-        this.pContainer = panel.FindChildTraverse("Problems")!;
         this.pMajor = panel.FindChildTraverse("Major")!;
         this.pMinor = panel.FindChildTraverse("Minor")!;
 
@@ -127,12 +125,13 @@ class UI {
         incident.panel.DeleteAsync(0);
     }
 
+    // Debug commands
     OnPlayerChat(event: PlayerChatEvent) {
         if (!event.text.startsWith("?")) return;
 
         const args = ParseChatArgs(event.text);
         switch(args[0]) {
-            // Add a new event
+            // Add a new incident
             case "?incident":
                 this.NewIncident({
                     name: args[1] || "Siege",
@@ -148,6 +147,7 @@ class UI {
                 $.Msg("Added new incident: " + args[1]);
                 break;
 
+            // Update a problem
             case "?problem":
                 this.UpdateProblem({
                     type: args[1] as ProblemType || "MajorBreak" as ProblemType,
@@ -161,7 +161,7 @@ class UI {
                 $.Msg("Added new problem: " + args[1])
                 break;
 
-            // Clear all events
+            // Clear all incidents and problems
             case "?clear":
                 this.incidents = [];
                 this.problems = {};
@@ -175,4 +175,6 @@ class UI {
     }
 }
 
-let ui = new UI($.GetContextPanel());
+const ui = new UI($.GetContextPanel());
+// Display UI under the shop by setting the context panel's parent to the HUD
+$.GetContextPanel().SetParent($.GetContextPanel().GetParent()!.GetParent()!.GetParent()!.FindChild("HUDElements")!);
