@@ -163,7 +163,6 @@ Incidents:
 			Climate Adjuster:
 				Reduces/increases temperature by 15 degrees, whichever is more dangerous.
 	
-	
 Biomes, Temperature and Climate:
 
 	Biomes:
