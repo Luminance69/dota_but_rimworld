@@ -18,13 +18,17 @@
     }
 }
 
+@define quad-out: cubic-bezier(.24, .56, .55, .9);
+@define quad-in: cubic-bezier(.85, 0, .6, .45);
 @keyframes 'bouncein' {
-    0% {animation-timing-function: cubic-bezier(.6, .3, .9, .8); transform: translateX(-400px);}
-    40% {animation-timing-function: cubic-bezier(1, 0, 1, 0); transform: translateX(0px);}
-    57% {animation-timing-function: ease-out; transform: translateX(-50px);}
-    80% {animation-timing-function: ease-in; transform: translateX(0px);}
-    91% {animation-timing-function: ease-out; transform: translateX(-5px);}
-    100% {animation-timing-function: ease-in; transform: translateX(0px);}
+    0% {animation-timing-function: quad-in; transform: translateX(-400px);}
+    45% {animation-timing-function: quad-in; transform: translateX(0px);}
+    65% {animation-timing-function: quad-out; transform: translateX(-80px);}
+    85% {animation-timing-function: quad-in; transform: translateX(0px);}
+    90% {animation-timing-function: quad-out; transform: translateX(-8px);}
+    95% {animation-timing-function: quad-in; transform: translateX(0px);}
+    97.5% {animation-timing-function: quad-out; transform: translateX(-2px);}
+    100% {animation-timing-function: quad-in; transform: translateX(0px);}
 }
 
 @keyframes 'pulse' {
@@ -34,6 +38,8 @@
     80% {background-color: #930000;}
     100% {background-color: #990000;}
 }
+
+/*----------------------------------------------------------------------------*/
 
 #Container {
     horizontal-align: right;
@@ -106,12 +112,12 @@
     width: 210px;
     padding: 5px 10px;
     animation-name: bouncein;
-    animation-duration: 1.5s;
+    animation-duration: 1.4s;
 }
 
 #Problems > #Major > #Problem {
     animation-name: bouncein, pulse;
-    animation-duration: 1.5s, 2s;
+    animation-duration: 1.4s, 2s;
     animation-iteration-count: 1, infinite;
 }
 
