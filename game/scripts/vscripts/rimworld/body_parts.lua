@@ -75,6 +75,12 @@ function BodyParts:AddBodyPart(hero, slot, part)
 
     hero:AddNewModifier(hero, nil, "modifier_" .. slot .. "_" .. part, nil)
 
+    if slot == "eye" then
+        local modifier = hero:FindModifierByName("modifier_cataract")
+
+        if modifier then hero:RemoveModifierByName("modifier_cataract") end
+    end
+
     return true
 end
 

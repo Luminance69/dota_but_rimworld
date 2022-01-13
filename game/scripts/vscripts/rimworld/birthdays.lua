@@ -30,17 +30,29 @@ function Birthdays:Init()
 end
 
 function Birthdays:DoBirthday(hero)
-    local incident = GetWeightedChoice(Birthdays.incidents)
+    local weights = Birthdays.incidents
+
+    if hero:HasModifier("modifier_tough") then
+        weights["bad_back"] = weights["bad_back"] * 2
+    end
+
+    if hero:HasModifier("modifier_neurotic") then
+        weights["dementia"] = weights["dementia"] * 2
+    end
+
+    if hero:HasModifier("modifier_joywire") then
+        weights["dementia"] = weights["dementia"] * 3
+    end
+
+    local incident = GetWeightedChoice()
 
     -- Don't do wisdom if hero is >= lvl 30
     while incident == "wisdom" and hero:GetLevel() >= 30 do
         incident = GetWeightedChoice(Birthdays.incidents)
     end
 
-    if self[incident] then
-        self[incident](hero)
-
-           -- Do notification/sound etc. (maybe panorama? :P)
+    if self[incident] and self[incident](hero) then
+        -- Do notification/sound etc. (maybe panorama? :P)
     end
 end
 
@@ -52,6 +64,8 @@ Birthdays.bad_back = function(hero)
     end
 
     modifier:IncrementStackCount()
+
+    return true
 end
 
 Birthdays.dementia = function(hero)
@@ -62,9 +76,13 @@ Birthdays.dementia = function(hero)
     end
 
     modifier:IncrementStackCount()
+
+    return true
 end
 
 Birthdays.cataract = function(hero)
+    if #hero.body_parts["eye"] == 2 then return false end
+    
     local modifier = hero:FindModifierByName("modifier_cataract")
 
     if not modifier then
@@ -72,16 +90,25 @@ Birthdays.cataract = function(hero)
     end
 
     modifier:IncrementStackCount()
+
+    return true
 end
 
 Birthdays.heart_attack = function(hero)
+    if #hero.body_parts["heart"] == 1 then return false end
     hero:AddNewModifier(hero, nil, "modifier_heart_attack", {duration = RandomInt(10, 20)})
+
+    return true
 end
 
 Birthdays.gift = function(hero) -- +500 + (25 to 50) * level gold
     hero:ModifyGoldFiltered(500 + RandomInt(25, 50) * hero:GetLevel(), true, DOTA_ModifyGold_GameTick)
+
+    return true
 end
 
 Birthdays.wisdom = function(hero) -- +700 + (25 to 50) * level experience
     hero:AddExperience(700 + RandomInt(25, 50) * hero:GetLevel(), DOTA_ModifyXP_TomeOfKnowledge, false, true)
+
+    return true
 end
