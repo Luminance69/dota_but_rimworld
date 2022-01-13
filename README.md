@@ -165,6 +165,7 @@ Incidents:
 	
 	
 Biomes, Temperature and Climate:
+
 	Biomes:
 		A biome is randomly chosen at the start of the game
 		Each biome has a temperature expressed as the low/high (night/day) temperature of summer/winter, with autumn and spring being half way between the two.
