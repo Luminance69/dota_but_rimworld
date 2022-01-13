@@ -35,6 +35,8 @@ function creep_disease:GetModifierBonusDamageOutgoing_Percentage() return self.b
 modifier_creep_disease_minor = class(creep_disease)
 
 function modifier_creep_disease_minor:OnCreated()
+    self.parent = self:GetParent()
+
     self:SetDuration(RandomInt(8, 16), true)
 
     self.move_speed = -10
@@ -43,7 +45,9 @@ function modifier_creep_disease_minor:OnCreated()
 end
 
 function modifier_creep_disease_minor:OnRemoved()
-    self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_creep_disease_major", nil)
+    if IsClient() then return end
+
+    self.parent:AddNewModifier(self.parent, nil, "modifier_creep_disease_major", nil)
 end
 
 
@@ -51,6 +55,8 @@ end
 modifier_creep_disease_major = class(creep_disease)
 
 function modifier_creep_disease_major:OnCreated()
+    self.parent = self:GetParent()
+    
     self:SetDuration(RandomInt(8, 16), true)
 
     self.move_speed = -30
@@ -59,7 +65,9 @@ function modifier_creep_disease_major:OnCreated()
 end
 
 function modifier_creep_disease_major:OnRemoved()
-    self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_creep_disease_extreme", nil)
+    if IsClient() then return end
+    
+    self.parent:AddNewModifier(self.parent, nil, "modifier_creep_disease_extreme", nil)
 end
 
 
@@ -67,6 +75,8 @@ end
 modifier_creep_disease_extreme = class(creep_disease)
 
 function modifier_creep_disease_extreme:OnCreated()
+    self.parent = self:GetParent()
+    
     self:SetDuration(RandomInt(8, 16), true)
 
     self.move_speed = -60
@@ -75,7 +85,9 @@ function modifier_creep_disease_extreme:OnCreated()
 end
 
 function modifier_creep_disease_extreme:OnRemoved()
+    if IsClient() then return end
+    
     if RandomFloat(0, 1) < 0.5 then
-        self:GetParent():ForceKill(true)
+        self.parent:ForceKill(true)
     end
 end

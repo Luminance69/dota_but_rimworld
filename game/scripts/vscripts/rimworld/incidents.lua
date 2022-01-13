@@ -19,7 +19,7 @@ function Incidents:Init()
 
     self:LinkModifiers(Incidents.modifiers)
 
-    Timers:CreateTimer(IsInToolsMode() and 2 or 30, self.DoIncident)
+    Timers:CreateTimer(IsInToolsMode() and 2 or 30, self.DoRandomIncident)
 end
 
 function Incidents:LinkModifiers(table)
@@ -34,22 +34,41 @@ function Incidents:LinkModifiers(table)
     end
 end
 
-function Incidents:DoIncident()
+function Incidents:DoRandomIncident()
     local incident = GetWeightedChoice(Incidents.incidents)
 
-    if self[incident] and self[incident]() then
-        
-        -- Do notification/sound etc. (maybe panorama? :P)
-        
-    end
+    Incidents:DoIncident(incident)
 
     return 1
+end
+
+function Incidents:DoIncident(incident)
+    if self[incident] then
+        local keys = self[incident]()
+
+        if keys then
+            keys["name"] = keys["name"] or Incidents.names[incident]
+            keys["description"] = keys["description"] or Incidents.descriptions[incident]
+            keys["severity"] = keys["severity"] or Incidents.severity[incident]
+            keys["sounds"] = keys["sounds"] or Incidents.sounds[incident]
+
+            if keys["team"] then
+                SendIncidentLetterTeam(keys["team"], keys)
+            elseif keys["player"] then
+                SendIncidentLetterPlayer(keys["player"], keys)
+            else
+                SendIncidentLetter(keys)
+            end
+        end
+    end
 end
 
 Incidents.creep_disease = function()
     print("creep disease")
 
     local team = RandomInt(2, 3)
+
+    local targets = {}
 
     local creeps = FindUnitsInRadius(team, Vector(0, 0, 0), nil, -1, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
@@ -58,10 +77,12 @@ Incidents.creep_disease = function()
     for _, creep in pairs(creeps) do
         if not creep:IsOwnedByAnyPlayer() and RandomFloat(0, 1) < 0.5 then
             creep:AddNewModifier(creep, nil, "modifier_creep_disease_minor", nil)
+
+            table.insert(targets, creep:GetEntityIndex())
         end
     end
 
-    return true
+    return {["team"] = team, ["targets"] = targets}
 end
 
 Incidents.modifiers = {
@@ -99,4 +120,63 @@ Incidents.modifiers = {
     "muscle_parasites",
     "fibrous_mechanites",
     "sensory_mechanites",
+}
+
+Incidents.names = {
+    ["creep_disease"] = "Creep Disease",
+    ["hero_sickness"] = "",
+    ["zzztt"] = "",
+    ["mad_neutral"] = "",
+    ["mass_neutral_insanity"] = "",
+    ["psychic_soothe"] = "",
+    ["psychic_drone"] = "",
+    ["invert_day"] = "",
+    ["gift"] = "",
+    ["cold_snap"] = "",
+}
+
+Incidents.descriptions = {
+    ["creep_disease"] = "Many of your creeps have been infected with a deadly illness.",
+    ["hero_sickness"] = "",
+    ["zzztt"] = "",
+    ["mad_neutral"] = "",
+    ["mass_neutral_insanity"] = "",
+    ["psychic_soothe"] = "",
+    ["psychic_drone"] = "",
+    ["invert_day"] = "",
+    ["gift"] = "",
+    ["cold_snap"] = "",
+}
+
+Severity = Severity or {
+    White = "#ffffff",
+    Blue = "#79afdb",
+    Yellow = "#ccc47f",
+    Red = "#ca7471",
+}
+
+Incidents.severity = {
+    ["creep_disease"] = Severity.Red,
+    ["hero_sickness"] = Severity.Yellow,
+    ["zzztt"] = Severity.Yellow,
+    ["mad_neutral"] = Severity.Yellow,
+    ["mass_neutral_insanity"] = Severity.Red,
+    ["psychic_soothe"] = Severity.Blue,
+    ["psychic_drone"] = Severity.Red,
+    ["invert_day"] = Severity.White,
+    ["gift"] = Severity.White,
+    ["cold_snap"] = Severity.Red,
+}
+
+Incidents.sounds = {
+    ["creep_disease"] = "LetterArriveBadUrgent",
+    ["hero_sickness"] = "LetterArriveBadUrgentSmall",
+    ["zzztt"] = "LetterArriveBadUrgentSmall",
+    ["mad_neutral"] = "LetterArriveBadUrgentSmall",
+    ["mass_neutral_insanity"] = "LetterArriveBadUrgentBig",
+    ["psychic_soothe"] = "LetterArriveGood",
+    ["psychic_drone"] = "LetterArriveBadUrgentSmall",
+    ["invert_day"] = "LetterArrive",
+    ["gift"] = "LetterArriveGood",
+    ["cold_snap"] = "LetterArriveBadUrgentBig",
 }
