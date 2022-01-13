@@ -8,7 +8,7 @@ modifier_relaxed = class(base_trait)
 
 function modifier_relaxed:IsDebuff() return false end
 
-function modifier_too_smart:DeclareFunctions()
+function modifier_relaxed:DeclareFunctions()
     return {
         MODIFIER_PROPERTY_TOOLTIP,
         MODIFIER_PROPERTY_TOOLTIP2,
@@ -19,7 +19,7 @@ function modifier_relaxed:GetExperienceMultiplierBonus()
     return -25
 end
 
-function modifier_too_smart:OnTooltip()
+function modifier_relaxed:OnTooltip()
     return -25
 end
 
@@ -27,6 +27,6 @@ function modifier_relaxed:GetMentalBreakThresholdBonus()
     return -8
 end
 
-function modifier_too_smart:OnTooltip2()
+function modifier_relaxed:OnTooltip2()
     return -8
 end

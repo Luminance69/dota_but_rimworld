@@ -98,3 +98,18 @@ ChatCommands.mood = function(args, hero, ...)
     
     print("Set " .. hero:GetUnitName() .. "\'s mood to: " .. mood)
 end
+
+-- Usage:
+-- -incident <string: incident>
+-- Causes the given incident to occur
+ChatCommands.incident = function(args, ...)
+    if IsClient() then return end
+
+    local incident = args[1]
+    
+    if Incidents then
+        Incidents:DoIncident(incident)
+
+        print("Caused incident: " .. incident)
+    end
+end
