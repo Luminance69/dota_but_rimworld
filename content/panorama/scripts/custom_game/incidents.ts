@@ -1,3 +1,10 @@
+const _WIDTH = 76; // Original letter width
+const _HEIGHT = 60; // Original letter height
+const SCALING = 0.75;
+const WIDTH = _WIDTH * SCALING;
+const HEIGHT = _HEIGHT * SCALING;
+const MARGIN = 20;
+
 class Incident {
     panel: Panel;
     targets: EntityIndex[];
@@ -45,8 +52,8 @@ class Incident {
 
         // Styles and effects
         this.name.text = name;
-        this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`;
         this.Style(colour);
+        this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`;
         $.Schedule(2, () => this.Glow(colour));
     }
 
@@ -57,7 +64,7 @@ class Incident {
 
         tooltipSmall.SetPanelEvent("onload", () => {
             let {x, y} = this.panel.GetPositionWithinWindow();
-            x -= tooltipSmall.actuallayoutwidth/2 + 2*20;
+            x -= tooltipSmall.actuallayoutwidth/2 + 2*MARGIN;
             tooltipSmall.SetPositionInPixels(x, y, 0);
             tooltipSmall.style.opacity = "1";
         });
@@ -89,13 +96,6 @@ class Incident {
     }
 
     Style(colour: string) {
-        const _WIDTH = 76; // Original letter width
-        const _HEIGHT = 60; // Original letter height
-        const SCALING = 0.75;
-        const WIDTH = _WIDTH * SCALING
-        const HEIGHT = _HEIGHT * SCALING
-        const MARGIN = 20;
-
         this.panel.style.height = `${HEIGHT}px`;
         this.panel.style.margin = `${MARGIN / 2}px 0px`;
 
@@ -124,21 +124,21 @@ class Problem {
     tooltipSmall?: LabelPanel;
     arrows: Arrow[] = [];
 
-    constructor(parent: Panel, type: string, name: string, description: string, targets: EntityIndex[], major: boolean) {
+    constructor(parent: Panel, type: string, name: string, description: string, targets: EntityIndex[]) {
         const panel = $.CreatePanel("Label", parent, "Problem") as LabelPanel;
         this.panel = panel;
         this.type = type;
         this.targets = targets;
 
-        this.UpdateTargets(name, description, targets, major);
+        this.UpdateTargets(parent, name, description, targets);
 
         Game.EmitSound("TinyBell");
-        if (major) Game.EmitSound("AlertRed");
+        if (parent.id === "Major") Game.EmitSound("AlertRed");
     }
 
     // Reapply text and targets to closure
     // Decrementing to 0 targets deletes itself
-    UpdateTargets(name: string, description: string, targets: EntityIndex[], major: boolean) {
+    UpdateTargets(parent: Panel, name: string, description: string, targets: EntityIndex[]) {
         if (!targets.length) ui.DeleteProblem(this);
         this.targets = targets;
 
@@ -172,7 +172,7 @@ class Problem {
         });
 
         this.panel.text = name;
-        major ? this.panel.SetParent(ui.pMajor) : this.panel.SetParent(ui.pMinor);
+        this.panel.SetParent(parent);
     }
 
     CreateSmallTooltip(text: string) {
@@ -182,7 +182,7 @@ class Problem {
 
         tooltipSmall.SetPanelEvent("onload", () => {
             let {x,} = this.panel.GetPositionWithinWindow();
-            x -= this.panel.actuallayoutwidth + 2*20;
+            x -= this.panel.actuallayoutwidth + 2*MARGIN;
 
             // Lock y-level to cursor y-level
             (function UpdateY() {
