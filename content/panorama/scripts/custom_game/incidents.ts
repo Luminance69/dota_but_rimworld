@@ -124,21 +124,21 @@ class Problem {
     tooltipSmall?: LabelPanel;
     arrows: Arrow[] = [];
 
-    constructor(parent: Panel, type: string, name: string, description: string, targets: EntityIndex[], major: boolean) {
+    constructor(parent: Panel, type: string, name: string, description: string, targets: EntityIndex[]) {
         const panel = $.CreatePanel("Label", parent, "Problem") as LabelPanel;
         this.panel = panel;
         this.type = type;
         this.targets = targets;
 
-        this.UpdateTargets(name, description, targets, major);
+        this.UpdateTargets(parent, name, description, targets);
 
         Game.EmitSound("TinyBell");
-        if (major) Game.EmitSound("AlertRed");
+        if (parent.id === "Major") Game.EmitSound("AlertRed");
     }
 
     // Reapply text and targets to closure
     // Decrementing to 0 targets deletes itself
-    UpdateTargets(name: string, description: string, targets: EntityIndex[], major: boolean) {
+    UpdateTargets(parent: Panel, name: string, description: string, targets: EntityIndex[]) {
         if (!targets.length) ui.DeleteProblem(this);
         this.targets = targets;
 
@@ -172,7 +172,7 @@ class Problem {
         });
 
         this.panel.text = name;
-        major ? this.panel.SetParent(ui.pMajor) : this.panel.SetParent(ui.pMinor);
+        this.panel.SetParent(parent);
     }
 
     CreateSmallTooltip(text: string) {

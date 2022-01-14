@@ -6,6 +6,7 @@
     <scripts>
         <include src="file://{resources}/scripts/custom_game/rwutils.js" />
         <include src="file://{resources}/scripts/custom_game/problem_data.js" />
+        <include src="file://{resources}/scripts/custom_game/incident_data.js" />
         <include src="file://{resources}/scripts/custom_game/incidents_ui.js" />
         <include src="file://{resources}/scripts/custom_game/incidents.js" />
     </scripts>
