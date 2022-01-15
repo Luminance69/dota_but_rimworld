@@ -75,8 +75,9 @@ class Incident {
         tooltipSmall.text = text;
 
         tooltipSmall.SetPanelEvent("onload", () => {
-            let {x, y} = this.panel.GetPositionWithinWindow();
-            x -= tooltipSmall.actuallayoutwidth/2 + 2*MARGIN;
+            let {x, y} = this.letter.GetPositionWithinWindow();
+            x -= tooltipSmall.actuallayoutwidth + MARGIN;
+            y -= tooltipSmall.actuallayoutheight/2;
             tooltipSmall.SetPositionInPixels(x, y, 0);
             tooltipSmall.style.opacity = "1";
         });
@@ -209,7 +210,7 @@ class Problem {
 
         tooltipSmall.SetPanelEvent("onload", () => {
             let {x,} = this.panel.GetPositionWithinWindow();
-            x -= this.panel.actuallayoutwidth + 2*MARGIN;
+            x -= tooltipSmall.actuallayoutwidth + MARGIN;
 
             // Lock y-level to cursor y-level
             (function UpdateY() {
