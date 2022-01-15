@@ -119,7 +119,7 @@ const IncidentTypes =
             },
             repeat:
             {
-                2: "<br>&nbsp;&nbsp;- <span color: '#bf8f5b'>{t}</span>",
+                2: "<br>&nbsp;&nbsp;- <span color='#bf8f5b'>{t}</span>",
             },
         },
     },
