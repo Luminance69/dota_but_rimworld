@@ -1,6 +1,6 @@
 const _WIDTH = 76; // Original letter width
 const _HEIGHT = 60; // Original letter height
-const SCALING = 0.75;
+const SCALING = 0.7;
 const WIDTH = _WIDTH * SCALING;
 const HEIGHT = _HEIGHT * SCALING;
 const MARGIN = 20;
@@ -58,7 +58,7 @@ class Incident {
             this.panel.RemoveClass("Init");
             this.letter.style.boxShadow = `${severity.color}00 100px 0px 250px 0px`;
             this.letter.style.transitionProperty = "box-shadow";
-            this.letter.style.transitionDuration = "1s";
+            this.letter.style.transitionDuration = "0.5s";
             this.Glow(severity.tGlow, severity.color);
         });
 
@@ -123,8 +123,8 @@ class Incident {
     Glow(period: number, colour: string) {
         if (!this.panel.IsValid()) return;
 
-        this.letter.style.boxShadow = `${colour}60 100px 0px 450px 0px`;
-        $.Schedule(1, () =>
+        this.letter.style.boxShadow = `${colour}50 100px 0px 550px 0px`;
+        $.Schedule(0.5, () =>
             this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`
         );
 
