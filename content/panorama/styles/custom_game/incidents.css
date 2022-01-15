@@ -18,7 +18,7 @@
     }
 }
 
-@define quad-out: cubic-bezier(.24, .56, .55, .9);
+@define quad-out: cubic-bezier(.24, .56, 0, 1);
 @define quad-in: cubic-bezier(.85, 0, .6, .45);
 @keyframes 'bouncein' {
     0% {animation-timing-function: quad-in; transform: translateX(-400px);}
@@ -28,6 +28,12 @@
     90% {animation-timing-function: quad-out; transform: translateX(-8px);}
     95% {animation-timing-function: quad-in; transform: translateX(0px);}
     97.5% {animation-timing-function: quad-out; transform: translateX(-2px);}
+    100% {animation-timing-function: quad-in; transform: translateX(0px);}
+}
+
+@keyframes 'bounce' {
+    0% {animation-timing-function: quad-out; transform: translateX(0px);}
+    50% {animation-timing-function: quad-out; transform: translateX(-165px);}
     100% {animation-timing-function: quad-in; transform: translateX(0px);}
 }
 
@@ -56,8 +62,8 @@
 }
 
 #Incidents {
-    overflow: scroll;
     horizontal-align: right;
+    width: 100%;
     padding-top: dropHeight; /* Fixes animation playing outside parent */
     margin-top: -dropHeight; /*                                        */
     flow-children: down;
@@ -67,18 +73,24 @@
 
 #Incident {
     horizontal-align: right;
+}
+
+#Incident.Init {
     animation-name: dropin;
     animation-duration: 2s;
 }
 
+#Incident.Bounce {
+    animation-name: bounce;
+    animation-duration: 1s;
+}
+
 #Incident > Image {
     horizontal-align: right;
-    transition-property: box-shadow;
-    transition-duration: 1s;
 }
 
 #Incident > Label {
-    align: center center;
+    align: middle middle;
     color: font-color;
     font-family: font-family;
     font-size: font-size;
@@ -88,7 +100,6 @@
 #Incident > #TooltipDummy {
     horizontal-align: right;
     height: 100%;
-    overflow: noclip;
 }
 
 /*----------------------------------------------------------------------------*/

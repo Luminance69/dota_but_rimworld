@@ -13,7 +13,7 @@
 
     <snippets>
         <snippet name="Incident">
-            <Panel id="Incident">
+            <Panel id="Incident" class="Init">
                 <Image id="Letter" src="file://{images}/custom_game/letter.png" />
                 <Label id="Name" />
                 <Button id="TooltipDummy" />

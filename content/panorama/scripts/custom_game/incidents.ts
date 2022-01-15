@@ -14,7 +14,7 @@ class Incident {
     tooltipSmall?: LabelPanel;
     arrows: Arrow[] = [];
 
-    constructor(parent: Panel, name: string, description: string, colour: string, targets: EntityIndex[]) {
+    constructor(parent: Panel, name: string, description: string, severity: Severity, targets: EntityIndex[]) {
         const panel = $.CreatePanel("Panel", parent, "Incident");
         panel.BLoadLayoutSnippet("Incident");
         this.panel = panel;
@@ -52,9 +52,21 @@ class Incident {
 
         // Styles and effects
         this.name.text = name;
-        this.Style(colour);
-        this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`;
-        $.Schedule(2, () => this.Glow(colour));
+        this.Style(severity.color);
+
+        $.Schedule(2, () => {
+            this.panel.RemoveClass("Init");
+            this.letter.style.boxShadow = `${severity.color}00 100px 0px 250px 0px`;
+            this.letter.style.transitionProperty = "box-shadow";
+            this.letter.style.transitionDuration = "1s";
+            this.Glow(severity.tGlow, severity.color);
+        });
+
+        if (severity.tBounce) {
+            $.Schedule(severity.tBounce, () => {
+                this.Bounce(severity.tBounce!);
+            });
+        };
     }
 
     CreateSmallTooltip(text: string) {
@@ -95,11 +107,11 @@ class Incident {
         });
     }
 
-    Style(colour: string) {
+    Style(color: string) {
         this.panel.style.height = `${HEIGHT}px`;
         this.panel.style.margin = `${MARGIN / 2}px 0px`;
 
-        this.letter.style.washColor = `${colour}`
+        this.letter.style.washColor = `${color}`
         this.letter.style.width = `${WIDTH}px`;
         this.letter.style.margin = `0px ${MARGIN}px`; // Left margin to centre name
 
@@ -108,11 +120,26 @@ class Incident {
     }
 
     // Simulates a keyframe with dynamic colouring
-    Glow(colour: string) {
+    Glow(period: number, colour: string) {
+        if (!this.panel.IsValid()) return;
+
         this.letter.style.boxShadow = `${colour}60 100px 0px 450px 0px`;
         $.Schedule(1, () =>
             this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`
         );
+
+        // Repeat every <period> seconds
+        $.Schedule(period, () => this.Glow(period, colour));
+    }
+
+    // Scale margin with bounce animation to correctly render text
+    Bounce(period: number) {
+        if (!this.panel.IsValid()) return;
+
+        this.panel.ToggleClass("Bounce");
+
+        // Repeat every <period> seconds
+        $.Schedule(period, () => this.Bounce(period));
     }
 }
 

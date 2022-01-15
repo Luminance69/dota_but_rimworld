@@ -1,7 +1,16 @@
 type LuaArray<T> = T | Record<number, T>;
 
+// I feel like I don't need all of these types...
 type ProblemType = keyof typeof ProblemTypes;
 type IncidentType = keyof typeof IncidentTypes;
+
+type Severity = {
+    color: string,
+    sounds: string[],
+    tGlow: number,
+    tBounce?: number,
+}
+
 type Description = {
     main: Partial<Record<number, string>>
     repeat: Partial<Record<number, string>>
@@ -93,7 +102,7 @@ class UI {
             this.iContainer,
             name,
             description,
-            data.severity.color,
+            data.severity,
             targets,
         );
 
@@ -150,7 +159,7 @@ class UI {
             // Add a new incident
             case "?incident":
                 this.NewIncident({
-                    type: args[1] as IncidentType,
+                    type: args[1] as IncidentType || "CreepDisease",
                     targets:
                         args[2]
                         ? args[2].split(" ").reduce((o,v,i) => (Object.assign(o, {[i]: Entities.GetAllEntitiesByName("npc_dota_hero_"+v)[0]})), {})
