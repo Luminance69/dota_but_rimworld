@@ -68,3 +68,7 @@ function ParseChatArgs(text: string) {
 
     return args;
 }
+
+function Capitalise(text: string) {
+    return text.replace(/\b\w/g, l => l.toUpperCase());
+}

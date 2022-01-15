@@ -142,9 +142,13 @@ class UI {
 
         // Replace any dangling or special placeholders
         for (const e in regex) {
-            const expr = new RegExp(`{${e}}`, "g");
-            name = name.replace(expr, regex[e]);
-            combined = combined.replace(expr, regex[e]);
+            const lower = new RegExp(`{${e}}`, "g");
+            name = name.replace(lower, regex[e]);
+            combined = combined.replace(lower, regex[e]);
+
+            const upper = new RegExp(`{${Capitalise(e)}}`, "g")
+            name = name.replace(upper, Capitalise(regex[e]));
+            combined = combined.replace(upper, Capitalise(regex[e]));
         };
 
         return [name, combined];
