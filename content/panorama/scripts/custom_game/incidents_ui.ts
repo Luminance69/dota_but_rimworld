@@ -19,7 +19,10 @@ type Description = {
 interface SendIncidentLetterEvent {
     type: IncidentType;
     targets: LuaArray<EntityIndex>;
-    special?: Record<string, string>;
+    special?: {
+        main?: Record<string, string>,
+        repeat?: Record<string, LuaArray<string>>,
+    }
 }
 
 interface UpdateProblemAlarmEvent {
@@ -116,39 +119,48 @@ class UI {
         incident.panel.DeleteAsync(0);
     }
 
-    ConstructData(name: string, description: Description, targets: EntityIndex[], special?: Record<string, string> | undefined): string[] {
-        const localised = targets.map(t => $.Localize(Entities.GetUnitName(t)));
+    // TODO: Stop the function input being so long...
+    ConstructData(name: string, description: Description, targets: EntityIndex[], special?: SendIncidentLetterEvent["special"]): string[] {
+        const loc = targets.map(t => $.Localize(Entities.GetUnitName(t)));
         const n = targets.length;
-        const regex: Record<string, string> = {n: String(n), t: localised[0]};
-        Object.assign(regex, special);
 
         // Replace x-type enumerators in name
         n > 1
         ? name = name.replace(/{xn}/g, ` x${n}`)
         : name = name.replace(/{xn}/g, "");
 
-        // Replace placeholders and duplicate repeatable string for each target
-        let repeat: Record<number, string> = {};
+        // Replace placeholders and duplicate repeatable strings
+        const regexRepeat: Record<string, LuaArray<string>> = {t: loc};
+        if (special) Object.assign(regexRepeat, special.repeat);
+
+        let repeated: Record<number, string> = {};
         for (const k in description.repeat) {
-            repeat[k] = "";
-            localised.forEach(t =>
-                repeat[k] += description.repeat[k]!.replace(/{t}/g, t)
+            // Match the first {} and use it as the iterable
+            repeated[k] = "";
+            const match = description.repeat[k]!.match(/{\w+}/)![0];
+            const array = ParseLuaArray(regexRepeat[match.slice(1,-1)]);
+
+            array.forEach(a =>
+                repeated[k] += description.repeat[k]!.replace(match, a)
             );
         };
 
         // Combine updated strings
-        Object.assign(description.main, repeat);
+        Object.assign(description.main, repeated);
         let combined = Object.values(description.main).join("");
 
-        // Replace any dangling or special placeholders
-        for (const e in regex) {
+        // Replace any baked and special placeholders
+        const regexMain: Record<string, string> = {n: String(n), t: loc[0]};
+        if (special) Object.assign(regexMain, special.main);
+
+        for (const e in regexMain) {
             const lower = new RegExp(`{${e}}`, "g");
-            name = name.replace(lower, regex[e]);
-            combined = combined.replace(lower, regex[e]);
+            name = name.replace(lower, regexMain[e]);
+            combined = combined.replace(lower, regexMain[e]);
 
             const upper = new RegExp(`{${Capitalise(e)}}`, "g")
-            name = name.replace(upper, Capitalise(regex[e]));
-            combined = combined.replace(upper, Capitalise(regex[e]));
+            name = name.replace(upper, Capitalise(regexMain[e]));
+            combined = combined.replace(upper, Capitalise(regexMain[e]));
         };
 
         return [name, combined];
@@ -163,12 +175,12 @@ class UI {
             // Add a new incident
             case "?incident":
                 this.NewIncident({
-                    type: args[1] as IncidentType || "CreepDisease",
+                    type:
+                        args[1] as IncidentType || "CreepDisease",
                     targets:
                         args[2]
                         ? args[2].split(" ").reduce((o,v,i) => (Object.assign(o, {[i]: Entities.GetAllEntitiesByName("npc_dota_hero_"+v)[0]})), {})
                         : Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()),
-                    special: {},
                 });
 
                 $.Msg("Added new incident: " + args[1]);

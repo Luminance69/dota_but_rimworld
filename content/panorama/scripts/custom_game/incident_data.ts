@@ -99,10 +99,12 @@ const IncidentTypes =
         {
             main:
             {
-                0: "Benefactors from <span color='#01b8f5'>{patron}</span> have left you a gift:",
-                1: "<br><br>&nbsp;&nbsp;- {gift}",
+                0: "Benefactors from <span color='#01b8f5'>{patron}</span> have left you a gift:<br>",
             },
-            repeat: {},
+            repeat:
+            {
+                1: "<br>&nbsp;&nbsp;- {gift}",
+            },
         },
     },
 
