@@ -11,7 +11,7 @@ Incidents.weights = {
     -- ["psychic_drone"] = 8,
     -- ["psychic_soothe"] = 10,
     -- ["zzztt"] = 10,
-    -- ["nothing"] = 10000,
+    ["nothing"] = 10000,
 }
 
 function Incidents:Init()
