@@ -71,39 +71,6 @@
 
 /*----------------------------------------------------------------------------*/
 
-#Incident {
-    horizontal-align: right;
-}
-
-#Incident.Init {
-    animation-name: dropin;
-    animation-duration: 1.5s;
-}
-
-#Incident.Bounce {
-    animation-name: bounce;
-    animation-duration: 1s;
-}
-
-#Incident > Image {
-    horizontal-align: right;
-}
-
-#Incident > Label {
-    align: middle middle;
-    color: #e3e3e3;
-    font-family: font-family;
-    font-size: font-size;
-    background-color: gradient(linear, 130% 0%, 0% 130%, from(rgba(0,0,0,0.05)), color-stop(0.5, rgba(0,0,0,0.5)), to(rgba(0,0,0,0.05)));
-}
-
-#Incident > #TooltipDummy {
-    horizontal-align: right;
-    height: 100%;
-}
-
-/*----------------------------------------------------------------------------*/
-
 #Problems > #Major {
     width: 100%;
     flow-children: down;
@@ -138,6 +105,39 @@
 
 #Problems > #Minor > #Problem:hover {
     background-color: #ffffff10;
+}
+
+/*----------------------------------------------------------------------------*/
+
+#Incident {
+    horizontal-align: right;
+}
+
+#Incident.Init {
+    animation-name: dropin;
+    animation-duration: 1.5s;
+}
+
+#Incident.Bounce {
+    animation-name: bounce;
+    animation-duration: 1s;
+}
+
+#Incident > Image {
+    horizontal-align: right;
+}
+
+#Incident > Label {
+    align: middle middle;
+    color: #e3e3e3;
+    font-family: font-family;
+    font-size: font-size;
+    background-color: gradient(linear, 130% 0%, 0% 130%, from(rgba(0,0,0,0.05)), color-stop(0.5, rgba(0,0,0,0.5)), to(rgba(0,0,0,0.05)));
+}
+
+#Incident > #TooltipDummy {
+    horizontal-align: right;
+    height: 100%;
 }
 
 /*----------------------------------------------------------------------------*/
