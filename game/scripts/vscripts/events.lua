@@ -5,7 +5,7 @@ end, nil)
 
 -- Update the targets of a problem alarm
 -- keys: {type, targets, major, increment} **{increment: false} will decrement**
---       [string, EntityIndex | EntityIndex[], bool, bool]
+--       [string, EntityIndex|EntityIndex[], bool, bool]
 function UpdateAlarmForPlayer(player, keys)
     CustomGameEventManager:Send_ServerToTeam(player, "update_problem_alarm", keys)
 end
@@ -19,8 +19,8 @@ function UpdateAlarmForAll(keys)
 end
 
 -- Send a new incident letter to the given player
--- keys: {type, targets, special}
---       [string, EntityIndex|EntityIndex[], {key:string}]
+-- keys: {type, targets, special?}
+--       [string, EntityIndex|EntityIndex[], {main?:{key: string}, repeat?:{key: string}}]
 function SendLetterToPlayer(player, keys)
     CustomGameEventManager:Send_ServerToPlayer(player, "send_incident_letter", keys)
 end
