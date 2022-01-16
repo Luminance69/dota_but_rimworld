@@ -37,6 +37,8 @@ class UI {
     iContainer: Panel;
     pMajor: Panel;
     pMinor: Panel;
+    forecast: LabelPanel;
+    date: LabelPanel;
     incidents: Incident[] = [];
     problems: Record<string, Problem> = {};
 
@@ -45,10 +47,15 @@ class UI {
         this.iContainer = panel.FindChildTraverse("Incidents")!;
         this.pMajor = panel.FindChildTraverse("Major")!;
         this.pMinor = panel.FindChildTraverse("Minor")!;
+        this.forecast = panel.FindChildTraverse("Forecast") as LabelPanel;
+        this.date = panel.FindChildTraverse("Date") as LabelPanel;
 
         GameEvents.Subscribe<SendIncidentLetterEvent>("send_incident_letter", event => this.NewIncident(event));
         GameEvents.Subscribe<UpdateProblemAlarmEvent>("update_problem_alarm", event => this.UpdateProblem(event));
         GameEvents.Subscribe<PlayerChatEvent>("player_chat", event => this.OnPlayerChat(event));
+
+        this.forecast.text = "Clear 30C";
+        this.date.text = "11h<br>Spring, 5500";
     }
 
     // Increment/decrement a problem alarm
@@ -181,6 +188,10 @@ class UI {
                         args[2]
                         ? args[2].split(" ").reduce((o,v,i) => (Object.assign(o, {[i]: Entities.GetAllEntitiesByName("npc_dota_hero_"+v)[0]})), {})
                         : Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()),
+                    special: {
+                        main: {patron: "The Masked Ones", tier: "low", gender:"female"},
+                        repeat: {gift: {0: "Tangoes x16", 1: "Divine rapier", 2: "Vitality booster"}},
+                    },
                 });
 
                 $.Msg("Added new incident: " + args[1]);

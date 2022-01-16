@@ -40,6 +40,8 @@
 
     <Panel style="width: 100%; height: 100%;">
         <Panel id="Container">
+            <Label id="Date" html="true" />
+            <Label id="Forecast" />
             <Panel id="Incidents" />
             <Panel id="Problems">
                 <Panel id="Major" />
