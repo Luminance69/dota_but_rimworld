@@ -54,11 +54,31 @@ class UI {
         GameEvents.Subscribe<UpdateProblemAlarmEvent>("update_problem_alarm", event => this.UpdateProblem(event));
         GameEvents.Subscribe<PlayerChatEvent>("player_chat", event => this.OnPlayerChat(event));
 
+        // UI forecast
         this.forecast.text = "Clear 30C";
+        this.forecast.SetPanelEvent("onmouseover", () => {
+            // Create tooltip after delay
+            const id = $.Schedule(0.5, () => {
+                const tooltip = CreateSmallTooltip(this.forecast, "A clear day. No penalties or modifiers.", -1, 1);
+                this.forecast.SetPanelEvent("onmouseout", () => tooltip.DeleteAsync(0));
+            });
+            this.forecast.SetPanelEvent("onmouseout", () => $.CancelScheduled(id));
+        });
+
+        // UI date and time
         (function UpdateTime(date) {
             date.text = `${Math.floor((Game.GetDOTATime(false, false)+150) % 600 / 25)}h<br>Spring, 5500`;
             $.Schedule(1, () => UpdateTime(date));
         })(this.date);
+
+        this.date.SetPanelEvent("onmouseover", () => {
+            // Create tooltip after delay
+            const id = $.Schedule(0.5, () => {
+                const tooltip = CreateSmallTooltip(this.date, "Days passed since your arrival: 5<br>Current quadrum: Aprimay<br>Local season: Spring", -1, -1);
+                this.date.SetPanelEvent("onmouseout", () => tooltip.DeleteAsync(0));
+            });
+            this.date.SetPanelEvent("onmouseout", () => $.CancelScheduled(id));
+        });
     }
 
     // Increment/decrement a problem alarm

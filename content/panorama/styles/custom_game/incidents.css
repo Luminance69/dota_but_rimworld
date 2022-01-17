@@ -57,6 +57,7 @@
 #Problems {
     horizontal-align: right;
     width: 100%;
+    margin-bottom: 5px;
     flow-children: down;
 }
 
@@ -70,7 +71,7 @@
 
 #Forecast {
     horizontal-align: right;
-    width: 210px;
+    width: 300px;
     padding: 5px 10px 5px 0px;
     text-align: right;
     font-family: font-family;
@@ -176,6 +177,13 @@
     border-right: 1px solid lGrey;
     background-color: dGrey;
     sound: "MouseoverButtonHigh";
+}
+
+#TooltipSmall.Forecast,
+#TooltipSmall.Date {
+    padding: 10px 5px;
+    border-color: #636d7b;
+    background-color: #0c1010;
 }
 
 #TooltipLarge {
