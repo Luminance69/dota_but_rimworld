@@ -5,6 +5,38 @@ const WIDTH = _WIDTH * SCALING;
 const HEIGHT = _HEIGHT * SCALING;
 const MARGIN = 20;
 
+// Tooltip generated on hover
+function CreateSmallTooltip(panel: Panel, text: string, lockX: -1|0|1, lockY: -1|0|1) {
+        const tooltip = $.CreatePanel("Label", $.GetContextPanel(), "TooltipSmall");
+        tooltip.BLoadLayoutSnippet("TooltipSmall");
+        tooltip.AddClass(panel.id); // Step-parent to handle different styles
+        tooltip.text = text;
+
+        tooltip.SetPanelEvent("onload", () => {
+            let {x,y} = panel.GetPositionWithinWindow();
+            x -= tooltip.actuallayoutwidth + MARGIN;
+            y -= tooltip.actuallayoutheight/2;
+
+            // Lock x/y-level to cursor x/y-level
+            if (lockX || lockY) (function UpdateXY() {
+                if (!tooltip.IsValid()) return;
+
+                if (lockX) [x,] = GameUI.GetCursorPosition();
+                if (lockY) [,y] = GameUI.GetCursorPosition();
+                if (lockX < 0) x -= tooltip.actuallayoutwidth+5;
+                if (lockY < 0) y -= tooltip.actuallayoutheight+5;
+                tooltip.SetPositionInPixels(x, y, 0);
+
+                $.Schedule(0.02, () => UpdateXY());
+            })();
+
+            tooltip.SetPositionInPixels(x, y, 0);
+            tooltip.style.opacity = "1";
+        });
+
+        return tooltip;
+}
+
 class Incident {
     panel: Panel;
     targets: EntityIndex[];
@@ -14,7 +46,7 @@ class Incident {
     tooltipSmall?: LabelPanel;
     arrows: Arrow[] = [];
 
-    constructor(parent: Panel, name: string, description: string, severity: Severity, targets: EntityIndex[]) {
+    constructor(parent: Panel, name: string, desc: string, severity: Severity, targets: EntityIndex[]) {
         const panel = $.CreatePanel("Panel", parent, "Incident");
         panel.BLoadLayoutSnippet("Incident");
         this.panel = panel;
@@ -34,12 +66,12 @@ class Incident {
         // Incident left click
         this.tooltipDummy.SetPanelEvent("onmouseactivate", () => {
             Game.EmitSound("CommsWindow_Open");
-            this.CreateLargeTooltip(description);
+            this.CreateLargeTooltip(desc);
         });
 
         // Small tooltip and arrow on hover
         this.tooltipDummy.SetPanelEvent("onmouseover", () => {
-            this.tooltipSmall = this.CreateSmallTooltip(description);
+            this.tooltipSmall = CreateSmallTooltip(this.letter, desc, 0, 0);
             targets.forEach(t => this.arrows.push(new Arrow(t)));
         });
 
@@ -67,22 +99,6 @@ class Incident {
                 this.Bounce(severity.tBounce!);
             });
         };
-    }
-
-    CreateSmallTooltip(text: string) {
-        const tooltipSmall = $.CreatePanel("Label", $.GetContextPanel(), "TooltipSmall");
-        tooltipSmall.BLoadLayoutSnippet("TooltipSmall");
-        tooltipSmall.text = text;
-
-        tooltipSmall.SetPanelEvent("onload", () => {
-            let {x, y} = this.letter.GetPositionWithinWindow();
-            x -= tooltipSmall.actuallayoutwidth + MARGIN;
-            y -= tooltipSmall.actuallayoutheight/2;
-            tooltipSmall.SetPositionInPixels(x, y, 0);
-            tooltipSmall.style.opacity = "1";
-        });
-
-        return tooltipSmall;
     }
 
     CreateLargeTooltip(text: string) {
@@ -152,13 +168,13 @@ class Problem {
     tooltipSmall?: LabelPanel;
     arrows: Arrow[] = [];
 
-    constructor(parent: Panel, type: string, name: string, description: string, targets: EntityIndex[]) {
+    constructor(parent: Panel, type: string, name: string, desc: string, targets: EntityIndex[]) {
         const panel = $.CreatePanel("Label", parent, "Problem") as LabelPanel;
         this.panel = panel;
         this.type = type;
         this.targets = targets;
 
-        this.UpdateTargets(parent, name, description, targets);
+        this.UpdateTargets(parent, name, desc, targets);
 
         Game.EmitSound("TinyBell");
         if (parent.id === "Major") Game.EmitSound("AlertRed");
@@ -166,7 +182,7 @@ class Problem {
 
     // Reapply text and targets to closure
     // Decrementing to 0 targets deletes itself
-    UpdateTargets(parent: Panel, name: string, description: string, targets: EntityIndex[]) {
+    UpdateTargets(parent: Panel, name: string, desc: string, targets: EntityIndex[]) {
         if (!targets.length) ui.DeleteProblem(this);
         this.targets = targets;
 
@@ -188,7 +204,7 @@ class Problem {
 
         // Small tooltip and arrow on hover
         this.panel.SetPanelEvent("onmouseover", () => {
-            this.tooltipSmall = this.CreateSmallTooltip(description);
+            this.tooltipSmall = CreateSmallTooltip(this.panel, desc, 0, 1);
             targets.forEach(t => this.arrows.push(new Arrow(t)));
         });
 
@@ -201,31 +217,6 @@ class Problem {
 
         this.panel.text = name;
         this.panel.SetParent(parent);
-    }
-
-    CreateSmallTooltip(text: string) {
-        const tooltipSmall = $.CreatePanel("Label", $.GetContextPanel(), "TooltipSmall");
-        tooltipSmall.BLoadLayoutSnippet("TooltipSmall");
-        tooltipSmall.text = text;
-
-        tooltipSmall.SetPanelEvent("onload", () => {
-            let {x,} = this.panel.GetPositionWithinWindow();
-            x -= tooltipSmall.actuallayoutwidth + MARGIN;
-
-            // Lock y-level to cursor y-level
-            (function UpdateY() {
-                if (!tooltipSmall.IsValid()) return;
-
-                let [,y] = GameUI.GetCursorPosition();
-                tooltipSmall.SetPositionInPixels(x, y, 0);
-
-                $.Schedule(0.02, () => UpdateY());
-            })();
-
-            tooltipSmall.style.opacity = "1";
-        });
-
-        return tooltipSmall;
     }
 }
 
