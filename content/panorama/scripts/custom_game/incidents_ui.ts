@@ -227,4 +227,5 @@ class UI {
 
 const ui = new UI($.GetContextPanel());
 // Display UI under the shop by setting the context panel's parent to the HUD
-$.GetContextPanel().SetParent($.GetContextPanel().GetParent()!.GetParent()!.GetParent()!.FindChild("HUDElements")!);
+if (!($.GetContextPanel().GetParent()!.id === "HUDElements"))
+    $.GetContextPanel().SetParent($.GetContextPanel().GetParent()!.GetParent()!.GetParent()!.FindChild("HUDElements")!);
