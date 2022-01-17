@@ -55,7 +55,10 @@ class UI {
         GameEvents.Subscribe<PlayerChatEvent>("player_chat", event => this.OnPlayerChat(event));
 
         this.forecast.text = "Clear 30C";
-        this.date.text = "11h<br>Spring, 5500";
+        (function UpdateTime(date) {
+            date.text = `${Math.floor((Game.GetDOTATime(false, false)+150) % 600 / 25)}h<br>Spring, 5500`;
+            $.Schedule(1, () => UpdateTime(date));
+        })(this.date);
     }
 
     // Increment/decrement a problem alarm
