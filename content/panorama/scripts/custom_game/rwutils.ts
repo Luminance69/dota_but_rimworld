@@ -51,7 +51,7 @@ function WorldToScreen(pos: Vector) {
     )
 }
 
-function ParseLuaArray<T>(array: LuaArray<T>): T[] {
+function ParseLuaArray<T>(array: EventArray<T>): T[] {
     return typeof array === "object"
     ? Object.values(array)
     : [array];

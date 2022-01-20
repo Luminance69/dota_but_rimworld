@@ -1,27 +1,24 @@
-type LuaArray<T> = T | Record<number, T>;
+type LuaArray<T> = Record<number, T>;
+type EventArray<T> = T | LuaArray<T>;
 
 // I feel like I don't need all of these types...
 type ProblemType = keyof typeof ProblemTypes;
 type IncidentType = keyof typeof IncidentTypes;
 type Severity = typeof IncidentSeverity[keyof typeof IncidentSeverity];
-
-type Description = {
-    main: Partial<Record<number, string>>
-    repeat: Partial<Record<number, string>>
-}
+type Description = {main: LuaArray<string>, repeat: LuaArray<string>};
 
 interface SendIncidentLetterEvent {
     type: IncidentType;
-    targets: LuaArray<EntityIndex>;
+    targets: EventArray<EntityIndex>;
     special?: {
         main?: Record<string, string>,
-        repeat?: Record<string, LuaArray<string>>,
+        repeat?: Record<string, EventArray<string>>,
     }
 }
 
 interface UpdateProblemAlarmEvent {
     type: ProblemType;
-    targets: LuaArray<EntityIndex>;
+    targets: EventArray<EntityIndex>;
     major: 0 | 1;
     increment: 0 | 1;
 }
