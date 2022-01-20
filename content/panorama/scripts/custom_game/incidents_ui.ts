@@ -3,13 +3,7 @@ type LuaArray<T> = T | Record<number, T>;
 // I feel like I don't need all of these types...
 type ProblemType = keyof typeof ProblemTypes;
 type IncidentType = keyof typeof IncidentTypes;
-
-type Severity = {
-    color: string,
-    sounds: string[],
-    tGlow: number,
-    tBounce?: number,
-}
+type Severity = typeof IncidentSeverity[keyof typeof IncidentSeverity];
 
 type Description = {
     main: Partial<Record<number, string>>

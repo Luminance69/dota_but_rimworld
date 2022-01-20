@@ -94,7 +94,7 @@ class Incident {
             this.Glow(severity.tGlow, severity.color);
         });
 
-        if (severity.tBounce) {
+        if ("tBounce" in severity) {
             $.Schedule(severity.tBounce, () => {
                 this.Bounce(severity.tBounce!);
             });
