@@ -44,12 +44,11 @@ function Birthdays:DoBirthday(hero)
         weights["dementia"] = weights["dementia"] * 3
     end
 
-    local incident = GetWeightedChoice()
-
-    -- Don't do wisdom if hero is >= lvl 30
-    while incident == "wisdom" and hero:GetLevel() >= 30 do
-        incident = GetWeightedChoice(Birthdays.incidents)
+    if hero:GetLevel() >= 30 then
+        weights["wisdom"] = 0
     end
+
+    local incident = GetWeightedChoice(weights)
 
     if self[incident] and self[incident](hero) then
         -- Do notification/sound etc. (maybe panorama? :P)
