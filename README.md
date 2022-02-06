@@ -10,7 +10,7 @@ Incidents:
     	-10/30/60% movement speed
     	-10/30/60 attack speed
     	-10/20/30% damage
-    	Upgrades after 8-16 seconds
+    	Upgrades after 10-20 seconds
     	At the end of the third stage, creeps have a 50% chance to be cured and a 50% chance to die
 
     Weight: 50
@@ -109,136 +109,150 @@ Incidents:
     Weight: 3
     Cold Snap:
     	120-240s duration
-		Reduces temperature by 20 degrees.
+    	Reduces temperature by 20 degrees.
 
     Weight: 3
     Heat Wave:
     	120-240s duration
-		Increases temperature by 20 degrees.
-	
-	Weight: 10
-	Cargo Pods (apparel/weapons):
-		A random item is dropped on a random location on the map.
-	
-	Weight: 10
-	Raid:
-		A group of neutral units with randomly assigned skins appear at a random location on the map at least 2000 units from the nearest non outpost building.
-		Power level scales with team power levels.
-		Spawn location is biased based on which team is winning.
-		They run at nearby radiant and dire units attacking them.
-	
-	Weight: 3
-	Siege:
-		A group of neutral units with randomly assigned skins appear at a random location on the map at least 2000 units from the nearest non outpost building.
-		Power level scales with team power levels.
-		Spawn location is biased based on which team is winning.
-		They shoot rockets at random radiant and dire units until killed.
-		Rockets are basically the effects of various spells; heat seeking missiles, blast off shard, rocket flare, homing missile, call down, sunstrike, LSA.
-	
-	Weight: 5
-	Mech Cluster:
-		A group of neutral buildings with randomly assigned robotic (tinker, clockwerk etc.) skins appear at a random location on the map at least 2000 units from the nearest non outpost building.
-		Power level scales with team power levels.
-		Spawn location is biased based on which team is winning.
-		Also spawns with a randomly chosed building:
-			Psychic Droner:
-				Basically a psychic drone incident. Gets more powerful over time.
-			Toxic Spewer:
-				All units not nearby a building slowly gain a toxic buildup modifier.
-				This increases cast points, cooldowns, reduces movement speed, attack speed, regeneration.
-				If reaches 100% the unit dies.
-			Sun Blocker:
-				Forces night time.
-				Reduces temperature by 5 degrees.
-			Artificial Sun:
-				Forces day time.
-				Increases temperature by 5 degrees.
-			Psychic Suppressor:
-				Increases cast points and cooldowns of all heroes, more severe the lower their mental break threshold is.
-			Hail Generator:
-				A hailstorm falls on the area, dealing physical damage randomly to units.
-				Reduces temperature by 5 degrees.
-			EMI Dynamo:
-				All items are muted.
-			Climate Adjuster:
-				Reduces/increases temperature by 15 degrees, whichever is more dangerous.
-	
+    	Increases temperature by 20 degrees.
+
+    Weight: 10
+    Cargo Pods (apparel/weapons):
+    	A random item is dropped on a random location on the map.
+
+    Weight: 7
+    Dry thunderstorm:
+    	20-40 second duration.
+    	A random 3000 unit radius circle on the map is bombarded by zeus lightning bolts.
+
+    Weight: 4
+    Boomalope Infusion:
+    	All units on the map are infused with the DNA of a boomalope, causing them to explode violently on death.
+
+    Weight: 10
+    Raid:
+    	A group of neutral units with randomly assigned skins appear at a random location on the map at least 2000 units from the nearest non outpost building.
+    	Power level scales with team power levels.
+    	Spawn location is biased based on which team is winning.
+    	They run at nearby radiant and dire units attacking them.
+
+    Weight: 3
+    Siege:
+    	A group of neutral units with randomly assigned skins appear at a random location on the map at least 2000 units from the nearest non outpost building.
+    	Power level scales with team power levels.
+    	Spawn location is biased based on which team is winning.
+    	They shoot rockets at random radiant and dire units until killed.
+    	Rockets are basically the effects of various spells; heat seeking missiles, blast off shard, rocket flare, homing missile, call down, sunstrike, LSA.
+
+    Weight: 5
+    Mech Cluster:
+    	A group of neutral buildings with randomly assigned robotic (tinker, clockwerk etc.) skins appear at a random location on the map at least 2000 units from the nearest non outpost building.
+    	Power level scales with team power levels.
+    	Spawn location is biased based on which team is winning.
+    	Also spawns with a randomly chosed building:
+    		Psychic Droner:
+    			Basically a psychic drone incident. Gets more powerful over time.
+    		Toxic Spewer:
+    			All units not nearby a building slowly gain a toxic buildup modifier.
+    			This increases cast points, cooldowns, reduces movement speed, attack speed, regeneration.
+    			If reaches 100% the unit dies.
+    		Sun Blocker:
+    			Forces night time.
+    			Reduces temperature by 5 degrees.
+    		Artificial Sun:
+    			Forces day time.
+    			Increases temperature by 5 degrees.
+    		Psychic Suppressor:
+    			Increases cast points and cooldowns of all heroes, more severe the lower their mental break threshold is.
+    		Hail Generator:
+    			A hailstorm falls on the area, dealing physical damage randomly to units.
+    			Reduces temperature by 5 degrees.
+    		EMI Dynamo:
+    			All items are muted.
+    		Climate Adjuster:
+    			Reduces/increases temperature by 15 degrees, whichever is more dangerous.
+
+(All implemented (except visuals)!)
 Biomes, Temperature and Climate:
 
-	Biomes:
-		A biome is randomly chosen at the start of the game
-		Each biome has a temperature expressed as the low/high (night/day) temperature of summer/winter, with autumn and spring being half way between the two.
-		Each biome also has a climate (wet/dry)
+    Biomes:
+    	A biome is randomly chosen at the start of the game.
+    	Each biome has a temperature expressed as the low/high (night/day) temperature of summer/winter, with autumn and spring being half way between the two.
+    	Each biome also has a climate (wet/dry)
 
-		Neutral (temperate forest):
-			Default ambient temp of 15/35|0/20 degrees
-		Hot + Wet (jungle):
-			Default ambient temp of 35/50|30/45 degrees
-		Hot + Dry (extreme desert):
-			Default ambient temp of -5/55|-15/35 degrees
-		Cold + Wet (bog):
-			Default ambient temp of 10/30|-25/-5 degrees
-		Cold + Dry (ice sheet):
-			Default ambient temp of -5/15|-30/-10 degrees
+    	Neutral (temperate forest):
+    		Default ambient temp of 15/35|0/20 degrees
+    	Hot + Wet (rainforest):
+    		Default ambient temp of 35/50|30/45 degrees
+    	Hot + Dry (extreme desert):
+    		Default ambient temp of -5/55|-15/35 degrees
+    	Cold + Wet (cold bog):
+    		Default ambient temp of 10/30|-25/-5 degrees
+    	Cold + Dry (ice sheet):
+    		Default ambient temp of -5/15|-30/-10 degrees
 
-	Climate:
-		Wet:
-			Double chance for all illnesses
-			Sweaty:
-				-8 Mood
-				Removed while temperature is below 30
-		Dry:
-			Thirsty:
-				-8 Mood
-				Entering the fountain or the river, or drinking from a bottle removes thirsty for 120 seconds.
+    Climate:
+    	Wet:
+    		Double chance for all illnesses
+    		Sweaty:
+    			-8 Mood
+    			-10% Attack Speed
+    			-10% Cast Point Reduction
+    			Removed while temperature is below 30
+    	Dry:
+    		Thirsty:
+    			-8 Mood
+    			Entering the fountain or the river, or drinking from a bottle removes thirsty for 120 seconds.
 
-	Temperature:
-		Global temperature is updated every second. Temperature for each unit is then offset based on how close they are to the nearest allied building, also updated once per second.
-		Standard temperature range is 5-35.
-		Buildings provide an offset to each unit's temperature within 1000 units of 15/20/30 degrees for towers/ancient/fountain. Does not stack.
-		
-		Hypothermia:
-			Gain 1 stack every second while the temperature is more than 5 below min.
-			Lose 1 stack every second per 2 degrees above min (rounded up).
+    Temperature:
+    	Global temperature is updated every second. Temperature for each unit is then offset based on how close they are to the nearest allied building, also updated once per second.
+    	Standard temperature range is 5-35.
+    	Buildings provide an offset to each unit's temperature within 1000 units of 15/20/30 degrees for towers/ancient/fountain. Does not stack.
 
-			25 stacks:
-				-10% movespeed
-				-20 attack speed
-				-25% HP regen
+    	Hypothermia:
+    		Gain 1 stack every second while the temperature is more than 5 below min.
+    		Lose 1 stack every second per 2 degrees above min (rounded up).
 
-			50 stacks:
-				-30% movespeed
-				-50 attack speed
-				-50% HP regen
-				25 magic DPS
+    		25 stacks:
+    			-10% movespeed
+    			-20 attack speed
+    			-25% HP regen
 
-			100 stacks:
-				-100% movespeed
-				-200 attack speed
-				-100% HP regen
-				stack count - 50 magic DPS
+    		50 stacks:
+    			-30% movespeed
+    			-50 attack speed
+    			-50% HP regen
+    			25 magic DPS
 
-				Frostbite:
-					Permanent.
-					-25% movespeed
-					-20% base attack damage
-					+50% illness chance
+    		100 stacks:
+    			-100% movespeed
+    			-200 attack speed
+    			-100% HP regen
+    			stack count - 50 magic DPS
 
-		Heatstroke:
-			Gain 1 stack every second while the temperature is more than 5 above max.
-			Lose 1 stack every second per 2 degrees below max (rounded up).
+    			Frostbite:
+    				Permanent.
+    				-25% movespeed
+    				-20% base attack damage
+    				+50% illness chance
 
-			25 stacks:
-				-10% movespeed
-				-20 attack speed
+    	Heatstroke:
+    		Gain 1 stack every second while the temperature is more than 5 above max.
+    		Lose 1 stack every second per 2 degrees below max (rounded up).
 
-			50 stacks:
-				-30% movespeed
-				-50 attack speed
-				50 pure DPS
+    		25 stacks:
+    			-10% movespeed
+    			-20 attack speed
 
-			100 stacks:
-				-0.05% max hp pure dmg per second per stack
+    		50 stacks:
+    			-30% movespeed
+    			-50 attack speed
+    			50 pure DPS
+
+    		100 stacks:
+    			-50% movespeed
+    			-100 attack speed
+    			0.05% max hp pure dmg per second per stack
 
 (All implemented!)
 Birthdays:
@@ -317,11 +331,11 @@ Traits:
     Neurotic:
     	+20% Outgoing Damage
     	+12 Mental Break Threshold
-		Double chance for dementia
+    	Double chance for dementia
 
     Tough:
     	-15% Incoming Damage
-		Half chance for bad back
+    	Half chance for bad back
 
     Wimp:
     	-40% Status Resistance
@@ -466,17 +480,17 @@ Body Parts:
 
 Things to add:
 
-	Noise when hero dies
-	Incidents
-	Consider the following stuff:
-		Ways to affect comfortable temperature
-		Assorted mood buffs/debuffs:
-			Expectations: 30/20/10/0/-10 mood for <1500/4000/75000/15000/15000+ networth
-			Pain: -3/-6/-10/-15 for missing 25/50/75/90% HP
-			Darkness: -20% movement speed & -4 mood when not near a building at night time
-			Aroura: no darkness debuff, +6 mood
-			Ally died: -2 mood while an ally is dead
-			Slept in the heat/cold: randomly given out at the start of each day time, -3 mood, lasts 450 seconds.
-			Generic sadgeness, randomly given, lasts a random time, -3 to -5 mood:
-			Awful bedroom, hungry, tired, ate without table
-			At the start of every game difficulty is chosen, changing the base mood from between 25 and 42
+    Noise when hero dies
+    Incidents
+    Consider the following stuff:
+    	Ways to affect comfortable temperature
+    	Assorted mood buffs/debuffs:
+    		Expectations: 30/20/10/0/-10 mood for <1500/4000/75000/15000/15000+ networth
+    		Pain: -3/-6/-10/-15 for missing 25/50/75/90% HP
+    		Darkness: -20% movement speed & -4 mood when not near a building at night time
+    		Aroura: no darkness debuff, +6 mood
+    		Ally died: -2 mood while an ally is dead
+    		Slept in the heat/cold: randomly given out at the start of each day time, -3 mood, lasts 450 seconds.
+    		Generic sadgeness, randomly given, lasts a random time, -3 to -5 mood:
+    		Awful bedroom, hungry, tired, ate without table
+    		At the start of every game difficulty is chosen, changing the base mood from between 25 and 42

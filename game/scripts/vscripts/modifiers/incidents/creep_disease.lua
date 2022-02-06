@@ -37,7 +37,7 @@ modifier_creep_disease_minor = class(creep_disease)
 function modifier_creep_disease_minor:OnCreated()
     self.parent = self:GetParent()
 
-    self:SetDuration(RandomInt(8, 16), true)
+    self:SetDuration(RandomInt(10, 20), true)
 
     self.move_speed = -10
     self.attack_speed = -10
@@ -57,7 +57,7 @@ modifier_creep_disease_major = class(creep_disease)
 function modifier_creep_disease_major:OnCreated()
     self.parent = self:GetParent()
     
-    self:SetDuration(RandomInt(8, 16), true)
+    self:SetDuration(RandomInt(10, 20), true)
 
     self.move_speed = -30
     self.attack_speed = -30
@@ -77,7 +77,7 @@ modifier_creep_disease_extreme = class(creep_disease)
 function modifier_creep_disease_extreme:OnCreated()
     self.parent = self:GetParent()
     
-    self:SetDuration(RandomInt(8, 16), true)
+    self:SetDuration(RandomInt(10, 20), true)
 
     self.move_speed = -60
     self.attack_speed = -60
