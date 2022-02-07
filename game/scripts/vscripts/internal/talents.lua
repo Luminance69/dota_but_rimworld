@@ -9,7 +9,7 @@ ListenToGameEvent("dota_player_learned_ability",function(keys)
         local file = "talents/"..modifiername
         if pcall(require,file) then
             LinkLuaModifier(modifiername, file, LUA_MODIFIER_MOTION_NONE)
-            hero:AddNewModifier(hero, ability, modifiername, {})
+            hero:AddNewModifierSpecial(hero, ability, modifiername, {})
         end
     end
 

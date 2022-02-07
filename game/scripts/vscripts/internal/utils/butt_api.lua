@@ -290,6 +290,24 @@ end
 -- Dota but Rimworld stuffs --
 ------------------------------
 
+-- Function to handle adding modifiers to dead units
+
+function CDOTA_BaseNPC_Hero:AddNewModifierSpecial(caster, ability, modifier_name, params)
+    if self:IsAlive() then
+        return self:AddNewModifier(caster, ability, modifier_name, params)
+    else
+        local listener = ListenToGameEvent("npc_spawned", function(keys)
+            if self == EntIndexToHScript(keys.entindex) then
+                self:AddNewModifier(caster, ability, modifier_name, params)
+            end
+        end, nil)
+
+        Timers:CreateTimer(self:GetTimeUntilRespawn() + 1, function()
+            StopListeningToGameEvent(listener)
+        end)
+    end
+end
+
 -- Run every second to update each hero's mood
 function CDOTA_BaseNPC_Hero:UpdateMood() -- nil
     if not self.mood then

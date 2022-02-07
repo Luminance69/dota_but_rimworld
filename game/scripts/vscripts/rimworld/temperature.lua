@@ -62,11 +62,11 @@ function Temperature:Init()
 
     for _, hero in pairs(heroes) do
         if Temperature.climate == "wet" then
-            hero:AddNewModifier(hero, nil, "modifier_sweaty", nil) 
+            hero:AddNewModifierSpecial(hero, nil, "modifier_sweaty", nil) 
         end
 
         if Temperature.climate == "dry" then
-            hero:AddNewModifier(hero, nil, "modifier_thirsty", nil) 
+            hero:AddNewModifierSpecial(hero, nil, "modifier_thirsty", nil) 
         end
     end
 

@@ -20,6 +20,10 @@ function Incidents:Init()
     self:LinkModifiers(Incidents.modifiers)
 
     Timers:CreateTimer(IsInToolsMode() and 2 or 30, self.DoRandomIncident)
+
+    ListenToGameEvent("entity_killed", function(keys)
+        Incidents:OnDeath(keys)
+    end, nil)
 end
 
 function Incidents:LinkModifiers(table)
@@ -85,12 +89,40 @@ Incidents.creep_disease = function()
     return {["team"] = team, ["targets"] = targets}
 end
 
+function Incidents:OnDeath(keys)
+    local killed = EntIndexToHScript(keys.entindex_killed)
+
+    if not killed or killed:IsNull() or not killed:IsHero() then return end
+
+    local player_id = killed:GetPlayerOwnerID()
+
+    if player_id == -1 then return end
+
+    if killed ~= PlayerResource:GetSelectedHeroEntity(player_id) then return end
+
+    local team = killed:GetTeamNumber()
+    
+    local color = team == EntIndexToHScript(keys.entindex_attacker):GetTeamNumber() and "#ccc47f" or "#ca7471"
+
+    local keys = {
+        name = "Death",
+        description = "One of your allies has died. Alexa, play despacito.",
+        severity = color,
+        sounds = "LetterArriveBadUrgentSmall",
+        targets = killed,
+    }
+
+    SendIncidentLetterTeam(team, keys)
+end
+
 Incidents.modifiers = {
     ["creep_disease"] = {
         "minor",
         "major",
         "extreme",
     },
+
+    --[[
 
     ["infection"] = {
         "minor",
@@ -109,10 +141,6 @@ Incidents.modifiers = {
 
     "creep_insanity",
 
-    "cold_snap",
-    "frostbite",
-    "frozen_heart",
-
     "malaria",
     "flu",
     "plague",
@@ -120,12 +148,15 @@ Incidents.modifiers = {
     "muscle_parasites",
     "fibrous_mechanites",
     "sensory_mechanites",
+    ]]
 }
 
 Incidents.names = {
     ["creep_disease"] = "Creep Disease",
+    ["zzztt"] = "Zzztt...",
+
+    --[[
     ["hero_sickness"] = "",
-    ["zzztt"] = "",
     ["mad_neutral"] = "",
     ["mass_neutral_insanity"] = "",
     ["psychic_soothe"] = "",
@@ -133,12 +164,15 @@ Incidents.names = {
     ["invert_day"] = "",
     ["gift"] = "",
     ["cold_snap"] = "",
+    ]]
 }
 
 Incidents.descriptions = {
     ["creep_disease"] = "Many of your creeps have been infected with a deadly illness.",
+    ["zzztt"] = "One of your towers has short circuted causing it to explode.",
+
+    --[[
     ["hero_sickness"] = "",
-    ["zzztt"] = "",
     ["mad_neutral"] = "",
     ["mass_neutral_insanity"] = "",
     ["psychic_soothe"] = "",
@@ -146,6 +180,7 @@ Incidents.descriptions = {
     ["invert_day"] = "",
     ["gift"] = "",
     ["cold_snap"] = "",
+    ]]
 }
 
 Severity = Severity or {
@@ -157,8 +192,10 @@ Severity = Severity or {
 
 Incidents.severity = {
     ["creep_disease"] = Severity.Red,
-    ["hero_sickness"] = Severity.Yellow,
     ["zzztt"] = Severity.Yellow,
+
+    --[[
+    ["hero_sickness"] = Severity.Yellow,
     ["mad_neutral"] = Severity.Yellow,
     ["mass_neutral_insanity"] = Severity.Red,
     ["psychic_soothe"] = Severity.Blue,
@@ -166,12 +203,15 @@ Incidents.severity = {
     ["invert_day"] = Severity.White,
     ["gift"] = Severity.White,
     ["cold_snap"] = Severity.Red,
+    ]]
 }
 
 Incidents.sounds = {
     ["creep_disease"] = "LetterArriveBadUrgent",
-    ["hero_sickness"] = "LetterArriveBadUrgentSmall",
     ["zzztt"] = "LetterArriveBadUrgentSmall",
+
+    --[[
+    ["hero_sickness"] = "LetterArriveBadUrgentSmall",
     ["mad_neutral"] = "LetterArriveBadUrgentSmall",
     ["mass_neutral_insanity"] = "LetterArriveBadUrgentBig",
     ["psychic_soothe"] = "LetterArriveGood",
@@ -179,4 +219,5 @@ Incidents.sounds = {
     ["invert_day"] = "LetterArrive",
     ["gift"] = "LetterArriveGood",
     ["cold_snap"] = "LetterArriveBadUrgentBig",
+    ]]
 }

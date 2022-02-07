@@ -27,7 +27,7 @@ function Moods:Init()
 
     for _, hero in pairs(heroes) do
         if hero:IsRealHero() then
-            hero:AddNewModifier(hero, nil, "modifier_mood", nil)
+            hero:AddNewModifierSpecial(hero, nil, "modifier_mood", nil)
             Timers:CreateTimer(1, function()
                 self:DoMoodUpdate(hero)
 
@@ -76,8 +76,8 @@ function Moods:DoMoodUpdate(hero)
         end
 
         if mental_break then
-            hero:AddNewModifier(hero, nil, "modifier_" .. mental_break, nil)
-            hero:AddNewModifier(hero, nil, "modifier_catharsis", {duration = 120})
+            hero:AddNewModifierSpecial(hero, nil, "modifier_" .. mental_break, nil)
+            hero:AddNewModifierSpecial(hero, nil, "modifier_catharsis", {duration = 120})
 
             -- Do notification/sound etc. (maybe panorama? :P)
         end

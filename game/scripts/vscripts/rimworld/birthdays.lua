@@ -1,12 +1,12 @@
 Birthdays = Birthdays or class({})
 
 Birthdays.incidents = {
-    ["bad_back"] = 5,
-    ["dementia"] = 5,
-    ["cataract"] = 5,
-    ["heart_attack"] = 1,
-    ["gift"] = 5,
-    ["wisdom"] = 5,
+    ["bad_back"] = 10,
+    ["dementia"] = 10,
+    ["cataract"] = 10,
+    ["heart_attack"] = 2,
+    ["gift"] = 10,
+    ["wisdom"] = 10,
 }
 
 function Birthdays:Init()
@@ -20,7 +20,7 @@ function Birthdays:Init()
 
     for _, hero in pairs(heroes) do
         if hero:IsRealHero() then
-            Timers:CreateTimer(RandomInt(0, 1), function()
+            Timers:CreateTimer(RandomInt(85, 685), function()
                 self:DoBirthday(hero)
 
                 return 600
@@ -33,7 +33,7 @@ function Birthdays:DoBirthday(hero)
     local weights = Birthdays.incidents
 
     if hero:HasModifier("modifier_tough") then
-        weights["bad_back"] = weights["bad_back"] * 2
+        weights["bad_back"] = weights["bad_back"] / 2
     end
 
     if hero:HasModifier("modifier_neurotic") then
@@ -44,6 +44,18 @@ function Birthdays:DoBirthday(hero)
         weights["dementia"] = weights["dementia"] * 3
     end
 
+    if #hero.body_parts["eye"] == 1 then 
+        weights["cataract"] = 5
+    end
+
+    if #hero.body_parts["eye"] == 2 then 
+        weights["cataract"] = 0
+    end
+
+    if #hero.body_parts["heart"] == 1 then
+        weights["heart_attack"] = 0
+    end
+
     if hero:GetLevel() >= 30 then
         weights["wisdom"] = 0
     end
@@ -51,6 +63,7 @@ function Birthdays:DoBirthday(hero)
     local incident = GetWeightedChoice(weights)
 
     if self[incident] and self[incident](hero) then
+        print("Birthday: " .. hero:GetUnitName() .. " - " .. incident)
         -- Do notification/sound etc. (maybe panorama? :P)
     end
 end
@@ -59,10 +72,10 @@ Birthdays.bad_back = function(hero)
     local modifier = hero:FindModifierByName("modifier_bad_back")
 
     if not modifier then
-        modifier = hero:AddNewModifier(hero, nil, "modifier_bad_back", {})
+        modifier = hero:AddNewModifierSpecial(hero, nil, "modifier_bad_back", {})
+    else
+        modifier:IncrementStackCount()
     end
-
-    modifier:IncrementStackCount()
 
     return true
 end
@@ -71,31 +84,28 @@ Birthdays.dementia = function(hero)
     local modifier = hero:FindModifierByName("modifier_dementia")
 
     if not modifier then
-        modifier = hero:AddNewModifier(hero, nil, "modifier_dementia", {})
+        modifier = hero:AddNewModifierSpecial(hero, nil, "modifier_dementia", {})
+    else
+        modifier:IncrementStackCount()
     end
-
-    modifier:IncrementStackCount()
 
     return true
 end
 
-Birthdays.cataract = function(hero)
-    if #hero.body_parts["eye"] == 2 then return false end
-    
+Birthdays.cataract = function(hero)    
     local modifier = hero:FindModifierByName("modifier_cataract")
 
     if not modifier then
-        modifier = hero:AddNewModifier(hero, nil, "modifier_cataract", {})
+        modifier = hero:AddNewModifierSpecial(hero, nil, "modifier_cataract", {})
+    else
+        modifier:IncrementStackCount()
     end
-
-    modifier:IncrementStackCount()
 
     return true
 end
 
 Birthdays.heart_attack = function(hero)
-    if #hero.body_parts["heart"] == 1 then return false end
-    hero:AddNewModifier(hero, nil, "modifier_heart_attack", {duration = RandomInt(10, 20)})
+    hero:AddNewModifierSpecial(hero, nil, "modifier_heart_attack", {duration = RandomInt(10, 20)})
 
     return true
 end

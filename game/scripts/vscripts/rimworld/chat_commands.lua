@@ -81,7 +81,7 @@ ChatCommands.trait = function(args, hero, ...)
 
     local trait = args[1]
 
-    hero:AddNewModifier(hero, nil, "modifier_" .. trait, nil)
+    hero:AddNewModifierSpecial(hero, nil, "modifier_" .. trait, nil)
 
     print("Added " .. trait .. " to " .. hero:GetUnitName())
 end

@@ -4,6 +4,7 @@ Dota 2 but Rimworld
 
 Incidents:
 
+    (Implemented!)
     Weight: 5
     Creep Disease:
     	50% of allied creeps are infected with disease.

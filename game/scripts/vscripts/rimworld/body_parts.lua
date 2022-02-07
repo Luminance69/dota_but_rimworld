@@ -73,7 +73,7 @@ function BodyParts:AddBodyPart(hero, slot, part)
 
     table.insert(hero.body_parts[slot], part)
 
-    hero:AddNewModifier(hero, nil, "modifier_" .. slot .. "_" .. part, nil)
+    hero:AddNewModifierSpecial(hero, nil, "modifier_" .. slot .. "_" .. part, nil)
 
     if slot == "eye" then
         local modifier = hero:FindModifierByName("modifier_cataract")
