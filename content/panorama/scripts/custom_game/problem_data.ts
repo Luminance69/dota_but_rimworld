@@ -1,5 +1,5 @@
 // No json import allowed by default ;;;;;
-const ProblemData =
+const ProblemTypes =
 {
     ExtremeBreak:
     {
@@ -51,4 +51,4 @@ const ProblemData =
             },
         },
     },
-}
+};

@@ -1,3 +1,42 @@
+const _WIDTH = 76; // Original letter width
+const _HEIGHT = 60; // Original letter height
+const SCALING = 0.7;
+const WIDTH = _WIDTH * SCALING;
+const HEIGHT = _HEIGHT * SCALING;
+const MARGIN = 20;
+
+// Tooltip generated on hover
+function CreateSmallTooltip(panel: Panel, text: string, lockX: -1|0|1, lockY: -1|0|1) {
+        const tooltip = $.CreatePanel("Label", $.GetContextPanel(), "TooltipSmall");
+        tooltip.BLoadLayoutSnippet("TooltipSmall");
+        tooltip.AddClass(panel.id); // Step-parent to handle different styles
+        tooltip.text = text;
+
+        tooltip.SetPanelEvent("onload", () => {
+            let {x,y} = panel.GetPositionWithinWindow();
+            x -= tooltip.actuallayoutwidth + MARGIN;
+            y -= tooltip.actuallayoutheight/2;
+
+            // Lock x/y-level to cursor x/y-level
+            if (lockX || lockY) (function UpdateXY() {
+                if (!tooltip.IsValid()) return;
+
+                if (lockX) [x,] = GameUI.GetCursorPosition();
+                if (lockY) [,y] = GameUI.GetCursorPosition();
+                if (lockX < 0) x -= tooltip.actuallayoutwidth+5;
+                if (lockY < 0) y -= tooltip.actuallayoutheight+5;
+                tooltip.SetPositionInPixels(x, y, 0);
+
+                $.Schedule(0.02, () => UpdateXY());
+            })();
+
+            tooltip.SetPositionInPixels(x, y, 0);
+            tooltip.style.opacity = "1";
+        });
+
+        return tooltip;
+}
+
 class Incident {
     panel: Panel;
     targets: EntityIndex[];
@@ -7,7 +46,7 @@ class Incident {
     tooltipSmall?: LabelPanel;
     arrows: Arrow[] = [];
 
-    constructor(parent: Panel, name: string, description: string, colour: string, targets: EntityIndex[]) {
+    constructor(parent: Panel, name: string, desc: string, severity: Severity, targets: EntityIndex[]) {
         const panel = $.CreatePanel("Panel", parent, "Incident");
         panel.BLoadLayoutSnippet("Incident");
         this.panel = panel;
@@ -27,12 +66,12 @@ class Incident {
         // Incident left click
         this.tooltipDummy.SetPanelEvent("onmouseactivate", () => {
             Game.EmitSound("CommsWindow_Open");
-            this.CreateLargeTooltip(description);
+            this.CreateLargeTooltip(desc);
         });
 
         // Small tooltip and arrow on hover
         this.tooltipDummy.SetPanelEvent("onmouseover", () => {
-            this.tooltipSmall = this.CreateSmallTooltip(description);
+            this.tooltipSmall = CreateSmallTooltip(this.letter, desc, 0, 0);
             targets.forEach(t => this.arrows.push(new Arrow(t)));
         });
 
@@ -45,24 +84,21 @@ class Incident {
 
         // Styles and effects
         this.name.text = name;
-        this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`;
-        this.Style(colour);
-        $.Schedule(2, () => this.Glow(colour));
-    }
+        this.Style(severity.color);
 
-    CreateSmallTooltip(text: string) {
-        const tooltipSmall = $.CreatePanel("Label", $.GetContextPanel(), "TooltipSmall");
-        tooltipSmall.BLoadLayoutSnippet("TooltipSmall");
-        tooltipSmall.text = text;
-
-        tooltipSmall.SetPanelEvent("onload", () => {
-            let {x, y} = this.panel.GetPositionWithinWindow();
-            x -= tooltipSmall.actuallayoutwidth/2 + 2*20;
-            tooltipSmall.SetPositionInPixels(x, y, 0);
-            tooltipSmall.style.opacity = "1";
+        $.Schedule(2, () => {
+            this.panel.RemoveClass("Init");
+            this.letter.style.boxShadow = `${severity.color}00 100px 0px 250px 0px`;
+            this.letter.style.transitionProperty = "box-shadow";
+            this.letter.style.transitionDuration = "0.5s";
+            this.Glow(severity.tGlow, severity.color);
         });
 
-        return tooltipSmall;
+        if ("tBounce" in severity) {
+            $.Schedule(severity.tBounce, () => {
+                this.Bounce(severity.tBounce!);
+            });
+        };
     }
 
     CreateLargeTooltip(text: string) {
@@ -88,18 +124,11 @@ class Incident {
         });
     }
 
-    Style(colour: string) {
-        const _WIDTH = 76; // Original letter width
-        const _HEIGHT = 60; // Original letter height
-        const SCALING = 0.75;
-        const WIDTH = _WIDTH * SCALING
-        const HEIGHT = _HEIGHT * SCALING
-        const MARGIN = 20;
-
+    Style(color: string) {
         this.panel.style.height = `${HEIGHT}px`;
         this.panel.style.margin = `${MARGIN / 2}px 0px`;
 
-        this.letter.style.washColor = `${colour}`
+        this.letter.style.washColor = `${color}`
         this.letter.style.width = `${WIDTH}px`;
         this.letter.style.margin = `0px ${MARGIN}px`; // Left margin to centre name
 
@@ -108,11 +137,26 @@ class Incident {
     }
 
     // Simulates a keyframe with dynamic colouring
-    Glow(colour: string) {
-        this.letter.style.boxShadow = `${colour}60 100px 0px 450px 0px`;
-        $.Schedule(1, () =>
+    Glow(period: number, colour: string) {
+        if (!this.panel.IsValid()) return;
+
+        this.letter.style.boxShadow = `${colour}50 100px 0px 550px 0px`;
+        $.Schedule(0.5, () =>
             this.letter.style.boxShadow = `${colour}00 100px 0px 250px 0px`
         );
+
+        // Repeat every <period> seconds
+        $.Schedule(period, () => this.Glow(period, colour));
+    }
+
+    // Scale margin with bounce animation to correctly render text
+    Bounce(period: number) {
+        if (!this.panel.IsValid()) return;
+
+        this.panel.ToggleClass("Bounce");
+
+        // Repeat every <period> seconds
+        $.Schedule(period, () => this.Bounce(period));
     }
 }
 
@@ -124,21 +168,21 @@ class Problem {
     tooltipSmall?: LabelPanel;
     arrows: Arrow[] = [];
 
-    constructor(parent: Panel, type: string, name: string, description: string, targets: EntityIndex[], major: boolean) {
+    constructor(parent: Panel, type: string, name: string, desc: string, targets: EntityIndex[]) {
         const panel = $.CreatePanel("Label", parent, "Problem") as LabelPanel;
         this.panel = panel;
         this.type = type;
         this.targets = targets;
 
-        this.UpdateTargets(name, description, targets, major);
+        this.UpdateTargets(parent, name, desc, targets);
 
         Game.EmitSound("TinyBell");
-        if (major) Game.EmitSound("AlertRed");
+        if (parent.id === "Major") Game.EmitSound("AlertRed");
     }
 
     // Reapply text and targets to closure
     // Decrementing to 0 targets deletes itself
-    UpdateTargets(name: string, description: string, targets: EntityIndex[], major: boolean) {
+    UpdateTargets(parent: Panel, name: string, desc: string, targets: EntityIndex[]) {
         if (!targets.length) ui.DeleteProblem(this);
         this.targets = targets;
 
@@ -160,7 +204,7 @@ class Problem {
 
         // Small tooltip and arrow on hover
         this.panel.SetPanelEvent("onmouseover", () => {
-            this.tooltipSmall = this.CreateSmallTooltip(description);
+            this.tooltipSmall = CreateSmallTooltip(this.panel, desc, 0, 1);
             targets.forEach(t => this.arrows.push(new Arrow(t)));
         });
 
@@ -172,32 +216,7 @@ class Problem {
         });
 
         this.panel.text = name;
-        major ? this.panel.SetParent(ui.pMajor) : this.panel.SetParent(ui.pMinor);
-    }
-
-    CreateSmallTooltip(text: string) {
-        const tooltipSmall = $.CreatePanel("Label", $.GetContextPanel(), "TooltipSmall");
-        tooltipSmall.BLoadLayoutSnippet("TooltipSmall");
-        tooltipSmall.text = text;
-
-        tooltipSmall.SetPanelEvent("onload", () => {
-            let {x,} = this.panel.GetPositionWithinWindow();
-            x -= this.panel.actuallayoutwidth + 2*20;
-
-            // Lock y-level to cursor y-level
-            (function UpdateY() {
-                if (!tooltipSmall.IsValid()) return;
-
-                let [,y] = GameUI.GetCursorPosition();
-                tooltipSmall.SetPositionInPixels(x, y, 0);
-
-                $.Schedule(0.02, () => UpdateY());
-            })();
-
-            tooltipSmall.style.opacity = "1";
-        });
-
-        return tooltipSmall;
+        this.panel.SetParent(parent);
     }
 }
 

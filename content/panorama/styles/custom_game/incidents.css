@@ -1,5 +1,5 @@
 @define font-color: white;
-@define font-size: 19px;
+@define font-size: 17px;
 @define font-family: Arial;
 @define lGrey: #616c7b;
 @define dGrey: #15191e;
@@ -18,7 +18,7 @@
     }
 }
 
-@define quad-out: cubic-bezier(.24, .56, .55, .9);
+@define quad-out: cubic-bezier(.24, .56, 0, 1);
 @define quad-in: cubic-bezier(.85, 0, .6, .45);
 @keyframes 'bouncein' {
     0% {animation-timing-function: quad-in; transform: translateX(-400px);}
@@ -28,6 +28,12 @@
     90% {animation-timing-function: quad-out; transform: translateX(-8px);}
     95% {animation-timing-function: quad-in; transform: translateX(0px);}
     97.5% {animation-timing-function: quad-out; transform: translateX(-2px);}
+    100% {animation-timing-function: quad-in; transform: translateX(0px);}
+}
+
+@keyframes 'bounce' {
+    0% {animation-timing-function: quad-out; transform: translateX(0px);}
+    50% {animation-timing-function: quad-out; transform: translateX(-165px);}
     100% {animation-timing-function: quad-in; transform: translateX(0px);}
 }
 
@@ -43,7 +49,7 @@
 
 #Container {
     horizontal-align: right;
-    height: 70%;
+    height: 85%;
     width: 100%;
     flow-children: up;
 }
@@ -51,44 +57,40 @@
 #Problems {
     horizontal-align: right;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     flow-children: down;
 }
 
 #Incidents {
-    overflow: scroll;
     horizontal-align: right;
+    width: 100%;
     padding-top: dropHeight; /* Fixes animation playing outside parent */
     margin-top: -dropHeight; /*                                        */
     flow-children: down;
 }
 
-/*----------------------------------------------------------------------------*/
-
-#Incident {
+#Forecast {
     horizontal-align: right;
-    animation-name: dropin;
-    animation-duration: 2s;
-}
-
-#Incident > Image {
-    horizontal-align: right;
-    transition-property: box-shadow;
-    transition-duration: 1s;
-}
-
-#Incident > Label {
-    align: center center;
-    color: font-color;
+    width: 300px;
+    padding: 5px 10px 5px 0px;
+    text-align: right;
     font-family: font-family;
     font-size: font-size;
-    background-color: gradient(linear, 130% 0%, 0% 130%, from(rgba(0,0,0,0.05)), color-stop(0.5, rgba(0,0,0,0.5)), to(rgba(0,0,0,0.05)));
+    color: white;
 }
 
-#Incident > #TooltipDummy {
+#Date {
     horizontal-align: right;
-    height: 100%;
-    overflow: noclip;
+    padding: -5px 10px 0px 0px;
+    line-height: 30px;
+    text-align: right;
+    font-family: font-family;
+    font-size: font-size;
+    color: white;
+}
+
+#Date:hover {
+    background-color: #ffffff10;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -131,17 +133,57 @@
 
 /*----------------------------------------------------------------------------*/
 
+#Incident {
+    horizontal-align: right;
+}
+
+#Incident.Init {
+    animation-name: dropin;
+    animation-duration: 1.5s;
+}
+
+#Incident.Bounce {
+    animation-name: bounce;
+    animation-duration: 1s;
+}
+
+#Incident > Image {
+    horizontal-align: right;
+}
+
+#Incident > Label {
+    align: middle middle;
+    color: #e3e3e3;
+    font-family: font-family;
+    font-size: font-size;
+    background-color: gradient(linear, 130% 0%, 0% 130%, from(rgba(0,0,0,0.05)), color-stop(0.5, rgba(0,0,0,0.5)), to(rgba(0,0,0,0.05)));
+}
+
+#Incident > #TooltipDummy {
+    horizontal-align: right;
+    height: 100%;
+}
+
+/*----------------------------------------------------------------------------*/
+
 #TooltipSmall {
     opacity: 0.0001; /* Fixes inital frame incorrectly displaying */
     color: font-color;
     font-family: font-family;
     font-size: font-size;
-    max-width: 350px;
-    padding: 20px 10px;
+    max-width: 400px;
+    padding: 15px 10px;
     border: 2px solid lGrey;
     border-right: 1px solid lGrey;
     background-color: dGrey;
     sound: "MouseoverButtonHigh";
+}
+
+#TooltipSmall.Forecast,
+#TooltipSmall.Date {
+    padding: 10px 5px;
+    border-color: #636d7b;
+    background-color: #0c1010;
 }
 
 #TooltipLarge {

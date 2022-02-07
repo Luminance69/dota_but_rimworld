@@ -51,7 +51,7 @@ function WorldToScreen(pos: Vector) {
     )
 }
 
-function ParseLuaArray<T>(array: LuaArray<T>): T[] {
+function ParseLuaArray<T>(array: EventArray<T>): T[] {
     return typeof array === "object"
     ? Object.values(array)
     : [array];
@@ -67,4 +67,8 @@ function ParseChatArgs(text: string) {
     } while (match);
 
     return args;
+}
+
+function Capitalise(text: string) {
+    return text.replace(/\b\w/g, l => l.toUpperCase());
 }

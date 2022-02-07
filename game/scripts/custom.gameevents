@@ -43,9 +43,15 @@
 
 	"send_incident_letter"
 	{
-		"name"			"string"
-		"description"	"string"
-		"severity"		"string"
-		"target"		"local"
+		"type"			"string"
+		"targets"		"local"
+		"special"		"local"
+	}
+	"update_problem_alarm"
+	{
+		"type"			"string"
+		"targets"		"local"
+		"major"			"bool"
+		"increment"		"bool"
 	}
 }
