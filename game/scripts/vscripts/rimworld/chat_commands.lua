@@ -107,9 +107,17 @@ ChatCommands.incident = function(args, ...)
 
     local incident = args[1]
     
-    if Incidents then
-        Incidents:DoIncident(incident)
+    if Incidents and Incidents[incident] then
+        Incidents[incident]()
 
         print("Caused incident: " .. incident)
     end
+end
+
+ChatCommands.birthday = function(args, hero, ...)
+    if IsClient() then return end
+
+    Birthdays:DoBirthday(hero)
+    
+    print("Did birthday")
 end

@@ -122,7 +122,7 @@ class UI {
 
         // Replace x-type enumerators in name
         n > 1
-        ? name = name.replace(/{xn}/g, ` x${n}`)
+        ? name = name.replace(/{xn}/g, `x${n}`)
         : name = name.replace(/{xn}/g, "");
 
         // Replace placeholders and duplicate repeatable strings

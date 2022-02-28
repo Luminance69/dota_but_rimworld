@@ -4,9 +4,9 @@ Birthdays.incidents = {
     ["bad_back"] = 10,
     ["dementia"] = 10,
     ["cataract"] = 10,
-    ["heart_attack"] = 2,
-    ["gift"] = 10,
-    ["wisdom"] = 10,
+    ["heart_attack"] = 3,
+    ["gift"] = 25,
+    ["wisdom"] = 25,
 }
 
 function Birthdays:Init()
@@ -20,7 +20,7 @@ function Birthdays:Init()
 
     for _, hero in pairs(heroes) do
         if hero:IsRealHero() then
-            Timers:CreateTimer(RandomInt(85, 685), function()
+            Timers:CreateTimer(IsInToolsMode() and 5 or RandomInt(85, 685), function()
                 self:DoBirthday(hero)
 
                 return 600
@@ -30,6 +30,8 @@ function Birthdays:Init()
 end
 
 function Birthdays:DoBirthday(hero)
+    hero.age = hero.age and hero.age + 1 or RandomInt(20, 70)
+
     local weights = Birthdays.incidents
 
     if hero:HasModifier("modifier_tough") then
@@ -62,9 +64,8 @@ function Birthdays:DoBirthday(hero)
 
     local incident = GetWeightedChoice(weights)
 
-    if self[incident] and self[incident](hero) then
-        print("Birthday: " .. hero:GetUnitName() .. " - " .. incident)
-        -- Do notification/sound etc. (maybe panorama? :P)
+    if self[incident] then
+        self[incident](hero)
     end
 end
 
@@ -76,6 +77,17 @@ Birthdays.bad_back = function(hero)
     else
         modifier:IncrementStackCount()
     end
+
+    SendLetterToTeam(hero:GetTeamNumber(), {
+        type = "BirthdayBad",
+        targets = hero:GetEntityIndex(),
+        special = {
+            main = {
+                illness = "Bad Back",
+                age = tostring(hero.age),
+            }
+        }
+    })
 
     return true
 end
@@ -89,6 +101,17 @@ Birthdays.dementia = function(hero)
         modifier:IncrementStackCount()
     end
 
+    SendLetterToTeam(hero:GetTeamNumber(), {
+        type = "BirthdayBad",
+        targets = hero:GetEntityIndex(),
+        special = {
+            main = {
+                illness = "Dementia",
+                age = tostring(hero.age),
+            }
+        }
+    })
+
     return true
 end
 
@@ -101,23 +124,74 @@ Birthdays.cataract = function(hero)
         modifier:IncrementStackCount()
     end
 
+    SendLetterToTeam(hero:GetTeamNumber(), {
+        type = "BirthdayBad",
+        targets = hero:GetEntityIndex(),
+        special = {
+            main = {
+                illness = "Cataract",
+                age = tostring(hero.age),
+            }
+        }
+    })
+
     return true
 end
 
 Birthdays.heart_attack = function(hero)
-    hero:AddNewModifierSpecial(hero, nil, "modifier_heart_attack", {duration = RandomInt(10, 20)})
+    hero:AddNewModifierSpecial(hero, nil, "modifier_heart_attack", {})
+
+    SendLetterToTeam(hero:GetTeamNumber(), {
+        type = "BirthdayHeartAttack",
+        targets = hero:GetEntityIndex(),
+        special = {
+            main = {
+                age = tostring(hero.age),
+            }
+        }
+    })
 
     return true
 end
 
 Birthdays.gift = function(hero) -- +500 + (25 to 50) * level gold
-    hero:ModifyGoldFiltered(500 + RandomInt(25, 50) * hero:GetLevel(), true, DOTA_ModifyGold_GameTick)
+    local gold = 500 + RandomInt(25, 50) * hero:GetLevel()
+    hero:ModifyGoldFiltered(gold, true, DOTA_ModifyGold_GameTick)
+
+	local player = hero:GetPlayerOwner()
+	if player then SendOverheadEventMessage(player, OVERHEAD_ALERT_GOLD, hero, gold, player) end
+
+    SendLetterToTeam(hero:GetTeamNumber(), {
+        type = "BirthdayGift",
+        targets = hero:GetEntityIndex(),
+        special = {
+            main = {
+                gold = tostring(gold),
+                age = tostring(hero.age),
+            }
+        }
+    })
 
     return true
 end
 
 Birthdays.wisdom = function(hero) -- +700 + (25 to 50) * level experience
-    hero:AddExperience(700 + RandomInt(25, 50) * hero:GetLevel(), DOTA_ModifyXP_TomeOfKnowledge, false, true)
+    exp = 700 + RandomInt(25, 50) * hero:GetLevel()
+    hero:AddExperience(exp, DOTA_ModifyXP_TomeOfKnowledge, false, true)
+    
+	local player = hero:GetPlayerOwner()
+	if player then SendOverheadEventMessage(player, OVERHEAD_ALERT_XP, hero, exp, player) end
+
+    SendLetterToTeam(hero:GetTeamNumber(), {
+        type = "BirthdayWisdom",
+        targets = hero:GetEntityIndex(),
+        special = {
+            main = {
+                exp = tostring(exp),
+                age = tostring(hero.age),
+            }
+        }
+    })
 
     return true
 end

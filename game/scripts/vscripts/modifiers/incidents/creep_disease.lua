@@ -47,7 +47,9 @@ end
 function modifier_creep_disease_minor:OnRemoved()
     if IsClient() then return end
 
-    self.parent:AddNewModifier(self.parent, nil, "modifier_creep_disease_major", nil)
+    if self.parent and not self.parent:IsNull() and self.parent:IsAlive() then
+        self.parent:AddNewModifier(self.parent, nil, "modifier_creep_disease_major", nil)
+    end
 end
 
 
@@ -67,6 +69,9 @@ end
 function modifier_creep_disease_major:OnRemoved()
     if IsClient() then return end
     
+    if self.parent and not self.parent:IsNull() and self.parent:IsAlive() then
+        self.parent:AddNewModifier(self.parent, nil, "modifier_creep_disease_extreme", nil)
+    end
     self.parent:AddNewModifier(self.parent, nil, "modifier_creep_disease_extreme", nil)
 end
 

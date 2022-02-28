@@ -38,7 +38,7 @@ function modifier_insulting_spree:OnIntervalThink()
 
     -- This is what we call a pro gamer move
     -- Basically just weights it so that closer allied heroes are more likely to be chosen.
-    local ally = real_allies[floor(sqrt(RandomInt(1, #real_allies * #real_allies)))]
+    local ally = real_allies[math.floor(math.sqrt(RandomInt(1, #real_allies * #real_allies)))]
 
     local modifier = ally:FindModifierByName("modifier_insulted")
 

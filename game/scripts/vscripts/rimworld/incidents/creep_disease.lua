@@ -10,14 +10,20 @@ return function()
 
     if #creeps < 1 then return end
 
+    local targets = {}
+
     for _, creep in pairs(creeps) do
         if not creep:IsOwnedByAnyPlayer() and RandomFloat(0, 1) < 0.5 then
             creep:AddNewModifier(creep, nil, "modifier_creep_disease_minor", nil)
+
+            table.insert(targets, creep)
         end
     end
 
+    if #targets < 1 then return end
+
     SendLetterToTeam(team, {
         type = "CreepDisease",
-        targets = {},
+        targets = targets,
     })
 end

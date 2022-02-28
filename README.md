@@ -65,25 +65,22 @@ Incidents:
     Weight: 8
     Zzztt...:
     	One of your towers had a short circuit probably because fUCKing DAVE LEFT IT OUT IN THE RAIN
-    	Tower takes 50% damage
-    	Deals damage to both teams in 800 aoe
+    	the formula for this is confusing, basically does a randomly sized and powerful explosion with damage based on a % of the towers max hp.
 
     Weight: 40
     Mad Animal:
-    	A random neutral creep is enraged, targetting a random allied hero
+    	A random neutral creep is enraged, targetting the nearest dire/radiant units until killed.
     	+50% damage resistance
     	+50% movement speed
-    	+50 damage
-    	120s duration
+    	+25 + (GameTime / 30) damage
     	If controlled by helm of the dominator/overlord, the bonuses are lost.
 
     Weight: 5
     Mass Animal Insanity:
-    	5-10 random neutral creeps are enraged, targetting random heroes from both teams
+    	3 + RandomInt(GameTime / 600, GameTime / 300) random neutral creeps are enraged, targetting the nearest dire/radiant units until killed.
     	+50% damage resistance
     	+50% movement speed
-    	+50 damage
-    	120s duration
+    	+25 + (GameTime / 30) damage
     	If controlled by helm of the dominator/overlord, the bonuses are lost.
 
     Weight: 8
@@ -105,17 +102,17 @@ Incidents:
 
     Weight: 5
     Gift:
-    	+200-400 + (game_time/3) gold to each hero on your team
+    	+150 + (game_time/3-5) gold to each hero on your team
 
     Weight: 3
     Cold Snap:
     	120-240s duration
-    	Reduces temperature by 20 degrees.
+    	Reduces temperature by 15 degrees.
 
     Weight: 3
     Heat Wave:
     	120-240s duration
-    	Increases temperature by 20 degrees.
+    	Increases temperature by 15 degrees.
 
     Weight: 10
     Cargo Pods (apparel/weapons):
@@ -285,8 +282,9 @@ Birthdays:
 
     Weight: 1
     Heart Attack:
-    	Take 15% max HP DPS for 10-20 seconds, after which you die
-    	Purged with healing salve
+    	Take 2% max hp damage every [0.75 - severity / 2] seconds.
+    	Severity starts at 0.4 and decreases by 0.04 or increases by 0.06 every [0.75 - self.severity / 2] seconds.
+		Using a healing salve reduces severity by a further 0.04 every [0.75 - self.severity / 2] seconds.
 
 (All implemented!)
 Traits:
