@@ -4,7 +4,8 @@
     "1" "Luminance"
     "2" "Senyksia"
 
-    //CHOMG Discord
+    // CHOMG Discord
+    // You will be missed ;-;
     "3" "Draze22"
     "4" "Chariot"
     "5" "Twilight Sparkle"
@@ -13,11 +14,11 @@
     "8" "Sanctus Animus"
     "9" "Sheodar"
     "10" "Baumi"
+    "11" "Shush"
+    "12" "Nibuja"
+    "13" "Scally"
+    "14" "Nocturne of Shadows"
     
-    "11" "Amiha"
-    "12" "Arrow"
-    "13" "Beast"
-    "14" "BrickBrack"
     "15" "Choksny"
     "16" "DarkWisp"
     "17" "EchoTheNull"
@@ -63,4 +64,8 @@
     "57" "Imposter"
     "58" "Integra"
     "59" "Jason"
+    "60" "Amiha"
+    "61" "Arrow"
+    "62" "Beast"
+    "63" "BrickBrack"
 }
