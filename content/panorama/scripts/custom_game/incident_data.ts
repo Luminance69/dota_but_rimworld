@@ -85,7 +85,7 @@ const IncidentTypes =
             main:
             {
                 0: "Benefactors from <span color='#01b8f5'>{patron}</span> have left you a gift:<br>",
-                1: "<br>&nbsp;&nbsp;- {amount} gold.",
+                1: "<br>&nbsp;&nbsp;- {gold} gold.",
             },
             repeat: {},
         },

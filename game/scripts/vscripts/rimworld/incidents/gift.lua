@@ -7,8 +7,6 @@ return function()
     
     local patron = names[tostring(RandomInt(1, 59))]
 
-    print(patron)
-
     local targets = {}
 
     for _, hero in pairs(Incidents.heroes) do
