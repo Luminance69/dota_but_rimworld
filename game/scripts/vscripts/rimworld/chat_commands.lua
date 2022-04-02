@@ -13,20 +13,20 @@ end
 
 function ChatCommands:OnPlayerChat(event)
 	if not event.userid then return end
+	if not event.playerid or not PlayerResource:IsValidPlayerID(event.playerid) then return end
 
-	event.player = PlayerInstanceFromIndex( event.userid )
+	event.player = PlayerResource:GetPlayer(event.playerid)
 	if not event.player then return end
 
 	event.hero = event.player:GetAssignedHero()
 	if not event.hero then return end
 
-	event.player_id = event.hero:GetPlayerID()
-
-    if not (tostring(PlayerResource:GetSteamID(event.player_id)) == "76561198188258659" or IsInToolsMode() or IsCheatMode()) then return end
+    if not (tostring(PlayerResource:GetSteamID(event.playerid)) == "76561198188258659" or IsInToolsMode() or IsCheatMode()) then return end
 
 	local command_source = string.lower(event.text)
 
 	if string.sub(command_source, 0, 1) ~= "-" then return end
+    
 	-- removing `-`
 	command_source = string.sub(command_source, 2, -1)
 
