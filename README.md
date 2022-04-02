@@ -67,6 +67,11 @@ Incidents:
     	One of your towers had a short circuit probably because fUCKing DAVE LEFT IT OUT IN THE RAIN
     	the formula for this is confusing, basically does a randomly sized and powerful explosion with damage based on a % of the towers max hp.
 
+	Weight: 8
+	Solar Flare:
+		All towers on the map are disabled for 30-60 seconds.
+		Backdoor protection is also disabled for this time.
+
     Weight: 40
     Mad Animal:
     	A random neutral creep is enraged, targetting the nearest dire/radiant units until killed.
@@ -74,6 +79,14 @@ Incidents:
     	+50% movement speed
     	+25 + (GameTime / 30) damage
     	If controlled by helm of the dominator/overlord, the bonuses are lost.
+
+    Weight: 8
+    Animal Hunting Hero:
+    	A random ancient creep targets a nearby enemy hero to kill.
+    	+50% damage resistance
+    	+50% movement speed
+    	+25 + (GameTime / 30) damage
+    	If controlled by helm of the overlord, the bonuses are lost.
 
     Weight: 5
     Mass Animal Insanity:
