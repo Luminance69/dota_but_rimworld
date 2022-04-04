@@ -4,6 +4,8 @@ Dota 2 but Rimworld
 
 Incidents:
 
+	Ok theres a bunch of stuff ive changed to do with karma and power level of incidents, i will go back and fix this before merging branch probably™
+
     (Implemented!)
     Weight: 5
     Creep Disease:
