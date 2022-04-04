@@ -3,9 +3,9 @@ LinkLuaModifier("modifier_psychic_soothe", "modifiers/incidents/psychic_soothe",
 return function()
     if Incidents.psychic_end > GameRules:GetGameTime() then return end
 
-    local duration = RandomInt(90, 180)
-
     if not Incidents:CheckKarma(Incidents.karmas["psychic_soothe"]) then return end
+
+    local duration = RandomInt(60, 60 + 30 * Incidents:CheckPowerLevel())
 
     Incidents.psychic_end = GameRules:GetGameTime() + duration
 

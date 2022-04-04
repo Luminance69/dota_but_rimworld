@@ -6,14 +6,14 @@ LinkLuaModifier("modifier_psychic_drone_extreme", "modifiers/incidents/psychic_d
 return function()
     if Incidents.psychic_end > GameRules:GetGameTime() then return end
 
-    local duration = RandomInt(90, 180)
-
     local intensities = {"low", "medium", "high", "extreme"}
 
-    local tier = RandomInt(1, min(4, math.ceil(GameRules:GetGameTime() / 900)))
+    local tier = RandomInt(1, min(4, math.floor(Incidents:CheckPowerLevel() * 0.75 + 1)))
     local intensity = intensities[tier]
     
     if not Incidents:CheckKarma(Incidents.karmas["psychic_drone"][tier]) then return end
+
+    local duration = RandomInt(60, 60 + 30 * Incidents:CheckPowerLevel())
 
     Incidents.psychic_end = GameRules:GetGameTime() + duration
 

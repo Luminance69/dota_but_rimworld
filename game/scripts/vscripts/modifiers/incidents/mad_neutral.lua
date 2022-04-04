@@ -17,13 +17,25 @@ function modifier_mad_neutral:OnIntervalThink()
     if not self:GetParent():IsAlive() then
         self:Destroy()
         return
-    elseif not self.target:IsAlive() then
+    end
+
+    self.bonus_dmg = 25 + Incidents:CheckPowerLevel() * 30
+    self.dmg_resist = math.pow(0.7, Incidents:CheckPowerLevel()) * -100
+    self.bonus_speed = 50
+    
+    if self:GetParent():GetTeamNumber() ~= DOTA_TEAM_NEUTRALS then
+        self.dmg_resist = self.dmg_resist * 0.5
+        self.bonus_dmg = self.bonus_dmg * 0.25
+        self.bonus_speed = 10
+    end
+        
+    if not self.target:IsAlive() then
         self:SetNewTarget()
     end
 end
 
 function modifier_mad_neutral:SetNewTarget()
-    local targets = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, self:GetParent():GetAbsOrigin(), nil, -1, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+    local targets = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, self:GetParent():GetAbsOrigin(), nil, -1, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 
     while outposts[targets[1]:GetUnitName()] do
         table.remove(targets, 1)
@@ -48,12 +60,6 @@ function modifier_mad_neutral:DeclareFunctions()
     }
 end
 
-function modifier_mad_neutral:OnAbilityFullyCast(keys)
-    if keys.ability:GetAbilityName() == "item_helm_of_the_overlord" or keys.ability:GetAbilityName() == "item_helm_of_the_dominator" and keys.target and keys.target == self:GetParent() then
-        self:Destroy()
-    end
-end
-
-function modifier_mad_neutral:GetModifierIncomingDamage_Percentage() return -50 end
-function modifier_mad_neutral:GetModifierPreAttack_BonusDamage() return 25 + GameRules:GetGameTime() / 30 end
-function modifier_mad_neutral:GetModifierMoveSpeedBonus_Percentage() return 50 end
+function modifier_mad_neutral:GetModifierIncomingDamage_Percentage() return self.dmg_resist end
+function modifier_mad_neutral:GetModifierPreAttack_BonusDamage() return self.bonus_dmg end
+function modifier_mad_neutral:GetModifierMoveSpeedBonus_Percentage() return self.bonus_speed end

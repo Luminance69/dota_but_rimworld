@@ -1,9 +1,9 @@
 return function()
     if Incidents.sun_event_end > GameRules:GetGameTime() then return end
-
-    local duration = RandomInt(60, 300)
     
     if not Incidents:CheckKarma(Incidents.karmas["solar_eclipse"]) then return end
+
+    local duration = RandomInt(60, 60 + 60 * Incidents:CheckPowerLevel())
 
     Incidents.sun_event_end = GameRules:GetGameTime() + duration
 
@@ -12,11 +12,6 @@ return function()
     SendLetterToAll({
         type = "SolarEclipse",
         targets = {},
-        special = {
-            main = {
-                gender = gender,
-            }
-        }
     })
 
     UpdateAlarmForAll({

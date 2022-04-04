@@ -10,7 +10,7 @@ return function()
 
     local buildings = FindUnitsInRadius(team, Vector(0, 0, 0), nil, -1, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
-    local factor = RandomFloat(2, 5)
+    local factor = RandomFloat(2, max(5, 2 + Incidents:CheckPowerLevel()))
 
     local power = math.floor(10 ^ factor)
 

@@ -12,8 +12,10 @@ return function()
 
     local targets = {}
 
+    local chance = 1 / (Incidents:CheckPowerLevel() + 1)
+
     for _, creep in pairs(creeps) do
-        if not creep:IsOwnedByAnyPlayer() and RandomFloat(0, 1) < 0.5 then
+        if not creep:IsOwnedByAnyPlayer() and RandomFloat(0, 1) > chance then
             creep:AddNewModifier(creep, nil, "modifier_creep_disease_minor", nil)
 
             table.insert(targets, creep)

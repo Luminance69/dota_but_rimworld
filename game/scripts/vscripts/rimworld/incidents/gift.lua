@@ -1,7 +1,7 @@
 return function()
     if not Incidents:CheckKarma(Incidents.karmas["gift"]) then return end
 
-    local gold = math.floor(150 + GameRules:GetGameTime() / RandomInt(3, 5))
+    local gold = math.floor(150 + Incidents:CheckPowerLevel() * 200)
 
     local team = RandomInt(2, 3)
 
