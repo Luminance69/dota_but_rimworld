@@ -3,7 +3,7 @@ LinkLuaModifier("modifier_creep_disease_major", "modifiers/incidents/creep_disea
 LinkLuaModifier("modifier_creep_disease_extreme", "modifiers/incidents/creep_disease", LUA_MODIFIER_MOTION_NONE)
 
 return function()
-    print("Running incident <Creep Disease>")
+    if not Incidents:CheckKarma(Incidents.karmas["creep_disease"]) then return end
 
     local team = RandomInt(2, 3)
     local creeps = FindUnitsInRadius(team, Vector(0, 0, 0), nil, -1, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)

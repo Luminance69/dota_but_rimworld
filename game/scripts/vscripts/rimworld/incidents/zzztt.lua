@@ -6,10 +6,6 @@ Zzztt...:
 ]]
 
 return function()
-    if IsClient() then return end
-
-    print("Running incident <Zzztt...>")
-
     local team = RandomInt(2, 3)
 
     local buildings = FindUnitsInRadius(team, Vector(0, 0, 0), nil, -1, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -22,6 +18,8 @@ return function()
 
     for _, building in pairs(buildings) do
         if building:IsTower() and not building:IsInvulnerable() then
+            if not Incidents:CheckKarma(Incidents.karmas["zzztt"]) then return end
+
             local damage = building:GetMaxHealth() * (0.2 + 0.12 * factor)
 
             local radius = 240 + factor * 140

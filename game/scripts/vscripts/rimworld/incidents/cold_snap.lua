@@ -1,5 +1,7 @@
 return function()
     if Incidents.temperature_end > GameRules:GetGameTime() then return end
+    
+    if not Incidents:CheckKarma(Incidents.karmas["cold_snap"]) then return end
 
     local duration = RandomInt(120, 240)
 

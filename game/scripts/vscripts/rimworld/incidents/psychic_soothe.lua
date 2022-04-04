@@ -5,6 +5,8 @@ return function()
 
     local duration = RandomInt(90, 180)
 
+    if not Incidents:CheckKarma(Incidents.karmas["psychic_soothe"]) then return end
+
     Incidents.psychic_end = GameRules:GetGameTime() + duration
 
     local genders = LoadKeyValues("scripts/kv/gender.txt")

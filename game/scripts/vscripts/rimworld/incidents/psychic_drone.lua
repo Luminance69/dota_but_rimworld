@@ -12,6 +12,8 @@ return function()
 
     local tier = RandomInt(1, min(4, math.ceil(GameRules:GetGameTime() / 900)))
     local intensity = intensities[tier]
+    
+    if not Incidents:CheckKarma(Incidents.karmas["psychic_drone"][tier]) then return end
 
     Incidents.psychic_end = GameRules:GetGameTime() + duration
 

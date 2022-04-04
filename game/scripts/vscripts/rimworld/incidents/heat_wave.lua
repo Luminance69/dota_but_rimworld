@@ -1,6 +1,8 @@
 return function()
     if Incidents.temperature_end > GameRules:GetGameTime() then return end
 
+    if not Incidents:CheckKarma(Incidents.karmas["heat_wave"]) then return end
+
     local duration = RandomInt(120, 240)
 
     Incidents.temperature_end = GameRules:GetGameTime() + duration

@@ -62,6 +62,7 @@ Incidents:
     		+75% Vision
     		300-600s duration
 
+	(Implemented)
     Weight: 8
     Zzztt...:
     	One of your towers had a short circuit probably because fUCKing DAVE LEFT IT OUT IN THE RAIN
@@ -72,6 +73,7 @@ Incidents:
 		All towers on the map are disabled for 30-60 seconds.
 		Backdoor protection is also disabled for this time.
 
+	(Implemented)
     Weight: 40
     Mad Animal:
     	A random neutral creep is enraged, targetting the nearest dire/radiant units until killed.
@@ -88,6 +90,7 @@ Incidents:
     	+25 + (GameTime / 30) damage
     	If controlled by helm of the overlord, the bonuses are lost.
 
+	(Implemented)
     Weight: 5
     Mass Animal Insanity:
     	3 + RandomInt(GameTime / 600, GameTime / 300) random neutral creeps are enraged, targetting the nearest dire/radiant units until killed.
@@ -96,37 +99,44 @@ Incidents:
     	+25 + (GameTime / 30) damage
     	If controlled by helm of the dominator/overlord, the bonuses are lost.
 
+	(Implemented)
     Weight: 8
     Psychic Drone:
     	n/10 chance to be each gender, where n is the number of heroes of that gender
     	-6/12/20/35 Mood
     	90-180s duration
 
+	(Implemented)
     Weight: 5
     Psychic Soothe:
     	n/10 chance to be each gender, where n is the number of heroes of that gender
     	+12 Mood
     	90-180s duration
 
+	(Implemented)
     Weight: 5
     Solar Eclipse:
     	60-300s duration
     	Forces night time
 
+	(Implemented)
     Weight: 5
     Gift:
     	+150 + (game_time/3-5) gold to each hero on your team
 
+	(Implemented)
     Weight: 3
     Cold Snap:
     	120-240s duration
     	Reduces temperature by 15 degrees.
 
+	(Implemented)
     Weight: 3
     Heat Wave:
     	120-240s duration
     	Increases temperature by 15 degrees.
 
+	(WIP)
     Weight: 10
     Cargo Pods (apparel/weapons):
     	A random item is dropped on a random location on the map.

@@ -8,6 +8,8 @@ return function()
     if units[1]:GetUnitName() == "npc_dota_roshan" then table.remove(units, 1) end
         
     if #units < 1 then return end
+    
+    if not Incidents:CheckKarma(Incidents.karmas["mad_neutral"]) then return end
 
     local unit = units[1]
 

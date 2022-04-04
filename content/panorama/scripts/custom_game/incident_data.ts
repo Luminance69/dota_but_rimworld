@@ -257,6 +257,20 @@ const IncidentTypes =
         },
     },
 
+    CargoPod:
+    {
+        name: "Cargo Pods ({item_type})",
+        severity: IncidentSeverity.Good,
+        description:
+        {
+            main:
+            {
+                0: "Cargo pods from a passing ship has crashed to the ground.",
+            },
+            repeat: {},
+        },
+    },
+
     DeathDeny:
     {
         name: "Death: {T}",

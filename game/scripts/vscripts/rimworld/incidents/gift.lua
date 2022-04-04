@@ -1,11 +1,13 @@
 return function()
+    if not Incidents:CheckKarma(Incidents.karmas["gift"]) then return end
+
     local gold = math.floor(150 + GameRules:GetGameTime() / RandomInt(3, 5))
 
     local team = RandomInt(2, 3)
 
     local names = LoadKeyValues("scripts/kv/names.txt")
     
-    local patron = names[tostring(RandomInt(1, 59))]
+    local patron = names[tostring(RandomInt(1, 63))]
 
     local targets = {}
 
