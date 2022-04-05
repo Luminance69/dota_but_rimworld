@@ -35,8 +35,13 @@ softRequire("thinker")
 function Precache( context )
     FireGameEvent("addon_game_mode_precache",nil)
     PrecacheResource("soundfile", "soundevents/custom_sounds.vsndevts", context)
+
     PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts", context) -- used for zzztt
     PrecacheResource("particle", "particles/econ/items/abaddon/abaddon_alliance/abaddon_aphotic_shield_alliance_explosion.vpcf", context) -- used for zzztt
+
+    PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context) -- used for dry thunderstorm
+    PrecacheResource("particle", "particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf", context) -- used for dry thunderstorm
+
     --[[
         Precache things we know we'll use.  Possible file types include (but not limited to):
             PrecacheResource( "model", "*.vmdl", context )

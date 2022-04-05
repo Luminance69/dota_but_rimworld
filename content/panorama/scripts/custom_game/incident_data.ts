@@ -271,6 +271,20 @@ const IncidentTypes =
         },
     },
 
+    DryThunderstorm:
+    {
+        name: "Dry Thunderstorm",
+        severity: IncidentSeverity.Special,
+        description:
+        {
+            main:
+            {
+                0: "A freak localised thunderstorm is occuring nearby.",
+            },
+            repeat: {},
+        },
+    },
+
     DeathDeny:
     {
         name: "Death: {T}",

@@ -12,6 +12,7 @@ Incidents.weights = {
     ["solar_eclipse"] = 20,
     ["gift"] = 20,
     ["cargo_pod"] = 40,
+    ["dry_thunderstorm"] = 18,
 
     ["nothing"] = 72000, -- 20 = once per hour, 240 = once per 5 mins
     ["death"] = 0,
@@ -31,6 +32,7 @@ Incidents.karmas = {
     ["solar_eclipse"] = 30,
     ["gift"] = -40,
     ["cargo_pod"] = -60,
+    ["dry_thunderstorm"] = 90,
 
     ["death_hero"] = 15,
     ["death_building"] = 30,
