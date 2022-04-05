@@ -10,7 +10,7 @@ return function()
 
     local buildings = FindUnitsInRadius(team, Vector(0, 0, 0), nil, -1, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
-    local factor = RandomFloat(2, max(5, 2 + Incidents:CheckPowerLevel()))
+    local factor = RandomFloat(2, max(5, 2 + Incidents:GetPowerLevel()))
 
     local power = math.floor(10 ^ factor)
 
@@ -35,7 +35,7 @@ return function()
                 })
             end
 
-            building:EmitSound("Hero_StormSpirit.StaticRemnantExplode")
+            building:EmitSoundParams("Hero_StormSpirit.StaticRemnantExplode", 0, 4, 0)
 
             local particle = ParticleManager:CreateParticle("particles/econ/items/abaddon/abaddon_alliance/abaddon_aphotic_shield_alliance_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, building)
             ParticleManager:SetParticleControl(particle, 0, building:GetAbsOrigin())

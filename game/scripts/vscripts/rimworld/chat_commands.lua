@@ -26,7 +26,7 @@ function ChatCommands:OnPlayerChat(event)
 	local command_source = string.lower(event.text)
 
 	if string.sub(command_source, 0, 1) ~= "-" then return end
-    
+
 	-- removing `-`
 	command_source = string.sub(command_source, 2, -1)
 
@@ -37,6 +37,10 @@ function ChatCommands:OnPlayerChat(event)
     end
 
 	local command_name = table.remove(args, 1)
+
+    if command_name == "debug" then
+        table.insert(args, event.playerid)
+    end
 
     if ChatCommands[command_name] then
         ChatCommands[command_name](args, event.hero)
@@ -64,7 +68,7 @@ ChatCommands.bodypart = function(args, hero, ...)
 
     local slot = args[1]
     local part = args[2]
-    
+
     if BodyParts:AddBodyPart(hero, slot, part) then
         print("Added " .. part .. " to " .. hero:GetUnitName())
     else
@@ -95,7 +99,7 @@ ChatCommands.mood = function(args, hero, ...)
     local mood = args[1]
 
     hero.mood = tonumber(mood)
-    
+
     print("Set " .. hero:GetUnitName() .. "\'s mood to: " .. mood)
 end
 
@@ -106,8 +110,12 @@ ChatCommands.incident = function(args, ...)
     if IsClient() then return end
 
     local incident = args[1]
-    
+
     if Incidents and Incidents[incident] then
+        if incident ~= "debug" then
+            Incidents.karma = 100000000
+        end
+
         Incidents[incident]()
 
         print("Caused incident: " .. incident)
@@ -118,6 +126,6 @@ ChatCommands.birthday = function(args, hero, ...)
     if IsClient() then return end
 
     Birthdays:DoBirthday(hero)
-    
+
     print("Did birthday")
 end

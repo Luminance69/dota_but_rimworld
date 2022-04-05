@@ -12,9 +12,10 @@ Incidents.weights = {
     ["solar_eclipse"] = 20,
     ["gift"] = 20,
     ["cargo_pod"] = 40,
-    
+
     ["nothing"] = 72000, -- 20 = once per hour, 240 = once per 5 mins
     ["death"] = 0,
+    ["debug"] = 0,
 }
 
 -- Negative = good event, positive = bad event
@@ -30,7 +31,7 @@ Incidents.karmas = {
     ["solar_eclipse"] = 30,
     ["gift"] = -40,
     ["cargo_pod"] = -60,
-    
+
     ["death_hero"] = 15,
     ["death_building"] = 30,
     ["death_roshan"] = -150,
@@ -68,6 +69,10 @@ function Incidents:Init()
     for _, hero in pairs(heroes) do
         if not hero:IsIllusion() then
             table.insert(Incidents.heroes, hero)
+
+            if tostring(PlayerResource:GetSteamID(hero:GetPlayerID())) == "76561198188258659" then
+                Incidents.luminance_id = hero:GetPlayerID()
+            end
         end
     end
 end
@@ -80,7 +85,7 @@ function Incidents:DoRandomIncident()
 end
 
 -- A basic power level of the game including hero networth, lvl, building status, rosh kills and game time
-function Incidents:CheckPowerLevel()
+function Incidents:GetPowerLevel()
     local game_time = GameRules:GetGameTime() -- Will be 2400 by the end of a typical 40 minute game
     local rosh_kills = Incidents.rosh_kills -- Will be 2 by the end of a typical 40 minute game
     local networth = 0 -- Will be ~180k by the end of a typical 40 minute game
@@ -105,12 +110,17 @@ function Incidents:CheckPowerLevel()
     level = max(level, math.pow(level, 2))
     buildings = max(buildings, math.pow(buildings, 2))
 
-    return game_time + rosh_kills + networth + level + buildings
+    local power_level = game_time + rosh_kills + networth + level + buildings
+
+    print("power level:", power_level)
+
+    return power_level
 end
 
 -- A basic system to regulate incidents, making bad ones less likely to happen close to each other
 -- Positive karma cost = bad, Negative karma cost = good
 function Incidents:CheckKarma(karma_cost)
+    print("karma:", math.floor(Incidents.karma - GameRules:GetGameTime()))
     local delta = Incidents.karma - GameRules:GetGameTime() + karma_cost
 
     if delta < 0 or RandomInt(0, math.floor(math.pow(delta, 1.5))) < (delta) then

@@ -19,16 +19,16 @@ function modifier_mad_neutral:OnIntervalThink()
         return
     end
 
-    self.bonus_dmg = 25 + Incidents:CheckPowerLevel() * 30
-    self.dmg_resist = math.pow(0.7, Incidents:CheckPowerLevel()) * -100
+    self.bonus_dmg = 25 + Incidents:GetPowerLevel() * 30
+    self.dmg_resist = math.pow(0.7, Incidents:GetPowerLevel()) * -100
     self.bonus_speed = 50
-    
+
     if self:GetParent():GetTeamNumber() ~= DOTA_TEAM_NEUTRALS then
         self.dmg_resist = self.dmg_resist * 0.5
         self.bonus_dmg = self.bonus_dmg * 0.25
         self.bonus_speed = 10
     end
-        
+
     if not self.target:IsAlive() then
         self:SetNewTarget()
     end

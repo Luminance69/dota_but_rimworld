@@ -12,7 +12,7 @@ return function()
 
     local targets = {}
 
-    local chance = 1 / (Incidents:CheckPowerLevel() + 1)
+    local chance = 1 / (Incidents:GetPowerLevel() + 1)
 
     for _, creep in pairs(creeps) do
         if not creep:IsOwnedByAnyPlayer() and RandomFloat(0, 1) > chance then

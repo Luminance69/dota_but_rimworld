@@ -138,7 +138,7 @@ Incidents:
     	120-240s duration
     	Increases temperature by 15 degrees.
 
-	(WIP)
+	(Implemented)
     Weight: 10
     Cargo Pods (apparel/weapons):
     	A random item is dropped on a random location on the map.
