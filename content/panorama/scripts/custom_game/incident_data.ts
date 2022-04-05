@@ -226,7 +226,7 @@ const IncidentTypes =
             repeat: {},
         },
     },
-    
+
     ColdSnap:
     {
         name: "Cold Snap",
@@ -241,7 +241,7 @@ const IncidentTypes =
             repeat: {},
         },
     },
-    
+
     HeatWave:
     {
         name: "Heat Wave",
@@ -265,7 +265,7 @@ const IncidentTypes =
         {
             main:
             {
-                0: "Cargo pods from a passing ship has crashed to the ground.",
+                0: "Cargo pods from a passing ship have crashed to the ground.",
             },
             repeat: {},
         },
@@ -355,6 +355,21 @@ const IncidentTypes =
             {
                 0: "{T} is having a heart attack!",
                 1: "<br>Get them a healing salve quickly or they may die.",
+            },
+            repeat: {},
+        },
+    },
+
+    Debug:
+    {
+        name: "Debug Letter",
+        severity: IncidentSeverity.Special,
+        description:
+        {
+            main:
+            {
+                0: "Karma: {karma}",
+                1: "<br>Power Level: {power_level}",
             },
             repeat: {},
         },
