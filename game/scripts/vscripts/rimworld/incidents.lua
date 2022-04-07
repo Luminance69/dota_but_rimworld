@@ -14,7 +14,7 @@ Incidents.weights = {
     ["cargo_pod"] = 40,
     ["dry_thunderstorm"] = 18,
 
-    ["nothing"] = 72000, -- 20 = once per hour, 240 = once per 5 mins
+    ["nothing"] = 18000, -- 5 = once per hour, 60 = once per 5 mins
     ["death"] = 0,
     ["debug"] = 0,
 }
@@ -22,17 +22,17 @@ Incidents.weights = {
 -- Negative = good event, positive = bad event
 Incidents.karmas = {
     ["creep_disease"] = 60,
-    ["zzztt"] = 30,
+    ["zzztt"] = 24,
     ["psychic_soothe"] = -60,
     ["psychic_drone"] = {30, 60, 120, 180},
-    ["mad_neutral"] = 30,
-    ["mass_neutral_insanity"] = 120,
+    ["mad_neutral"] = 25,
+    ["mass_neutral_insanity"] = 90,
     ["cold_snap"] = 180,
     ["heat_wave"] = 180,
-    ["solar_eclipse"] = 30,
+    ["solar_eclipse"] = 20,
     ["gift"] = -40,
     ["cargo_pod"] = -60,
-    ["dry_thunderstorm"] = 90,
+    ["dry_thunderstorm"] = 45,
 
     ["death_hero"] = 15,
     ["death_building"] = 30,
@@ -114,18 +114,15 @@ function Incidents:GetPowerLevel()
 
     local power_level = game_time + rosh_kills + networth + level + buildings
 
-    print("power level:", power_level)
-
     return power_level
 end
 
 -- A basic system to regulate incidents, making bad ones less likely to happen close to each other
 -- Positive karma cost = bad, Negative karma cost = good
 function Incidents:CheckKarma(karma_cost)
-    print("karma:", math.floor(Incidents.karma - GameRules:GetGameTime()))
     local delta = Incidents.karma - GameRules:GetGameTime() + karma_cost
 
-    if delta < 0 or RandomInt(0, math.floor(math.pow(delta, 1.5))) < (delta) then
+    if karma_cost < 0 or delta < 0 or RandomInt(0, math.floor(math.pow(delta, 1.5))) < (delta) then
         Incidents.karma = Incidents.karma + karma_cost
 
         return true

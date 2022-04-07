@@ -143,6 +143,7 @@ Incidents:
     Cargo Pods (apparel/weapons):
     	A random item is dropped on a random location on the map.
 
+    (Implemented)
     Weight: 7
     Dry thunderstorm:
     	20-40 second duration.
