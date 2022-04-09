@@ -16,8 +16,8 @@ function BodyParts:Init()
             self:InitiateBodyParts(hero)
         end
     end
-    
-    Timers:CreateTimer((IsInToolsMode() and 1) or RandomInt(300, 480), self.AddRandomItemStock)
+
+    Timers:CreateTimer(RandomInt(30, 120), self.AddRandomItemStock)
 end
 
 function BodyParts:InitiateBodyParts(hero)
@@ -86,16 +86,23 @@ end
 
 function BodyParts:AddRandomItemStock()
     for team = 2, 3 do
-        local slot = BodyParts:GetRandomSlot()
-        local part = BodyParts:GetRandomPart(slot)
+        for i = 0, 2 do
+            local slot = BodyParts:GetRandomSlot()
+            local part = BodyParts:GetRandomPart(slot)
 
-        BodyParts:AddStock(slot, part, team)
+            BodyParts:AddStock(slot, part, team)
+        end
+
+        -- Change to be in the top right display in future
+        SendLetterToTeam(team, {type = "BodyPartStock"})
     end
     return RandomInt(300, 480)
 end
 
 function BodyParts:AddStock(slot, part, team)
     local item_name = "item_body_part_" .. slot .. "_" .. part
+
+    print(item_name)
 
     GameRules:IncreaseItemStock(team, item_name, 1, -1)
 end

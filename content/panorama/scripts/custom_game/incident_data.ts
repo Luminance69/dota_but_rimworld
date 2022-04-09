@@ -374,6 +374,21 @@ const IncidentTypes =
         },
     },
 
+    BodyPartStock:
+    {
+        name: "Body Part Stock",
+        severity: IncidentSeverity.Good,
+        description:
+        {
+            main:
+            {
+                0: "Thanks to a recent promotion from a local body part \"manufacturer\", fresh stock of body parts are now available in the shop.",
+                1: "<br>See the Consumables and Attributes sections in the Basic tab of the shop.",
+            },
+            repeat: {},
+        },
+    },
+
     Debug:
     {
         name: "Debug Letter",
