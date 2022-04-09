@@ -102,8 +102,6 @@ end
 function BodyParts:AddStock(slot, part, team)
     local item_name = "item_body_part_" .. slot .. "_" .. part
 
-    print(item_name)
-
     GameRules:IncreaseItemStock(team, item_name, 1, -1)
 end
 
