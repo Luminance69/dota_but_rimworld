@@ -1,0 +1,12 @@
+"DOTAAbilities"
+{
+    "mech_cluster_toxic_spewer"
+    {
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"abilities/mech_cluster/toxic_spewer.lua"
+		"AbilityTextureName"			"mech_cluster_toxic_spewer"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    }
+}
+
