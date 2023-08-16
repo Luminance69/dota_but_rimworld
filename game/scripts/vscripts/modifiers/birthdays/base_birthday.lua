@@ -8,3 +8,7 @@ function base_birthday:IsPermanent() return true end
 function base_birthday:IsPurgable() return false end
 
 function base_birthday:GetTexture() return "birthday" end
+
+function base_birthday:OnCreated()
+    self:SetStackCount(1)
+end

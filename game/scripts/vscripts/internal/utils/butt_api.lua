@@ -242,6 +242,26 @@ function TeamResource:GetShop(teamID)
     return fountain
 end
 
+-----------------------------------
+-- extend CDOTA_BaseNPC_Building --
+-----------------------------------
+
+-- Tier 1,2,3,4 tower worth 2,4,6,8
+-- Ranged/Melee rax worth 6/8
+-- Other buildings worth 1
+
+function CDOTA_BaseNPC_Building:GetBuildingValue()
+    local value = 1
+
+    if self:IsTower() then
+        value = 2 * tonumber(string.match(self:GetUnitName(), "%d"))
+    elseif self:IsBarracks() then
+        value = (not string.match(self:GetUnitName(), "melee")) and 6 or 8
+    end
+
+    return value
+end
+
 --------------------------
 -- extend CDOTA_BaseNPC --
 --------------------------
@@ -289,6 +309,24 @@ end
 ------------------------------
 -- Dota but Rimworld stuffs --
 ------------------------------
+
+-- Function to handle adding modifiers to dead units
+
+function CDOTA_BaseNPC_Hero:AddNewModifierSpecial(caster, ability, modifier_name, params)
+    if self:IsAlive() then
+        return self:AddNewModifier(caster, ability, modifier_name, params)
+    else
+        local listener = ListenToGameEvent("npc_spawned", function(keys)
+            if self == EntIndexToHScript(keys.entindex) then
+                self:AddNewModifier(caster, ability, modifier_name, params)
+            end
+        end, nil)
+
+        Timers:CreateTimer(self:GetTimeUntilRespawn() + 1, function()
+            StopListeningToGameEvent(listener)
+        end)
+    end
+end
 
 -- Run every second to update each hero's mood
 function CDOTA_BaseNPC_Hero:UpdateMood() -- nil

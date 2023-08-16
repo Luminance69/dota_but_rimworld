@@ -112,7 +112,7 @@ ListenToGameEvent("game_rules_state_change", function()
                 else
                     for _,p in pairs(PlayerList:GetValidTeamPlayers()) do
                         local hero = PlayerResource:GetSelectedHeroEntity(p:GetPlayerID())
-                        hero:AddNewModifier(hero, nil, "modifier_item_aghanims_shard", {})
+                        hero:AddNewModifierSpecial(hero, nil, "modifier_item_aghanims_shard", {})
                     end
                 end
             end

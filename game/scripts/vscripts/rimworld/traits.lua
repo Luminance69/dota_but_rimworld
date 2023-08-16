@@ -24,11 +24,10 @@ function Traits:AddTraits(hero)
     print("Adding traits to " .. hero:GetUnitName() .. ":")
 
     for _, trait in pairs(traits) do
-        hero:AddNewModifier(hero, nil, "modifier_" .. trait, nil)
+        hero:AddNewModifierSpecial(hero, nil, "modifier_" .. trait, nil)
 
         print(trait)
     end
-    hero:AddNewModifier(hero, nil, "modifier_nudist", nil)
 end
 
 -- Ngl I'm really proud of this function

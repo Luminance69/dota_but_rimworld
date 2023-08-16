@@ -51,7 +51,7 @@ function modifier_mood:OnIntervalThink()
                     if i ~= 2 then parent:RemoveModifierByName(self.risk_names[2]) end
                     if i ~= 3 then parent:RemoveModifierByName(self.risk_names[3]) end
 
-                    parent:AddNewModifier(parent, nil, self.risk_names[i], nil)
+                    parent:AddNewModifierSpecial(parent, nil, self.risk_names[i], nil)
 
                     self.risk = i
 

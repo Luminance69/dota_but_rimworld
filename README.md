@@ -4,6 +4,9 @@ Dota 2 but Rimworld
 
 Incidents:
 
+	Ok theres a bunch of stuff ive changed to do with karma and power level of incidents, i will go back and fix this before merging branch probably™
+
+    (Implemented!)
     Weight: 5
     Creep Disease:
     	50% of allied creeps are infected with disease.
@@ -61,65 +64,86 @@ Incidents:
     		+75% Vision
     		300-600s duration
 
+	(Implemented)
     Weight: 8
     Zzztt...:
     	One of your towers had a short circuit probably because fUCKing DAVE LEFT IT OUT IN THE RAIN
-    	Tower takes 50% damage
-    	Deals damage to both teams in 800 aoe
+    	the formula for this is confusing, basically does a randomly sized and powerful explosion with damage based on a % of the towers max hp.
 
+	Weight: 8
+	Solar Flare:
+		All towers on the map are disabled for 30-60 seconds.
+		Backdoor protection is also disabled for this time.
+
+	(Implemented)
     Weight: 40
     Mad Animal:
-    	A random neutral creep is enraged, targetting a random allied hero
+    	A random neutral creep is enraged, targetting the nearest dire/radiant units until killed.
     	+50% damage resistance
     	+50% movement speed
-    	+50 damage
-    	120s duration
+    	+25 + (GameTime / 30) damage
     	If controlled by helm of the dominator/overlord, the bonuses are lost.
 
+    Weight: 8
+    Animal Hunting Hero:
+    	A random ancient creep targets a nearby enemy hero to kill.
+    	+50% damage resistance
+    	+50% movement speed
+    	+25 + (GameTime / 30) damage
+    	If controlled by helm of the overlord, the bonuses are lost.
+
+	(Implemented)
     Weight: 5
     Mass Animal Insanity:
-    	5-10 random neutral creeps are enraged, targetting random heroes from both teams
+    	3 + RandomInt(GameTime / 600, GameTime / 300) random neutral creeps are enraged, targetting the nearest dire/radiant units until killed.
     	+50% damage resistance
     	+50% movement speed
-    	+50 damage
-    	120s duration
+    	+25 + (GameTime / 30) damage
     	If controlled by helm of the dominator/overlord, the bonuses are lost.
 
+	(Implemented)
     Weight: 8
     Psychic Drone:
     	n/10 chance to be each gender, where n is the number of heroes of that gender
     	-6/12/20/35 Mood
     	90-180s duration
 
+	(Implemented)
     Weight: 5
     Psychic Soothe:
     	n/10 chance to be each gender, where n is the number of heroes of that gender
     	+12 Mood
     	90-180s duration
 
+	(Implemented)
     Weight: 5
     Solar Eclipse:
     	60-300s duration
     	Forces night time
 
+	(Implemented)
     Weight: 5
     Gift:
-    	+200-400 + (game_time/3) gold to each hero on your team
+    	+150 + (game_time/3-5) gold to each hero on your team
 
+	(Implemented)
     Weight: 3
     Cold Snap:
     	120-240s duration
-    	Reduces temperature by 20 degrees.
+    	Reduces temperature by 15 degrees.
 
+	(Implemented)
     Weight: 3
     Heat Wave:
     	120-240s duration
-    	Increases temperature by 20 degrees.
+    	Increases temperature by 15 degrees.
 
+	(Implemented)
     Weight: 10
     Cargo Pods (apparel/weapons):
     	A random item is dropped on a random location on the map.
 
+    (Implemented)
     Weight: 7
     Dry thunderstorm:
     	20-40 second duration.
@@ -284,8 +308,9 @@ Birthdays:
 
     Weight: 1
     Heart Attack:
-    	Take 15% max HP DPS for 10-20 seconds, after which you die
-    	Purged with healing salve
+    	Take 2% max hp damage every [0.75 - severity / 2] seconds.
+    	Severity starts at 0.4 and decreases by 0.04 or increases by 0.06 every [0.75 - self.severity / 2] seconds.
+		Using a healing salve reduces severity by a further 0.04 every [0.75 - self.severity / 2] seconds.
 
 (All implemented!)
 Traits:

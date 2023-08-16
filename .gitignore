@@ -6,6 +6,7 @@ node_modules
 *.bin
 *.cfg
 *.tmp
+*.ini
 
 # Valve compiled
 *.vpk

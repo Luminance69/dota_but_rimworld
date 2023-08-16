@@ -1,12 +1,12 @@
 Birthdays = Birthdays or class({})
 
 Birthdays.incidents = {
-    ["bad_back"] = 5,
-    ["dementia"] = 5,
-    ["cataract"] = 5,
-    ["heart_attack"] = 1,
-    ["gift"] = 5,
-    ["wisdom"] = 5,
+    ["bad_back"] = 10,
+    ["dementia"] = 10,
+    ["cataract"] = 10,
+    ["heart_attack"] = 3,
+    ["gift"] = 25,
+    ["wisdom"] = 25,
 }
 
 function Birthdays:Init()
@@ -20,7 +20,7 @@ function Birthdays:Init()
 
     for _, hero in pairs(heroes) do
         if hero:IsRealHero() then
-            Timers:CreateTimer(RandomInt(0, 1), function()
+            Timers:CreateTimer(IsInToolsMode() and 5 or RandomInt(85, 685), function()
                 self:DoBirthday(hero)
 
                 return 600
@@ -30,10 +30,12 @@ function Birthdays:Init()
 end
 
 function Birthdays:DoBirthday(hero)
+    hero.age = hero.age and hero.age + 1 or RandomInt(20, 70)
+
     local weights = Birthdays.incidents
 
     if hero:HasModifier("modifier_tough") then
-        weights["bad_back"] = weights["bad_back"] * 2
+        weights["bad_back"] = weights["bad_back"] / 2
     end
 
     if hero:HasModifier("modifier_neurotic") then
@@ -44,14 +46,26 @@ function Birthdays:DoBirthday(hero)
         weights["dementia"] = weights["dementia"] * 3
     end
 
+    if #hero.body_parts["eye"] == 1 then 
+        weights["cataract"] = 5
+    end
+
+    if #hero.body_parts["eye"] == 2 then 
+        weights["cataract"] = 0
+    end
+
+    if #hero.body_parts["heart"] == 1 then
+        weights["heart_attack"] = 0
+    end
+
     if hero:GetLevel() >= 30 then
         weights["wisdom"] = 0
     end
 
     local incident = GetWeightedChoice(weights)
 
-    if self[incident] and self[incident](hero) then
-        -- Do notification/sound etc. (maybe panorama? :P)
+    if self[incident] then
+        self[incident](hero)
     end
 end
 
@@ -59,10 +73,21 @@ Birthdays.bad_back = function(hero)
     local modifier = hero:FindModifierByName("modifier_bad_back")
 
     if not modifier then
-        modifier = hero:AddNewModifier(hero, nil, "modifier_bad_back", {})
+        modifier = hero:AddNewModifierSpecial(hero, nil, "modifier_bad_back", {})
+    else
+        modifier:IncrementStackCount()
     end
 
-    modifier:IncrementStackCount()
+    SendLetterToTeam(hero:GetTeamNumber(), {
+        type = "BirthdayBad",
+        targets = hero:GetEntityIndex(),
+        special = {
+            main = {
+                illness = "Bad Back",
+                age = tostring(hero.age),
+            }
+        }
+    })
 
     return true
 end
@@ -71,43 +96,102 @@ Birthdays.dementia = function(hero)
     local modifier = hero:FindModifierByName("modifier_dementia")
 
     if not modifier then
-        modifier = hero:AddNewModifier(hero, nil, "modifier_dementia", {})
+        modifier = hero:AddNewModifierSpecial(hero, nil, "modifier_dementia", {})
+    else
+        modifier:IncrementStackCount()
     end
 
-    modifier:IncrementStackCount()
+    SendLetterToTeam(hero:GetTeamNumber(), {
+        type = "BirthdayBad",
+        targets = hero:GetEntityIndex(),
+        special = {
+            main = {
+                illness = "Dementia",
+                age = tostring(hero.age),
+            }
+        }
+    })
 
     return true
 end
 
-Birthdays.cataract = function(hero)
-    if #hero.body_parts["eye"] == 2 then return false end
-    
+Birthdays.cataract = function(hero)    
     local modifier = hero:FindModifierByName("modifier_cataract")
 
     if not modifier then
-        modifier = hero:AddNewModifier(hero, nil, "modifier_cataract", {})
+        modifier = hero:AddNewModifierSpecial(hero, nil, "modifier_cataract", {})
+    else
+        modifier:IncrementStackCount()
     end
 
-    modifier:IncrementStackCount()
+    SendLetterToTeam(hero:GetTeamNumber(), {
+        type = "BirthdayBad",
+        targets = hero:GetEntityIndex(),
+        special = {
+            main = {
+                illness = "Cataract",
+                age = tostring(hero.age),
+            }
+        }
+    })
 
     return true
 end
 
 Birthdays.heart_attack = function(hero)
-    if #hero.body_parts["heart"] == 1 then return false end
-    hero:AddNewModifier(hero, nil, "modifier_heart_attack", {duration = RandomInt(10, 20)})
+    hero:AddNewModifierSpecial(hero, nil, "modifier_heart_attack", {})
+
+    SendLetterToTeam(hero:GetTeamNumber(), {
+        type = "BirthdayHeartAttack",
+        targets = hero:GetEntityIndex(),
+        special = {
+            main = {
+                age = tostring(hero.age),
+            }
+        }
+    })
 
     return true
 end
 
 Birthdays.gift = function(hero) -- +500 + (25 to 50) * level gold
-    hero:ModifyGoldFiltered(500 + RandomInt(25, 50) * hero:GetLevel(), true, DOTA_ModifyGold_GameTick)
+    local gold = 500 + RandomInt(25, 50) * hero:GetLevel()
+    hero:ModifyGoldFiltered(gold, true, DOTA_ModifyGold_GameTick)
+
+	local player = hero:GetPlayerOwner()
+	if player then SendOverheadEventMessage(player, OVERHEAD_ALERT_GOLD, hero, gold, player) end
+
+    SendLetterToTeam(hero:GetTeamNumber(), {
+        type = "BirthdayGift",
+        targets = hero:GetEntityIndex(),
+        special = {
+            main = {
+                gold = tostring(gold),
+                age = tostring(hero.age),
+            }
+        }
+    })
 
     return true
 end
 
 Birthdays.wisdom = function(hero) -- +700 + (25 to 50) * level experience
-    hero:AddExperience(700 + RandomInt(25, 50) * hero:GetLevel(), DOTA_ModifyXP_TomeOfKnowledge, false, true)
+    exp = 700 + RandomInt(25, 50) * hero:GetLevel()
+    hero:AddExperience(exp, DOTA_ModifyXP_TomeOfKnowledge, false, true)
+    
+	local player = hero:GetPlayerOwner()
+	if player then SendOverheadEventMessage(player, OVERHEAD_ALERT_XP, hero, exp, player) end
+
+    SendLetterToTeam(hero:GetTeamNumber(), {
+        type = "BirthdayWisdom",
+        targets = hero:GetEntityIndex(),
+        special = {
+            main = {
+                exp = tostring(exp),
+                age = tostring(hero.age),
+            }
+        }
+    })
 
     return true
 end

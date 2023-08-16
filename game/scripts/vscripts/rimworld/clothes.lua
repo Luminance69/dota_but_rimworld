@@ -8,6 +8,7 @@ local types = {
         "item_travel_boots",
         "item_travel_boots_2",
         "item_phase_boots",
+        "item_power_treads",
         "item_arcane_boots",
         "item_tranquil_boots",
         "item_guardian_greaves",
@@ -89,6 +90,7 @@ local types = {
         "item_mystic_staff",
         "item_reaver",
         "item_relic",
+        
         "item_broom_handle",
         "item_trusty_shovel",
         "item_unstable_wand",
@@ -170,8 +172,8 @@ local types = {
         "item_crimson_guard",
         "item_shivas_guard",
         "item_assault",
-        "item_basher",
         "item_satanic",
+
         "item_chipped_vest",
         "item_possessed_mask",
         "item_nether_shawl",

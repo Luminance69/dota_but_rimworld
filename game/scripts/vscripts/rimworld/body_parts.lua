@@ -16,8 +16,8 @@ function BodyParts:Init()
             self:InitiateBodyParts(hero)
         end
     end
-    
-    Timers:CreateTimer((IsInToolsMode() and 1) or RandomInt(300, 480), self.AddRandomItemStock)
+
+    Timers:CreateTimer(RandomInt(30, 120), self.AddRandomItemStock)
 end
 
 function BodyParts:InitiateBodyParts(hero)
@@ -73,7 +73,7 @@ function BodyParts:AddBodyPart(hero, slot, part)
 
     table.insert(hero.body_parts[slot], part)
 
-    hero:AddNewModifier(hero, nil, "modifier_" .. slot .. "_" .. part, nil)
+    hero:AddNewModifierSpecial(hero, nil, "modifier_" .. slot .. "_" .. part, nil)
 
     if slot == "eye" then
         local modifier = hero:FindModifierByName("modifier_cataract")
@@ -86,10 +86,15 @@ end
 
 function BodyParts:AddRandomItemStock()
     for team = 2, 3 do
-        local slot = BodyParts:GetRandomSlot()
-        local part = BodyParts:GetRandomPart(slot)
+        for i = 0, 2 do
+            local slot = BodyParts:GetRandomSlot()
+            local part = BodyParts:GetRandomPart(slot)
 
-        BodyParts:AddStock(slot, part, team)
+            BodyParts:AddStock(slot, part, team)
+        end
+
+        -- Change to be in the top right display in future
+        SendLetterToTeam(team, {type = "BodyPartStock"})
     end
     return RandomInt(300, 480)
 end

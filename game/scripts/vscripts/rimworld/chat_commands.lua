@@ -13,20 +13,20 @@ end
 
 function ChatCommands:OnPlayerChat(event)
 	if not event.userid then return end
+	if not event.playerid or not PlayerResource:IsValidPlayerID(event.playerid) then return end
 
-	event.player = PlayerInstanceFromIndex( event.userid )
+	event.player = PlayerResource:GetPlayer(event.playerid)
 	if not event.player then return end
 
 	event.hero = event.player:GetAssignedHero()
 	if not event.hero then return end
 
-	event.player_id = event.hero:GetPlayerID()
-
-    if not (tostring(PlayerResource:GetSteamID(event.player_id)) == "76561198188258659" or IsInToolsMode() or IsCheatMode()) then return end
+    if not (tostring(PlayerResource:GetSteamID(event.playerid)) == "76561198188258659" or IsInToolsMode() or IsCheatMode()) then return end
 
 	local command_source = string.lower(event.text)
 
 	if string.sub(command_source, 0, 1) ~= "-" then return end
+
 	-- removing `-`
 	command_source = string.sub(command_source, 2, -1)
 
@@ -37,6 +37,10 @@ function ChatCommands:OnPlayerChat(event)
     end
 
 	local command_name = table.remove(args, 1)
+
+    if command_name == "debug" then
+        table.insert(args, event.playerid)
+    end
 
     if ChatCommands[command_name] then
         ChatCommands[command_name](args, event.hero)
@@ -64,7 +68,7 @@ ChatCommands.bodypart = function(args, hero, ...)
 
     local slot = args[1]
     local part = args[2]
-    
+
     if BodyParts:AddBodyPart(hero, slot, part) then
         print("Added " .. part .. " to " .. hero:GetUnitName())
     else
@@ -81,7 +85,7 @@ ChatCommands.trait = function(args, hero, ...)
 
     local trait = args[1]
 
-    hero:AddNewModifier(hero, nil, "modifier_" .. trait, nil)
+    hero:AddNewModifierSpecial(hero, nil, "modifier_" .. trait, nil)
 
     print("Added " .. trait .. " to " .. hero:GetUnitName())
 end
@@ -95,7 +99,7 @@ ChatCommands.mood = function(args, hero, ...)
     local mood = args[1]
 
     hero.mood = tonumber(mood)
-    
+
     print("Set " .. hero:GetUnitName() .. "\'s mood to: " .. mood)
 end
 
@@ -106,10 +110,22 @@ ChatCommands.incident = function(args, ...)
     if IsClient() then return end
 
     local incident = args[1]
-    
-    if Incidents then
-        Incidents:DoIncident(incident)
+
+    if Incidents and Incidents[incident] then
+        if incident ~= "debug" then
+            Incidents.karma = 100000000
+        end
+
+        Incidents[incident]()
 
         print("Caused incident: " .. incident)
     end
+end
+
+ChatCommands.birthday = function(args, hero, ...)
+    if IsClient() then return end
+
+    Birthdays:DoBirthday(hero)
+
+    print("Did birthday")
 end

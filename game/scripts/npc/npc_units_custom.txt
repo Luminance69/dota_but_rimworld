@@ -1,0 +1,41 @@
+"DOTAUnits"
+{
+    "npc_mech_cluster_toxic_spewer"
+	{
+		"BaseClass"					"npc_dota_building"
+		"Model"						"models/items/rattletrap/the_neuromaniac_experiment_subject_no08/the_neuromaniac_experiment_subject_no08.vmdl"
+		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
+		"MinimapIcon"				"minimap_racks90"
+		"ModelScale"				"2.7"
+		"Level"						"1"
+		"IsAncient"					"1"
+
+		"Ability1"					"mech_cluster_toxic_spewer"
+
+		"ArmorPhysical"				"20"
+		"StatusHealth"				"2500"
+		"BountyXP"					"0"
+		"BountyGoldMin"				"0"
+		"BountyGoldMax"				"0"
+
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"MovementSpeed"				"0"
+		"AttackAnimationPoint"		"0"
+		"AttackRange"				"0"
+		"ProjectileSpeed"			"0"
+		"MagicalResistance"			"0"
+		"AttackAcquisitionRange"	"0"
+		"AttackRate"				"1"
+		"RingRadius"				"220"
+		"HealthBarOffset"			"250"
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"1200"
+		"ProjectileModel"			""
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	}
+}

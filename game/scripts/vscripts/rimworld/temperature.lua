@@ -57,16 +57,17 @@ function Temperature:Init()
 
     Temperature.climate = Temperature.biome["climate"]
     Temperature.temps = Temperature:GenerateTemperatures(Temperature.biome["temperatures"])
+    Temperature.special_offset = 0
 
     local heroes = HeroList:GetAllHeroes()
 
     for _, hero in pairs(heroes) do
         if Temperature.climate == "wet" then
-            hero:AddNewModifier(hero, nil, "modifier_sweaty", nil) 
+            hero:AddNewModifierSpecial(hero, nil, "modifier_sweaty", nil) 
         end
 
         if Temperature.climate == "dry" then
-            hero:AddNewModifier(hero, nil, "modifier_thirsty", nil) 
+            hero:AddNewModifierSpecial(hero, nil, "modifier_thirsty", nil) 
         end
     end
 
@@ -125,7 +126,7 @@ function Temperature:UpdateSeason()
 end
 
 function Temperature:UpdateTemperature()
-    Temperature.temp_target = Temperature.temp_targets[GameRules:IsDaytime() and 2 or 1]
+    Temperature.temp_target = Temperature.temp_targets[GameRules:IsDaytime() and 2 or 1] + Temperature.special_offset
 
     if not Temperature.temp then
         Temperature.temp = Temperature.temp_target
@@ -145,15 +146,15 @@ function Temperature:UpdateTemperature()
 
         local temp_offset = 0
 
-        local buildings = FindUnitsInRadius(hero:GetTeamNumber(), hero:GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+        local buildings = FindUnitsInRadius(hero:GetTeamNumber(), hero:GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
         for _, building in pairs(buildings) do
             if building:GetUnitName() == "dota_fountain" then
-                temp_offset = 30
+                temp_offset = 50
             elseif building:IsAncient() then
-                temp_offset = temp_offset < 20 and 20 or temp_offset
+                temp_offset = temp_offset < 35 and 35 or temp_offset
             elseif building:IsTower() then
-                temp_offset = temp_offset < 10 and 10 or temp_offset
+                temp_offset = temp_offset < 20 and 20 or temp_offset
             end
         end
 

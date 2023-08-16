@@ -2,8 +2,8 @@ LinkLuaModifier("XPModifier","internal/xp_modifier", LUA_MODIFIER_MOTION_NONE)
 
 ListenToGameEvent("npc_spawned",function(event)
     local npc = EntIndexToHScript(event.entindex)
-    if npc and npc.AddNewModifier then
-        npc:AddNewModifier(npc, nil, "XPModifier", nil)
+    if npc and npc.AddNewModifierSpecial then
+        npc:AddNewModifierSpecial(npc, nil, "XPModifier", nil)
     end
 end, self)
 

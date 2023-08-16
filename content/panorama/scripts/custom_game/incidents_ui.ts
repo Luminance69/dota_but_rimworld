@@ -117,12 +117,12 @@ class UI {
 
     // TODO: Stop the function input being so long...
     ConstructData(name: string, description: Description, targets: EntityIndex[], special?: SendIncidentLetterEvent["special"]): string[] {
-        const loc = targets.map(t => $.Localize(Entities.GetUnitName(t)));
+        const loc = targets.map(t => $.Localize("#".concat(Entities.GetUnitName(t))));
         const n = targets.length;
 
         // Replace x-type enumerators in name
         n > 1
-        ? name = name.replace(/{xn}/g, ` x${n}`)
+        ? name = name.replace(/{xn}/g, `x${n}`)
         : name = name.replace(/{xn}/g, "");
 
         // Replace placeholders and duplicate repeatable strings

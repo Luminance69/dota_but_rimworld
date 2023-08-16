@@ -26,7 +26,7 @@ function modifier_passive_gold:OnCreated(data)
     ListenToGameEvent("game_rules_state_game_in_progress",function()
         self.hero.passive_gold_gain = 0
         self:StartIntervalThink(self.goldTickTime)
-        self.hero:AddNewModifier(self.hero, nil, "modifier_passive_gold_helper", {gpm = self.normalGPM})
+        self.hero:AddNewModifierSpecial(self.hero, nil, "modifier_passive_gold_helper", {gpm = self.normalGPM})
     end, nil)
 end
 

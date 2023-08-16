@@ -1,0 +1,145 @@
+"item_names"
+{
+    "Apparel"
+    {
+        "1" // Cheap
+        {
+            "1" "item_gauntlets"
+            "2" "item_slippers"
+            "3" "item_mantle"
+            "4" "item_belt_of_strength"
+            "5" "item_boots_of_elves"
+            "6" "item_robe"
+            "7" "item_gloves"
+            "8" "item_chainmail"
+            "9" "item_sobi_mask"
+            "10" "item_fluffy_hat"
+            "11" "item_cloak"
+            "12" "item_boots"
+            "13" "item_wraith_band"
+            "14" "item_bracer"
+            "15" "item_headdress"
+        }
+        "2" // Moderate
+        {
+            "1" "item_helm_of_iron_will"
+            "2" "item_lifesteal"
+            "3" "item_voodoo_mask"
+            "4" "item_power_treads"
+            "5" "item_phase_boots"
+            "6" "item_tranquil_boots"
+            "7" "item_arcane_boots"
+        }
+        "3" // Expensive
+        {
+            "1" "item_hand_of_midas"
+            "2" "item_helm_of_the_dominator"
+            "3" "item_travel_boots"
+            "4" "item_vladmir"
+            "5" "item_blade_mail"
+            "6" "item_hood_of_defiance"
+            "7" "item_veil_of_discord"
+            "8" "item_mask_of_madness"
+            "9" "item_glimmer_cape"
+        }
+        "4" // End Game
+        {
+            "1" "item_helm_of_the_overlord"
+            "2" "item_guardian_greaves"
+            "3" "item_eternal_shroud"
+            "4" "item_crimson_guard"
+            "5" "item_shivas_guard"
+            "6" "item_assault"
+            "7" "item_satanic"
+        }
+    }
+    "Weapons"
+    {
+        "1" // Cheap
+        {
+            "1" "item_quelling_blade"
+            "2" "item_magic_stick"
+            "3" "item_magic_wand"
+            "4" "item_ogre_axe"
+            "5" "item_blade_of_alacrity"
+            "6" "item_staff_of_wizardry"
+            "7" "item_blades_of_attack"
+            "8" "item_quarterstaff"
+            "9" "item_broadsword"
+            "10" "item_blitz_knuckles"
+            "11" "item_javelin"
+            "12" "item_falcon_blade"
+            
+        }
+        "2" // Moderate
+        {
+            "1" "item_claymore"
+            "2" "item_mithril_hammer"
+            "3" "item_ghost"
+            "4" "item_sange"
+            "5" "item_yasha"
+            "6" "item_kaya"
+            "7" "item_blink"
+            "8" "item_hand_of_midas"
+            "9" "item_dragon_lance"
+            "10" "item_echo_sabre"
+            "11" "item_maelstrom"
+            "12" "item_diffusal_blade"
+            "13" "item_demon_edge"
+            "14" "item_mage_slayer"
+            "15" "item_meteor_hammer"
+            "16" "item_lesser_crit"
+            "17" "item_dagon"
+            "18" "item_rod_of_atos"
+            "19" "item_oblivion_staff"
+            "20" "item_force_staff"
+        }
+        "3" // Expensive
+        {
+            "1" "item_cyclone"
+            "2" "item_witch_blade"
+            "3" "item_kaya_and_sange"
+            "4" "item_sange_and_yasha"
+            "5" "item_yasha_and_kaya"
+            "6" "item_relic"
+            "7" "item_reaver"
+            "8" "item_mystic_staff"
+            "9" "item_heavens_halberd"
+            "10" "item_ethereal_blade"
+            "11" "item_nullifier"
+            "12" "item_bfury"
+            "13" "item_desolator"
+            "14" "item_invis_sword"
+            "15" "item_basher"
+            "16" "item_hurricane_pike"
+            "17" "item_ultimate_scepter"
+            "18" "item_moon_shard"
+            "19" "item_dagon_2"
+            "20" "item_dagon_3"
+            "21" "item_orchid"
+        }
+        "4" // End Game
+        {
+            "1" "item_sheepstick"
+            "2" "item_gungir"
+            "3" "item_wind_waker"
+            "4" "item_black_king_bar"
+            "5" "item_manta"
+            "6" "item_monkey_king_bar"
+            "7" "item_overwhelming_blink"
+            "8" "item_swift_blink"
+            "9" "item_arcane_blink"
+            "10" "item_mjollnir"
+            "11" "item_butterfly"
+            "12" "item_radiance"
+            "13" "item_greater_crit"
+            "14" "item_silver_edge"
+            "15" "item_rapier"
+            "16" "item_bloodthorn"
+            "17" "item_abyssal_blade"
+            "18" "item_ultimate_scepter_2"
+            "19" "item_dagon_4"
+            "20" "item_dagon_5"
+        }
+    }
+}
